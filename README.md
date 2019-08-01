@@ -2,7 +2,7 @@
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-[![](https://img.shields.io/badge/devel%20version-0.1.0-yellow.svg)](https://github.com/MaaniBeigy/cvcqv)
+![GitHub release](https://img.shields.io/github/release/MaaniBeigy/cvcqv)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.1.2-6666ff.svg)](https://cran.r-project.org/)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MaaniBeigy/cvcqv)](https://github.com/MaaniBeigy/cvcqv)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -10,7 +10,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MaaniBeigy/cvcqv/issues)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)     
 
-# cvcqv <img src="./sticker.svg" align="right" width="120" />
+# cvcqv <img src="./man/figures/sticker.svg" align="right" width="120" />
 
 `cvcqv` provides some easy-to-use functions and classes to calculate 
 Coefficient of  Variation (`cv`) and Coefficient of Quartile Variation (`cqv`)
@@ -113,10 +113,10 @@ The `results` will be:
 
 ## Documentation    
 
-Download the [cvcqv_0.1.0.tar.gz](https://github.com/MaaniBeigy/cvcqv/raw/master/cvcqv_0.1.0.tar.gz). Install the source package `cvcqv` from the Packages >> Install >> Package Archive File (.tar.gz) >> Browse >> DescObs_0.1.0.tar.gz. Or run an installation code like:  
+Download the [cvcqv_0.1.0.tar.gz](https://github.com/MaaniBeigy/cvcqv/raw/master/cvcqv_1.0.0.tar.gz). Install the source package `cvcqv` from the Packages >> Install >> Package Archive File (.tar.gz) >> Browse >> cvcqv_1.0.0.tar.gz. Or run an installation code like:  
 
 ```r
-install.packages("~/cvcqv_0.1.0.tar.gz", repos = NULL, type = "source")
+install.packages("~/cvcqv_1.0.0.tar.gz", repos = NULL, type = "source")
 ```
 
 Then, browse for vignettes:

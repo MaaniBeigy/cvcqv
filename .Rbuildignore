@@ -5,7 +5,6 @@
 ^CMakeLists\.txt$
 ^src$
 ^appveyor\.yml$
-^DescObs_0\.1\.0\.tar\.gz$
 ^codecov\.yml$
 ^\.travis\.yml$
 ^tmp$
@@ -13,3 +12,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^cran-comments\.md$
+^cvcqv_1\.0\.0\.tar\.gz$
+^sticker\.svg$
+^cvcqv_1\.0\.0_R_x86_64-pc-linux-gnu\.tar\.gz$

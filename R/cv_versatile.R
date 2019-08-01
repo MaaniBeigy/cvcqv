@@ -133,6 +133,7 @@ NULL
 #' @importFrom stats quantile sd qchisq qnorm
 #' @importFrom MBESS conf.limits.nct
 NULL
+globalVariables(c("al", "a", "b"))
 cv_versatile <- function(
     x,  # Currently there are methods for numeric vectors
     na.rm = FALSE,  # indicating whether NA values should be stripped

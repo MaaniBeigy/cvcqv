@@ -16,7 +16,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# cvcqv <img src="../sticker.svg" align="right" width="120" />
+# cvcqv <img src="../man/figures/sticker.svg" align="right" width="120" />
 
 `cvcqv` provides some easy-to-use functions and classes to calculate 
 Coefficient of  Variation (`cv`) and Coefficient of Quartile Variation (`cqv`)
