@@ -1,6 +1,23 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# cvcqv <img src="./sticker.svg" align="right" width="120" />
+
+<!-- badges: start -->
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
-[![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
+[![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)](https://codecov.io/gh/MaaniBeigy/cvcqv)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![](https://img.shields.io/badge/devel%20version-0.1.0-yellow.svg)](https://github.com/MaaniBeigy/cvcqv)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.1.2-6666ff.svg)](https://cran.r-project.org/)
@@ -8,29 +25,15 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GitHub last commit](https://img.shields.io/github/last-commit/MaaniBeigy/cvcqv)](https://github.com/MaaniBeigy/cvcqv/commits/master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MaaniBeigy/cvcqv/issues)
-[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)     
-
-# cvcqv <img src="./sticker.svg" align="right" width="120" />
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)  
+<!-- badges: end -->
 
 `cvcqv` provides some easy-to-use functions and classes to calculate 
 Coefficient of  Variation (`cv`) and Coefficient of Quartile Variation (`cqv`)
-with confidence intervals provided with all available methds.   
+with confidence intervals provided with all available methds.
 
-# Overview   
 
-### Background    
-
-There are abundant methods available for the calculation of **confidence intervals** of a dispersion measure like coefficient of variation (`cv`) or coefficient of quartile variation (`cqv`), which have not yet been implemented in R. Also, `cqv` is quite useful in conditions where the distribution of variables does not follow normal distribution.   
-
-### Aims    
-
-The authors' intention is to create a small R package adhering to [K-I-S-S principle](<https://en.wikipedia.org/wiki/KISS_principle>) to facilitate the use of the most available rigorous methods for calculation of confidence intervals around the variability measures of `cv` and `cqv`.
-
-### Convention       
-
-We are bound by the high standards of functional programming (FP) and object-oriented programming (OOP). The majority of tools provided by `cvcqv` are developed as both FP tools and [R6](https://github.com/r-lib/R6) classes, for sake of versatility, portability and efficiency.
-
-# Getting started    
+## Installation
 
 If you are an ubuntu user, you are going to need these non-R packages:    
 
@@ -38,9 +41,9 @@ If you are an ubuntu user, you are going to need these non-R packages:
 sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libgsl-dev   
 ```   
 
-The `cvcqv` is available on github. To install it in `R`, use:    
+You can install the released version of cvcqv from github with:
 
-```r
+```{r, eval = FALSE}
 devtools::install_github('MaaniBeigy/cvcqv')  
 ```
 
@@ -58,14 +61,14 @@ devtools::install_github('MaaniBeigy/cvcqv')
 |BootCoefVar      |TRUE    |Bootstrap Resampling for cv             |
 |BootCoefQuartVar |TRUE    |Bootstrap Resampling for cqv            |
 
-\* This package is inspired by `dplyr`, `R6`, `SciView`, `boot`, and `MBESS`.    
+\* This package is inspired by `dplyr`, `R6`, `SciView`, `boot`, and `MBESS`.  
 
-## Examples    
+## Example
 
 Here, we want to observe **all** available *confidence intervals* for the `cv` 
 of variable *x*:
 
-```r
+```{r, eval=FALSE, message=FALSE}
 x <- c(
     0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
     4.6, 5.4, 5.4, 5.7, 5.8, 5.9, 6.0, 6.6, 7.1, 7.9
@@ -94,7 +97,7 @@ The `results` will be:
 
 Next, we want to find **all** of the available *confidence intervals* for the `cqv` of variable *x*:  
 
-```r
+```{r, eval=FALSE, message=FALSE}
 results <- CoefQuartVarCI$new(x, digits = 3)$all_ci()  # R6 class
 # or alternatively:
 results <- cqv_versatile(x, , digits = 3, method = "all")  # functional programming
