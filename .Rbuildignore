@@ -12,3 +12,4 @@
 ^eye\.png$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
