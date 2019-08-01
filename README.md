@@ -11,7 +11,6 @@
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)     
 
 # cvcqv <img src="./sticker.svg" align="right" width="120" />
-Tools for Versatile Exploration of Data.   
 
 `cvcqv` Provides some easy-to-use functions and classes to calculate 
 Coefficient of  Variation (`cv`) and Coefficient of Quartile Variation (`cqv`)
