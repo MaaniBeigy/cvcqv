@@ -1,0 +1,29 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: R
+sudo: required
+r_packages:
+  - dplyr
+  - SciViews
+  - boot
+  - MBESS
+  - R6
+  - stats
+  - utils
+  - testthat
+  - knitr
+  - rmarkdown
+  - covr
+latex: false
+# environment variables set for all builds
+env:
+  global:
+  # don't treat missing suggested packages as error
+  - _R_CHECK_FORCE_SUGGESTS_=false
+  # switch off vdiffr by default
+  - VDIFFR_RUN_TESTS=false
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgsl-dev texlive texinfo libudunits2-dev libproj-dev libgeos-dev libgdal-dev
+  - Rscript -e 'update.packages(ask = FALSE)'
+after_success:
+  - Rscript -e 'covr::codecov()'

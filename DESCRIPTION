@@ -1,0 +1,30 @@
+Package: cvcqv
+Type: Package
+Title: Coefficient of Variation (CV) and Coefficient of Quartile Variation (CQV) with Confidence Intervals (CI)
+Version: 0.1.0
+Date: 2019-02-15
+Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
+                  role = c("aut", "cre"))
+Maintainer: Maani Beigy <manibeygi@gmail.com>
+Description: Provides some easy-to-use functions and classes to calculate 
+    Coefficient of  Variation (CV) and Coefficient of Quartile Variation (CQV)
+    with confidence intervals provided with all available methds. 
+Depends: 
+    R (>= 3.1.2),
+    dplyr (>= 0.8.0.1)
+Imports: R6,
+  SciViews, 
+  boot, 
+  MBESS
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    covr
+VignetteBuilder: knitr
+URL: https://github.com/MaaniBeigy/cvcqv
+BugReports: https://github.com/MaaniBeigy/cvcqv/issues
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1

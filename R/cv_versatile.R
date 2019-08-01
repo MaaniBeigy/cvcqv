@@ -1,0 +1,1285 @@
+#' @title Coefficient of Variation (cv)
+#' @name cv_versatile
+#' @description Versatile function for the coefficient of variation (cv)
+#' @param x An \code{R} object. Currently there are methods for numeric vectors
+#' @param na.rm a logical value indicating whether \code{NA} values should be
+#'              stripped before the computation proceeds.
+#' @param digits integer indicating the number of decimal places to be used.
+#' @param method a scalar representing the type of confidence intervals
+#'               required. The value should be any of the values "kelley",
+#'               "mckay", "miller", "vangel", "mahmoudvand_hassani",
+#'               "equal_tailed", "shortest_length", "normal_approximation",
+#'               "norm","basic", or "all".
+#' @param correction returns the unbiased estimate of the coefficient of
+#'                   variation
+#' @param alpha The allowed type I error probability
+#' @param R integer indicating the number of bootstrap replicates.
+#' @details \describe{
+#'         \item{\strong{Coefficient of Variation}}{
+#'         \deqn{ CV = \sigma/\mu} where \eqn{\sigma}
+#'         and \eqn{\mu} are standard deviation and mean, respectively.
+#'         The \emph{cv} is a measure of relative dispersion representing
+#'         the degree of variability relative to the mean [1]. Since \eqn{cv} is
+#'         unitless, it is useful for comparison of variables with different
+#'         units. It is also a measure of homogeneity [1].
+#'         }
+#'         }
+#' @return An object of type "list" which contains the estimate, the
+#'         intervals, and the computation method. It has two main components:
+#' @return \describe{
+#'        \item{$method}{
+#'        A description of statistical method used for the computations.
+#'        }
+#'        \item{$statistics}{
+#'        A data frame representing three vectors: est, lower and upper limits
+#'        of \eqn{(1-\alpha)}\% confidence interval \code{(CI)};
+#'        additional description vector is provided when "all" is selected:
+#'        \cr \cr
+#'        \strong{est:}{
+#'        \deqn{(sd/mean)*100}
+#'        }
+#'        \strong{Kelley Confidence Interval:}{
+#'        Thanks to package \link[MBESS]{MBESS} [2] for the
+#'        computation of confidence limits for the noncentrality parameter from
+#'        a \emph{t} distribution \link[MBESS]{conf.limits.nct} [3].
+#'        }
+#'        \cr \cr
+#'        \strong{McKay Confidence Interval:}{
+#'        The intervals calculated by the method introduced by McKay [4],
+#'        using \eqn{\chi^2} distribution.
+#'        }
+#'        \cr \cr
+#'        \strong{Miller Confidence Interval:}{
+#'        The intervals calculated by the method introduced by Miller [5],
+#'        using the standard normal distribution.
+#'        }
+#'        \cr \cr
+#'        \strong{Vangel Confidence Interval:}{
+#'        Vangel [6] proposed a method for the calculation of CI for \emph{cv};
+#'        which is a modification on McKay’s CI.
+#'        }
+#'        \cr \cr
+#'        \strong{Mahmoudvand-Hassani Confidence Interval:}{
+#'        Mahmoudvand and Hassani [7] proposed a new CI for \emph{cv}; which
+#'        is obtained using ranked set sampling \emph{(RSS)}
+#'        }
+#'        \cr \cr
+#'        \strong{Normal Approximation Confidence Interval:}{
+#'        Wararit Panichkitkosolkul [8] proposed another CI for \emph{cv};
+#'        which is a normal approximation.
+#'        }
+#'        \cr \cr
+#'        \strong{Shortest-Length Confidence Interval:}{
+#'        Wararit Panichkitkosolkul [8] proposed another CI for \emph{cv};
+#'        which is obtained through minimizing the length of CI.
+#'        }
+#'        \cr \cr
+#'        \strong{Equal-Tailed Confidence Interval:}{
+#'        Wararit Panichkitkosolkul [8] proposed another CI for \emph{cv};
+#'        which is obtained using \eqn{\chi^2} distribution.
+#'        }
+#'        \cr \cr
+#'        \strong{Bootstrap Confidence Intervals:}{
+#'        Thanks to package \pkg{boot} by Canty & Ripley [9] we can obtain
+#'        bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.
+#'        }
+#'        \cr \cr
+#'        }
+#'        }
+#' @examples
+#' x <- c(
+#'     0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
+#'     4.6, 5.4, 5.4, 5.7, 5.8, 5.9, 6.0, 6.6, 7.1, 7.9
+#' )
+#' cv_versatile(x)
+#' cv_versatile(x, correction = TRUE)
+#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "kelley", correction = TRUE)
+#' cv_versatile(x, na.rm = TRUE, method = "mahmoudvand_hassani", correction = TRUE)
+#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "shortest_length", correction = TRUE)
+#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "norm", correction = TRUE)
+#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "all", correction = TRUE)
+#' @references [1] Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib, B, 2014,
+#'                 Confidence interval estimation for the population coefficient
+#'                 of variation using ranked set sampling: A simulation study,
+#'                 Journal of Applied Statistics, 41(4), 733–751, DOI:
+#'                 \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
+#' @references [2] Kelley, K., 2018, MBESS: The MBESS R Package. R package
+#'                 version 4.4. 3., Retrieved from \href{http://cran.r-project.org/package=MBESS}{http://cran.r-project.org/package=MBESS}
+#' @references [3] Kelley, K., 2007, Sample size planning for the coefficient of
+#'                 variation from the accuracy in parameter estimation approach,
+#'                 Behavior Research Methods, 39(4), 755–766, DOI:
+#'                 \href{http://doi.org/10.3758/BF03192966}{http://doi.org/10.3758/BF03192966}
+#' @references [4] McKay, AT., 1932, Distribution of the Coefficient of
+#'                 Variation and the Extended“ t” Distribution, Journal of the
+#'                 Royal Statistical Society, 95(4), 695–698
+#' @references [5] Miller, E., 1991, Asymptotic test statistics for coefficients
+#'                 of variation, Communications in Statistics-Theory and
+#'                 Methods, 20(10), 3351–3363
+#' @references [6] Vangel, MG., 1996, Confidence intervals for a normal
+#'                 coefficient of variation, The American Statistician, 50(1),
+#'                 21–26
+#' @references [7] Mahmoudvand, R., & Hassani, H., 2009, Two new confidence
+#'                 intervals for the coefficient of variation in a normal
+#'                 distribution, Journal of Applied Statistics, 36(4), 429–442
+#' @references [8] Panichkitkosolkul, W., 2013, Confidence Intervals for the
+#'                 Coefficient of Variation in a Normal Distribution with a
+#'                 Known Population Mean, Journal of Probability and Statistics,
+#'                 2013, 1–11, \href{http://doi.org/10.1155/2013/324940}{http://doi.org/10.1155/2013/324940}
+#' @references [9] Canty, A., & Ripley, B., 2017, boot: Bootstrap R (S-Plus)
+#'                 Functions, R package version 1.3-20
+#' @export
+#' @import dplyr SciViews boot R6 utils
+NULL
+#' @importFrom stats quantile sd qchisq qnorm
+#' @importFrom MBESS conf.limits.nct
+NULL
+cv_versatile <- function(
+    x,  # Currently there are methods for numeric vectors
+    na.rm = FALSE,  # indicating whether NA values should be stripped
+    digits = 1,  # digits of output after rounding. default is 4
+    method = NULL,  # method for the computation of confidence interval (CI)
+    correction = FALSE,  # indicating whether to compute the unbiased statistics
+    alpha = 0.05,  # The allowed type I error probability
+    R = NULL,  # integer indicating the number of bootstrap replicates
+    ...
+) {
+    # library(MBESS)
+    # require(dplyr)
+    # require(SciViews)
+    # require(boot)
+    if (missing(x) || is.null(x)) {
+        stop("object 'x' not found")
+    } else if (!missing(x)) {
+        x <- x
+    }
+    if (!is.numeric(x)) {
+        stop("argument is not a numeric vector")
+    }
+    na.rm <- na.rm  # removes NAs if TRUE
+    if (na.rm == TRUE) {
+        x <- x[!is.na(x)]
+    } else if (anyNA(x)) {
+        stop(
+            "missing values and NaN's not allowed if 'na.rm' is FALSE"
+        )
+    }
+
+    # if (is.null(digits)) {
+    #     digits = 1
+    # }
+    if (is.null(R)) {
+        R = 1000
+    }
+    digits <- digits  # digits required for rounding
+    shortest_length <- data.frame(  # "a" and "b" values for shortest-length CI
+        v = c(  # degrees of freedom
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 50, 60, 70, 80, 90,
+            100, 150, 200, 250, 300, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+            14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+            30, 40, 50, 60, 70, 80, 90, 100, 150, 200, 250, 300, 2, 3, 4,
+            5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+            22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 50, 60, 70, 80, 90,
+            100, 150, 200, 250, 300
+        ),
+        al = c(  # al is the allowed type I error probability
+            0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+            0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+            0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+            0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+            0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+            0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+            0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+            0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+            0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+            0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+            0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+            0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+            0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01,
+            0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01
+        ),
+        a = c(  # a is an attribute for the length of CI
+            0.2065, 0.5654, 1.02, 1.5352, 2.093, 2.6828, 3.2981, 3.9343,
+            4.5883, 5.2573, 5.9397, 6.6337, 7.3382, 8.0521, 8.7745,
+            9.5047, 10.2421, 10.9861, 11.7362, 12.4919, 13.253,
+            14.0191, 14.7899, 15.565, 16.3443, 17.1275, 17.9144,
+            18.7049, 19.4987, 27.5919, 35.9012, 44.3661, 52.9501,
+            61.629, 70.386, 79.2086, 124.0372, 169.6646, 215.8057,
+            262.3132, 0.1015, 0.3449, 0.6918, 1.1092, 1.5776,
+            2.0851, 2.6235, 3.1874, 3.7729, 4.3768, 4.9967,
+            5.6308, 6.2776, 6.9357, 7.6042, 8.282, 8.9685,
+            9.6629, 10.3647, 11.0733, 11.7882, 12.5092,
+            13.2357, 13.9675, 14.7043, 15.4458, 16.1917,
+            16.9419, 17.6961, 25.4233, 33.4085, 41.5794, 49.8923,
+            58.3183, 66.8374, 75.4347, 119.2737, 164.0642,
+            209.4667, 255.3057, 0.02, 0.114, 0.2937, 0.5461,
+            0.8567, 1.2143, 1.6107, 2.0394, 2.4958, 2.976, 3.4771,
+            3.9968, 4.5329, 5.084, 5.6487, 6.2256, 6.8139, 7.4126,
+            8.0209, 8.6383, 9.264, 9.8976, 10.5385, 11.1864, 11.8408,
+            12.5014, 13.1678, 13.8397, 14.517, 21.5331, 28.8879,
+            36.4863, 44.2711, 52.2044, 60.2597, 68.4177, 110.3262,
+            153.4834, 197.444, 241.9776
+        ),
+        b = c(  # b is an attribute for the length of CI
+            12.5208, 13.1532, 14.18, 15.3498, 16.5807, 17.8391,
+            19.1099, 20.3848, 21.6598, 22.9325, 24.2016,
+            25.4666, 26.7269, 27.9825, 29.2334, 30.4796,
+            31.7212, 32.9585, 34.1915, 35.4205, 36.6455,
+            37.8668, 39.0844, 40.2986, 41.5095, 42.7171,
+            43.9217, 45.1234, 46.3222, 58.1755, 69.8342,
+            81.3479, 92.7487, 104.0584, 115.2925, 126.4628,
+            181.6128, 235.9748, 289.8273, 343.3155, 15.1194,
+            15.5897, 16.5735, 17.7432, 18.9954, 20.2863,
+            21.5953, 22.9118, 24.2303, 25.5476, 26.8618,
+            28.1717, 29.4769, 30.777, 32.072, 33.3619,
+            34.6467, 35.9266, 37.2016, 38.472, 39.7379,
+            40.9995, 42.257, 43.5105, 44.7601, 46.006,
+            47.2483, 48.4872, 49.7229, 61.9217, 73.892,
+            85.6914, 97.3573, 108.9153, 120.3839, 131.7767,
+            187.9079, 243.1025, 297.691, 351.8461, 20.8264,
+            20.9856, 21.8371, 22.9867, 24.2618, 25.6017,
+            26.9749, 28.3643, 29.7602, 31.158, 32.5543,
+            33.9474, 35.3358, 36.7192, 38.0968, 39.4688,
+            40.8347, 42.1952, 43.5498, 44.8989, 46.2426,
+            47.581, 48.9144, 50.2428, 51.5665, 52.8856,
+            54.2002, 55.5107, 56.8169, 69.6808, 82.2534,
+            94.6063, 106.7867, 118.8272, 130.7514, 142.5771,
+            200.6194, 257.4375, 313.462, 368.9185
+        )
+    )
+    # if ("kelley" %in% method) {
+    #     if (!requireNamespace("MBESS")) {
+    #         warning(
+    #     "package 'MBESS' required to calculate Kelley's confidence interval"
+    #         )
+    #     }
+    # }
+    cv <- (
+        stats::sd(x, na.rm = na.rm)/mean(x, na.rm = na.rm)  # coefficient of variation
+    )
+    cv_corr <- cv * (
+        (1 - (1/(4 * (length(x) - 1))) +  # corrected coefficient of variation
+             (1/length(x)) * cv^2) +
+            (1/(2 * (length(x) - 1)^2))
+    )
+    if (is.null(method) == TRUE & correction == FALSE) {
+        return(
+            list(
+                method = "cv = sd/mean (may be biased)",
+                statistics = data.frame(
+                    est = round(cv*100, digits = digits),
+                    row.names = c(" ")
+                    )
+                )
+            )
+    } else if (is.null(method) == TRUE & correction == TRUE) {
+        return(
+            list(
+                method = "Corrected (i.e., unbiased) cv",
+                statistics = data.frame(
+                    est = round(cv_corr*100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if (!is.null(method)) {
+        method <- tolower(method)  # convert user's input to lower-case
+        method <- match.arg(  # match the user's input with available methods
+            arg = method,
+            choices = c(
+                "kelley", "mckay", "miller", "vangel", "mahmoudvand_hassani",
+                "equal_tailed", "shortest_length", "normal_approximation",
+                "norm","basic", "perc", "bca", "all"
+            ),
+            several.ok = TRUE
+        )
+    }
+
+# calculating cv's bootstrap CI
+    boot.cv <- boot::boot(
+        x,
+        function(x, i) {  # coefficient of variation
+            stats::sd(x[i], na.rm = na.rm)/mean(x[i], na.rm = na.rm)
+        },
+        R = R
+    )
+    boot.cv_corr <- boot::boot(
+        x,
+        function(x, i) {  # corrected coefficient of variation
+            stats::sd(x[i], na.rm = na.rm)/mean(x[i], na.rm = na.rm) * (
+                (1 - (1/(4 * (length(x[i]) - 1))) +
+                     (1/length(x)) * (
+                         stats::sd(x[i], na.rm = na.rm)/mean(x[i], na.rm = na.rm)
+                     )^2) +
+                    (1/(2 * (length(x) - 1)^2))
+            )
+        },
+        R = R
+    )
+# calculating cv and its CI attributes based on selected methods
+    if ("kelley" %in% method && correction == FALSE) {
+        ci <- MBESS::conf.limits.nct(
+            ncp = sqrt(length(x))/cv_corr,
+            df = length(x) - 1,
+            conf.level = (1 - alpha)
+        )
+        est.kelley <- cv  # cv is an estimate of CV
+        lower.tile.kelley <- unname(sqrt(length(x))/ci$Upper.Limit)
+        upper.tile.kelley <- unname(sqrt(length(x))/ci$Lower.Limit)
+    } else if ("kelley" %in% method && correction == TRUE) {
+        ci <- MBESS::conf.limits.nct(
+            ncp = sqrt(length(x))/cv_corr,
+            df = length(x) - 1,
+            conf.level = (1 - alpha)
+        )
+        est.kelley <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.kelley <- unname(sqrt(length(x))/ci$Upper.Limit)
+        upper.tile.kelley <- unname(sqrt(length(x))/ci$Lower.Limit)
+    } else if ("mckay" %in% method && correction == FALSE) {
+        # if (cv > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.mckay <- cv  # cv is an estimate of CV
+        lower.tile.mckay <- cv/sqrt((u1/(v + 1) - 1 )*(cv^2) + u1/v)
+        upper.tile.mckay <- cv/sqrt((u2/(v + 1) - 1)*(cv^2) + u2/v)
+    } else if ("mckay" %in% method && correction == TRUE) {
+        # if (cv_corr > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.mckay <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.mckay <- cv_corr/sqrt((u1/(v + 1) - 1 )*(cv_corr^2) + u1/v)
+        upper.tile.mckay <- cv_corr/sqrt((u2/(v + 1) - 1)*(cv_corr^2) + u2/v)
+    } else if ("miller" %in% method && correction == FALSE) {
+        v <- length(x) - 1
+        z_alpha_over2 <- stats::qnorm(1 - (alpha/2))
+        u <- sqrt(
+            (cv^2/v) * (0.5 + cv^2)
+        )
+        zu <- z_alpha_over2 * u
+        est.miller <- cv  # cv is an estimate of CV
+        lower.tile.miller <- cv - zu
+        upper.tile.miller <- cv + zu
+    } else if ("miller" %in% method && correction == TRUE) {
+        v <- length(x) - 1
+        z_alpha_over2 <- stats::qnorm(1 - (alpha/2))
+        u <- sqrt(
+            (cv_corr^2/v) * (0.5 + cv_corr^2)
+        )
+        zu <- z_alpha_over2 * u
+        est.miller <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.miller <- cv_corr - zu
+        upper.tile.miller <- cv_corr + zu
+    }  else if ("vangel" %in% method && correction == FALSE) {
+        # if (cv > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.vangel <- cv  # cv is an estimate of CV
+        lower.tile.vangel <- cv/sqrt(((u1 + 1)/(v + 1) - 1 )*(cv^2) + u1/v)
+        upper.tile.vangel <- cv/sqrt(((u2 + 1)/(v + 1) - 1)*(cv^2) + u2/v)
+    } else if ("vangel" %in% method && correction == TRUE) {
+        # if (cv_corr > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.vangel <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.vangel <- cv_corr/sqrt(
+            ((u1 + 1)/(v + 1) - 1 )*(cv_corr^2) + u1/v
+            )
+        upper.tile.vangel <- cv_corr/sqrt(
+            ((u2 + 1)/(v + 1) - 1)*(cv_corr^2) + u2/v
+            )
+    } else if ("mahmoudvand_hassani" %in% method && correction == FALSE) {
+        if (length(x) <= 340) {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (gamma(length(x)/2))/(gamma((length(x) - 1)/2))
+                )
+        } else {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (lgamma(length(x)/2))/(lgamma((length(x) - 1)/2))
+            )
+        }
+        ul <- 2 - (cn + (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        uu <- 2 - (cn - (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        est.mahmoud <- cv  # cv is an estimate of CV
+        lower.tile.mahmoud <- cv/ul
+        upper.tile.mahmoud <- cv/uu
+    } else if ("mahmoudvand_hassani" %in% method && correction == TRUE) {
+        if (length(x) <= 340) {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (gamma(length(x)/2))/(gamma((length(x) - 1)/2))
+            )
+        } else {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (lgamma(length(x)/2))/(lgamma((length(x) - 1)/2))
+            )
+        }
+        ul <- 2 - (cn + (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        uu <- 2 - (cn - (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        est.mahmoud <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.mahmoud <- cv_corr/ul
+        upper.tile.mahmoud <- cv_corr/uu
+    } else if ("normal_approximation" %in% method && correction == FALSE) {
+        cn <- sqrt(1 - (1/(2 * length(x))))
+        ul <- cn + (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cn^2))
+        uu <- cn - (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cn^2))
+        est.normaapprox <- cv  # cv is an estimate of CV
+        lower.tile.normaapprox <- cv/ul
+        upper.tile.normaapprox <- cv/uu
+    } else if ("normal_approximation" %in% method && correction == TRUE) {
+        cn <- sqrt(1 - (1/(2 * length(x))))
+        ul <- cn + (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cn^2))
+        uu <- cn - (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cn^2))
+        est.normaapprox <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.normaapprox <- cv_corr/ul
+        upper.tile.normaapprox <- cv_corr/uu
+    } else if ("shortest_length" %in% method && correction == FALSE) {
+        if (length(x) <= 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(b)
+        } else if (length(x) > 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(b)
+        }
+        est.shortest <- cv  # cv is an estimate of CV
+        lower.tile.shortest <- (cv*sqrt(length(x) - 1))/sqrt(b_value$b)
+        upper.tile.shortest <- (cv*sqrt(length(x) - 1))/sqrt(a_value$a)
+    } else if ("shortest_length" %in% method && correction == TRUE) {
+        if (length(x) <= 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(b)
+        } else if (length(x) > 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(b)
+        }
+        est.shortest <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.shortest <- (cv_corr*sqrt(length(x) - 1))/sqrt(b_value$b)
+        upper.tile.shortest <- (cv_corr*sqrt(length(x) - 1))/sqrt(a_value$a)
+    } else if ("equal_tailed" %in% method && correction == FALSE) {
+        v <- length(x) - 1
+        tt1 <- stats::qchisq(1 - alpha/2,v)
+        tt2 <- stats::qchisq(alpha/2,v)
+        est.equal <- cv  # cv is an estimate of CV
+        lower.tile.equal <- (cv*sqrt(v))/(sqrt(tt1))
+        upper.tile.equal <- (cv*sqrt(v))/(sqrt(tt2))
+    } else if ("equal_tailed" %in% method && correction == TRUE) {
+        v <- length(x) - 1
+        tt1 <- stats::qchisq(1 - alpha/2,v)
+        tt2 <- stats::qchisq(alpha/2,v)
+        est.equal <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.equal <- (cv_corr*sqrt(v))/(sqrt(tt1))
+        upper.tile.equal <- (cv_corr*sqrt(v))/(sqrt(tt2))
+    } else if ("norm" %in% method && correction == FALSE) {
+        boot.normcv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "norm"
+        )
+        est.norm <- cv  # cv is an estimate of CV
+        lower.tile.norm <- boot.normcv.ci$normal[2]
+        upper.tile.norm <- boot.normcv.ci$normal[3]
+    } else if ("norm" %in% method && correction == TRUE) {
+        boot.normcv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "norm"
+        )
+        est.norm <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.norm <- boot.normcv_corr.ci$normal[2]
+        upper.tile.norm <- boot.normcv_corr.ci$normal[3]
+    } else if ("basic" %in% method && correction == FALSE) {
+        boot.basiccv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.basic <- cv  # cv is an estimate of CV
+        lower.tile.basic <- boot.basiccv.ci$basic[4]
+        upper.tile.basic <- boot.basiccv.ci$basic[5]
+    } else if ("basic" %in% method && correction == TRUE) {
+        boot.basiccv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.basic <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.basic <- boot.basiccv_corr.ci$basic[4]
+        upper.tile.basic <- boot.basiccv_corr.ci$basic[5]
+    } else if ("perc" %in% method && correction == FALSE) {
+        boot.percentcv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.percent <- cv  # cv is an estimate of CV
+        lower.tile.percent <- boot.percentcv.ci$percent[4]
+        upper.tile.percent <- boot.percentcv.ci$percent[5]
+    } else if ("perc" %in% method && correction == TRUE) {
+        boot.percentcv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.percent <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.percent <- boot.percentcv_corr.ci$percent[4]
+        upper.tile.percent <- boot.percentcv_corr.ci$percent[5]
+    } else if ("bca" %in% method && correction == FALSE) {
+        boot.bcacv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.bca <- cv  # cv is an estimate of CV
+        lower.tile.bca <- boot.bcacv.ci$bca[4]
+        upper.tile.bca <- boot.bcacv.ci$bca[5]
+    } else if ("bca" %in% method && correction == TRUE) {
+        boot.bcacv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.bca <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.bca <- boot.bcacv_corr.ci$percent[4]
+        upper.tile.bca <- boot.bcacv_corr.ci$percent[5]
+    } else if (method == "all" && correction == FALSE) {
+        est.all <- cv  # cv is an estimate of CV
+        ci <- MBESS::conf.limits.nct(
+            ncp = sqrt(length(x))/cv_corr,
+            df = length(x) - 1,
+            conf.level = (1 - alpha)
+        )
+        lower.tile.kelley <- unname(sqrt(length(x))/ci$Upper.Limit)
+        upper.tile.kelley <- unname(sqrt(length(x))/ci$Lower.Limit)
+        # if (cv > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.mckay <- cv  # cv is an estimate of CV
+        lower.tile.mckay <- cv/sqrt((u1/(v + 1) - 1 )*(cv^2) + u1/v)
+        upper.tile.mckay <- cv/sqrt((u2/(v + 1) - 1)*(cv^2) + u2/v)
+        z_alpha_over2 <- stats::qnorm(1 - (alpha/2))
+        u <- sqrt(
+            (cv^2/v) * (0.5 + cv^2)
+        )
+        zu <- z_alpha_over2 * u
+        est.miller <- cv  # cv is an estimate of CV
+        lower.tile.miller <- cv - zu
+        upper.tile.miller <- cv + zu
+        tt1 <- stats::qchisq(1 - alpha/2,v)/v
+        tt2 <- stats::qchisq(alpha/2,v)/v
+        uu1 <- v*tt1
+        uu2 <- v*tt2
+        est.vangel <- cv  # cv is an estimate of CV
+        lower.tile.vangel <- cv/sqrt(((uu1 + 1)/(v + 1) - 1 )*(cv^2) + uu1/v)
+        upper.tile.vangel <- cv/sqrt(((uu2 + 1)/(v + 1) - 1)*(cv^2) + uu2/v)
+        if (length(x) <= 340) {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (gamma(length(x)/2))/(gamma((length(x) - 1)/2))
+            )
+        } else if (length(x) > 340) {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (lgamma(length(x)/2))/(lgamma((length(x) - 1)/2))
+            )
+        }
+        ul <- 2 - (cn + (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        uu <- 2 - (cn - (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        est.mahmoud <- cv  # cv is an estimate of CV
+        lower.tile.mahmoud <- cv/ul
+        upper.tile.mahmoud <- cv/uu
+        cnt <- sqrt(1 - (1/(2 * length(x))))
+        ult <- cnt + (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cnt^2))
+        uut <- cnt - (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cnt^2))
+        est.normaapprox <- cv  # cv is an estimate of CV
+        lower.tile.normaapprox <- cv/ult
+        upper.tile.normaapprox <- cv/uut
+        if (length(x) <= 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(b)
+        } else if (length(x) > 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(b)
+        }
+        est.shortest <- cv  # cv is an estimate of CV
+        lower.tile.shortest <- (cv*sqrt(length(x) - 1))/sqrt(b_value$b)
+        upper.tile.shortest <- (cv*sqrt(length(x) - 1))/sqrt(a_value$a)
+        ttt1 <- stats::qchisq(1 - alpha/2,v)
+        ttt2 <- stats::qchisq(alpha/2,v)
+        est.equal <- cv  # cv is an estimate of CV
+        lower.tile.equal <- (cv*sqrt(v))/(sqrt(ttt1))
+        upper.tile.equal <- (cv*sqrt(v))/(sqrt(ttt2))
+        boot.normcv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "norm"
+        )
+        est.norm <- cv  # cv is an estimate of CV
+        lower.tile.norm <- boot.normcv.ci$normal[2]
+        upper.tile.norm <- boot.normcv.ci$normal[3]
+        boot.basiccv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.basic <- cv  # cv is an estimate of CV
+        lower.tile.basic <- boot.basiccv.ci$basic[4]
+        upper.tile.basic <- boot.basiccv.ci$basic[5]
+        boot.percentcv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.percent <- cv  # cv is an estimate of CV
+        lower.tile.percent <- boot.percentcv.ci$percent[4]
+        upper.tile.percent <- boot.percentcv.ci$percent[5]
+        boot.bcacv.ci <- boot::boot.ci(
+            boot.cv, conf = (1 - alpha), type = "basic"
+        )
+        est.bca <- cv  # cv is an estimate of CV
+        lower.tile.bca <- boot.bcacv.ci$bca[4]
+        upper.tile.bca <- boot.bcacv.ci$bca[5]
+    } else if (method == "all" && correction == TRUE) {
+        est.all <- cv_corr  # cv_corr is an estimate of CV
+        ci <- MBESS::conf.limits.nct(
+            ncp = sqrt(length(x))/cv_corr,
+            df = length(x) - 1,
+            conf.level = (1 - alpha)
+        )
+        lower.tile.kelley <- unname(sqrt(length(x))/ci$Upper.Limit)
+        upper.tile.kelley <- unname(sqrt(length(x))/ci$Lower.Limit)
+        # if (cv_corr > 0.33) {
+        #     warning("Confidence interval may be very approximate")
+        # }
+        v <- length(x) - 1
+        t1 <- stats::qchisq(1 - alpha/2,v)/v
+        t2 <- stats::qchisq(alpha/2,v)/v
+        u1 <- v*t1
+        u2 <- v*t2
+        est.mckay <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.mckay <- cv_corr/sqrt((u1/(v + 1) - 1 )*(cv_corr^2) + u1/v)
+        upper.tile.mckay <- cv_corr/sqrt((u2/(v + 1) - 1)*(cv_corr^2) + u2/v)
+        z_alpha_over2 <- stats::qnorm(1 - (alpha/2))
+        u <- sqrt(
+            (cv_corr^2/v) * (0.5 + cv_corr^2)
+        )
+        zu <- z_alpha_over2 * u
+        est.miller <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.miller <- cv_corr - zu
+        upper.tile.miller <- cv_corr + zu
+        tt1 <- stats::qchisq(1 - alpha/2,v)/v
+        tt2 <- stats::qchisq(alpha/2,v)/v
+        uu1 <- v*tt1
+        uu2 <- v*tt2
+        est.vangel <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.vangel <- cv_corr/sqrt(((uu1 + 1)/(v + 1) - 1 )*(cv_corr^2) + uu1/v)
+        upper.tile.vangel <- cv_corr/sqrt(((uu2 + 1)/(v + 1) - 1)*(cv_corr^2) + uu2/v)
+        if (length(x) <= 340) {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (gamma(length(x)/2))/(gamma((length(x) - 1)/2))
+            )
+        } else {
+            cn <- sqrt(2/(length(x) - 1)) * (
+                (lgamma(length(x)/2))/(lgamma((length(x) - 1)/2))
+            )
+        }
+        ul <- 2 - (cn + (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        uu <- 2 - (cn - (stats::qnorm((alpha/2)) * sqrt(1 - cn^2)))
+        est.mahmoud <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.mahmoud <- cv_corr/ul
+        upper.tile.mahmoud <- cv_corr/uu
+        cnt <- sqrt(1 - (1/(2 * length(x))))
+        ult <- cnt + (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cnt^2))
+        uut <- cnt - (stats::qnorm(1 - (alpha/2)) * sqrt(1 - cnt^2))
+        est.normaapprox <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.normaapprox <- cv_corr/ult
+        upper.tile.normaapprox <- cv_corr/uut
+        if (length(x) <= 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == length(x) - 1) %>%
+                dplyr::select(b)
+        } else if (length(x) > 300) {
+            a_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(a)
+            b_value <- shortest_length %>%
+                subset(al == alpha & v == 300) %>%
+                dplyr::select(b)
+        }
+        est.shortest <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.shortest <- (cv_corr*sqrt(length(x) - 1))/sqrt(b_value$b)
+        upper.tile.shortest <- (cv_corr*sqrt(length(x) - 1))/sqrt(a_value$a)
+        ttt1 <- stats::qchisq(1 - alpha/2,v)
+        ttt2 <- stats::qchisq(alpha/2,v)
+        est.equal <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.equal <- (cv_corr*sqrt(v))/(sqrt(ttt1))
+        upper.tile.equal <- (cv_corr*sqrt(v))/(sqrt(ttt2))
+        boot.normcv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "norm"
+        )
+        est.norm <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.norm <- boot.normcv_corr.ci$normal[2]
+        upper.tile.norm <- boot.normcv_corr.ci$normal[3]
+        boot.basiccv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.basic <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.basic <- boot.basiccv_corr.ci$basic[4]
+        upper.tile.basic <- boot.basiccv_corr.ci$basic[5]
+        boot.percentcv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.percent <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.percent <- boot.percentcv_corr.ci$percent[4]
+        upper.tile.percent <- boot.percentcv_corr.ci$percent[5]
+        boot.bcacv_corr.ci <- boot::boot.ci(
+            boot.cv_corr, conf = (1 - alpha), type = "basic"
+        )
+        est.bca <- cv_corr  # cv_corr is an estimate of CV
+        lower.tile.bca <- boot.bcacv_corr.ci$bca[4]
+        upper.tile.bca <- boot.bcacv_corr.ci$bca[5]
+    }
+# preparing the output based on the selected methods
+    if ("kelley" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Kelley 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.kelley * 100, digits = digits),
+                    lower = round(lower.tile.kelley * 100, digits = digits),
+                    upper = round(upper.tile.kelley * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("kelley" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Kelley 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.kelley * 100, digits = digits),
+                    lower = round(lower.tile.kelley * 100, digits = digits),
+                    upper = round(upper.tile.kelley * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("mckay" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with McKay 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.mckay * 100, digits = digits),
+                    lower = round(lower.tile.mckay * 100, digits = digits),
+                    upper = round(upper.tile.mckay * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("mckay" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with McKay 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.mckay * 100, digits = digits),
+                    lower = round(lower.tile.mckay * 100, digits = digits),
+                    upper = round(upper.tile.mckay * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("miller" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                   "cv with Miller 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.miller * 100, digits = digits),
+                    lower = round(lower.tile.miller * 100, digits = digits),
+                    upper = round(upper.tile.miller * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("miller" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Miller 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.miller * 100, digits = digits),
+                    lower = round(lower.tile.miller * 100, digits = digits),
+                    upper = round(upper.tile.miller * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("vangel" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Vangel 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.vangel * 100, digits = digits),
+                    lower = round(lower.tile.vangel * 100, digits = digits),
+                    upper = round(upper.tile.vangel * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("vangel" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Vangel 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.vangel * 100, digits = digits),
+                    lower = round(lower.tile.vangel * 100, digits = digits),
+                    upper = round(upper.tile.vangel * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("mahmoudvand_hassani" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Mahmoudvand-Hassani 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.mahmoud * 100, digits = digits),
+                    lower = round(lower.tile.mahmoud * 100, digits = digits),
+                    upper = round(upper.tile.mahmoud * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("mahmoudvand_hassani" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Mahmoudvand-Hassani 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.mahmoud * 100, digits = digits),
+                    lower = round(lower.tile.mahmoud * 100, digits = digits),
+                    upper = round(upper.tile.mahmoud * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("normal_approximation" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Normal Approximation 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.normaapprox * 100, digits = digits),
+                    lower = round(
+                        lower.tile.normaapprox * 100, digits = digits
+                    ),
+                    upper = round(
+                        upper.tile.normaapprox * 100, digits = digits
+                    ),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("normal_approximation" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Normal Approximation 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.normaapprox * 100, digits = digits),
+                    lower = round(
+                        lower.tile.normaapprox * 100, digits = digits
+                        ),
+                    upper = round(
+                        upper.tile.normaapprox * 100, digits = digits
+                    ),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("shortest_length" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Shortest-Length 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.shortest * 100, digits = digits),
+                    lower = round(lower.tile.shortest * 100, digits = digits),
+                    upper = round(upper.tile.shortest * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("shortest_length" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Shortest-Length 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.shortest * 100, digits = digits),
+                    lower = round(lower.tile.shortest * 100, digits = digits),
+                    upper = round(upper.tile.shortest * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("equal_tailed" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Equal-Tailed 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.equal * 100, digits = digits),
+                    lower = round(lower.tile.equal * 100, digits = digits),
+                    upper = round(upper.tile.equal * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("equal_tailed" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Equal-Tailed 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.equal * 100, digits = digits),
+                    lower = round(lower.tile.equal * 100, digits = digits),
+                    upper = round(upper.tile.equal * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("norm" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Normal Approximation Bootstrap 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.norm * 100, digits = digits),
+                    lower = round(lower.tile.norm * 100, digits = digits),
+                    upper = round(upper.tile.norm * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("norm" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Normal Approximation Bootstrap 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.norm * 100, digits = digits),
+                    lower = round(lower.tile.norm * 100, digits = digits),
+                    upper = round(upper.tile.norm * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("basic" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Basic Bootstrap 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.basic * 100, digits = digits),
+                    lower = round(lower.tile.basic * 100, digits = digits),
+                    upper = round(upper.tile.basic * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+            )
+    } else if ("basic" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Basic Bootstrap 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.basic * 100, digits = digits),
+                    lower = round(lower.tile.basic * 100, digits = digits),
+                    upper = round(upper.tile.basic * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("perc" %in% method && correction == FALSE) {
+        stop("percent method is not developed yet")
+        # return(
+        #     list(
+        #         method = (
+        #             "cv with Bootstrap Percentile 95% CI"
+        #         ),
+        #         statistics = data.frame(
+        #             est = round(est.percent * 100, digits = digits),
+        #             lower = round(lower.tile.percent * 100, digits = digits),
+        #             upper = round(upper.tile.percent * 100, digits = digits),
+        #             row.names = c(" ")
+        #         )
+        #     )
+        #     )
+    } else if ("perc" %in% method && correction == TRUE) {
+        stop("percent method is not developed yet")
+        # return(
+        #     list(
+        #         method = (
+        #             "Corrected cv with Bootstrap Percentile 95% CI"
+        #         ),
+        #         statistics = data.frame(
+        #             est = round(est.percent * 100, digits = digits),
+        #             lower = round(lower.tile.percent * 100, digits = digits),
+        #             upper = round(upper.tile.percent * 100, digits = digits),
+        #             row.names = c(" ")
+        #         )
+        #     )
+        # )
+    } else if ("bca" %in% method && correction == FALSE) {
+        stop("BCa method is not developed yet")
+        # return(
+        #     list(
+        #         method = (
+        #             "cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+        #         ),
+        #         statistics = data.frame(
+        #             est = round(est.bca * 100, digits = digits),
+        #             lower = round(lower.tile.bca * 100, digits = digits),
+        #             upper = round(upper.tile.bca * 100, digits = digits),
+        #             row.names = c(" ")
+        #         )
+        #     )
+        #     )
+    } else if ("bca" %in% method && correction == TRUE) {
+        stop("BCa method is not developed yet")
+        # return(
+        #     list(
+        #         method = (
+        #         "Corrected cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+        #         ),
+        #         statistics = data.frame(
+        #             est = round(est.bca * 100, digits = digits),
+        #             lower = round(lower.tile.bca * 100, digits = digits),
+        #             upper = round(upper.tile.bca * 100, digits = digits),
+        #             row.names = c(" ")
+        #         )
+        #     )
+        # )
+    } else if (method == "all" && correction == FALSE) {
+        return(
+            list(
+                method = "All methods",
+                statistics = data.frame(
+                    row.names = c(
+                        "kelley",  # 1
+                        "mckay",  # 2
+                        "miller",  # 3
+                        "vangel",  # 4
+                        "mahmoudvand_hassani",  # 5
+                        "equal_tailed",  # 6
+                        "shortest_length",  # 7
+                        "normal_approximation",  # 8
+                        "norm",  # 9
+                        "basic"  # 10
+                        # "perc"  # 11
+                        # "bca"  # 12
+                    ),
+                    est = c(
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        # round(cv * 100, digits = digits),
+                        # round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits)
+                        ),
+                    lower = c(
+                        round(lower.tile.kelley * 100, digits = digits),
+                        round(lower.tile.mckay * 100, digits = digits),
+                        round(lower.tile.miller * 100, digits = digits),
+                        round(lower.tile.vangel * 100, digits = digits),
+                        round(lower.tile.mahmoud * 100, digits = digits),
+                        round(lower.tile.equal * 100, digits = digits),
+                        round(lower.tile.shortest * 100, digits = digits),
+                        round(lower.tile.normaapprox * 100, digits = digits),
+                        round(lower.tile.norm * 100, digits = digits),
+                        round(lower.tile.basic * 100, digits = digits)
+                        # ,
+                        # round(lower.tile.percent * 100, digits = digits)
+                        # ,
+                        # round(lower.tile.bca * 100, digits = digits)
+                    ),
+                    upper = c(
+                        round(upper.tile.kelley * 100, digits = digits),
+                        round(upper.tile.mckay * 100, digits = digits),
+                        round(upper.tile.miller * 100, digits = digits),
+                        round(upper.tile.vangel * 100, digits = digits),
+                        round(upper.tile.mahmoud * 100, digits = digits),
+                        round(upper.tile.equal * 100, digits = digits),
+                        round(upper.tile.shortest * 100, digits = digits),
+                        round(upper.tile.normaapprox * 100, digits = digits),
+                        round(upper.tile.norm * 100, digits = digits),
+                        round(upper.tile.basic * 100, digits = digits)
+                        # ,
+                        # round(upper.tile.percent * 100, digits = digits)
+                        # ,
+                        # round(upper.tile.bca * 100, digits = digits)
+                    ),
+                    description = c(
+                        "cv with Kelley 95% CI",
+                        "cv with McKay 95% CI",
+                        "cv with Miller 95% CI",
+                        "cv with Vangel 95% CI",
+                        "cv with Mahmoudvand-Hassani 95% CI",
+                        "cv with Equal-Tailed 95% CI",
+                        "cv with Shortest-Length 95% CI",
+                        "cv with Normal Approximation 95% CI",
+                        "cv with Normal Approximation Bootstrap 95% CI",
+                        "cv with Basic Bootstrap 95% CI"
+                        # ,
+                        # "cv with Bootstrap Percentile 95% CI"
+                        # ,
+                        # "cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                    )
+                )
+            )
+        )
+    } else if (method == "all" && correction == TRUE) {
+        return(
+            list(
+                method = "All methods",
+                statistics = data.frame(
+                    row.names = c(
+                        "kelley",  # 1
+                        "mckay",  # 2
+                        "miller",  # 3
+                        "vangel",  # 4
+                        "mahmoudvand_hassani",  # 5
+                        "equal_tailed",  # 6
+                        "shortest_length",  # 7
+                        "normal_approximation",  # 8
+                        "norm",  # 9
+                        "basic"  # 10
+                        # "perc"  # 11
+                        # "bca"  # 12
+                    ),
+                    est = c(
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        # round(cv_corr * 100, digits = digits),
+                        # round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits)
+                    ),
+                    lower = c(
+                        round(lower.tile.kelley * 100, digits = digits),
+                        round(lower.tile.mckay * 100, digits = digits),
+                        round(lower.tile.miller * 100, digits = digits),
+                        round(lower.tile.vangel * 100, digits = digits),
+                        round(lower.tile.mahmoud * 100, digits = digits),
+                        round(lower.tile.equal * 100, digits = digits),
+                        round(lower.tile.shortest * 100, digits = digits),
+                        round(lower.tile.normaapprox * 100, digits = digits),
+                        round(lower.tile.norm * 100, digits = digits),
+                        round(lower.tile.basic * 100, digits = digits)
+                        # ,
+                        # round(lower.tile.percent * 100, digits = digits)
+                        # ,
+                        # round(lower.tile.bca * 100, digits = digits)
+                    ),
+                    upper = c(
+                        round(upper.tile.kelley * 100, digits = digits),
+                        round(upper.tile.mckay * 100, digits = digits),
+                        round(upper.tile.miller * 100, digits = digits),
+                        round(upper.tile.vangel * 100, digits = digits),
+                        round(upper.tile.mahmoud * 100, digits = digits),
+                        round(upper.tile.equal * 100, digits = digits),
+                        round(upper.tile.shortest * 100, digits = digits),
+                        round(upper.tile.normaapprox * 100, digits = digits),
+                        round(upper.tile.norm * 100, digits = digits),
+                        round(upper.tile.basic * 100, digits = digits)
+                        # ,
+                        # round(upper.tile.percent * 100, digits = digits)
+                        # ,
+                        # round(upper.tile.bca * 100, digits = digits)
+                    ),
+                    description = c(
+                "Corrected cv with Kelley 95% CI",
+                "Corrected cv with McKay 95% CI",
+                "Corrected cv with Miller 95% CI",
+                "Corrected cv with Vangel 95% CI",
+                "Corrected cv with Mahmoudvand-Hassani 95% CI",
+                "Corrected cv with Equal-Tailed 95% CI",
+                "Corrected cv with Shortest-Length 95% CI",
+                "Corrected cv with Normal Approximation 95% CI",
+                "Corrected cv with Normal Approximation Bootstrap 95% CI",
+                "Corrected cv with Basic Bootstrap 95% CI"
+                # ,
+                # "Corrected cv with Bootstrap Percentile 95% CI"
+                # ,
+                # "Corrected cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                    )
+                )
+            )
+        )
+    }
+}
