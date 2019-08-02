@@ -83,17 +83,6 @@ cv_y <- CoefVarCI$new(
 )
 cv_y$kelley_ci()
 cv_y$mckay_ci()
-cv_y$miller_ci()
-cv_y$vangel_ci()
-cv_y$mh_ci()
-cv_y$equal_ci()
-cv_y$shortest_ci()
-cv_y$normaapprox_ci()
-cv_y$norm_ci()
-cv_y$basic_ci()
-cv_y$perc_ci()
-cv_y$bca_ci()
-cv_y$all_ci()
 R6::is.R6(cv_y)
 }
 \references{
@@ -104,8 +93,7 @@ R6::is.R6(cv_y)
   \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
 
 \code{[2]} Kelley, K., 2018, MBESS: The MBESS R Package. R
-  package version 4.4. 3., Retrieved from
-  \href{http://cran.r-project.org/package=MBESS}{http://cran.r-project.org/package=MBESS}
+  package version 4.4. 3.
 
 \code{[3]} Kelley, K., 2007, Sample size planning for the
   coefficient of variation from the accuracy in parameter estimation

@@ -45,11 +45,6 @@
 #'     digits = 2
 #' )
 #' cqv_y$bonett_ci()
-#' cqv_y$norm_ci()
-#' cqv_y$basic_ci()
-#' cqv_y$perc_ci()
-#' cqv_y$bca_ci()
-#' cqv_y$all_ci()
 #' R6::is.R6(cqv_y)
 #' @references \code{[1]} Bonett, DG., 2006, Confidence interval for a
 #'   coefficient of quartile variation, Computational Statistics & Data

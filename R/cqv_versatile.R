@@ -40,11 +40,6 @@
 #' cqv_versatile(x)
 #' cqv_versatile(x, na.rm = TRUE, digits = 2)
 #' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "bonett")
-#' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "norm")
-#' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "basic")
-#' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "perc")
-#' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "bca")
-#' cqv_versatile(x, na.rm = TRUE, digits = 2, method = "all")
 #' @references \code{[1]} Bonett, DG., 2006, Confidence interval for a
 #'   coefficient of quartile variation, Computational Statistics & Data
 #'   Analysis, 50(11), 2953-7, DOI:

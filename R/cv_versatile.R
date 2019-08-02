@@ -57,9 +57,6 @@
 #' cv_versatile(x, correction = TRUE)
 #' cv_versatile(x, na.rm = TRUE, digits = 3, method = "kelley", correction = TRUE)
 #' cv_versatile(x, na.rm = TRUE, method = "mahmoudvand_hassani", correction = TRUE)
-#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "shortest_length", correction = TRUE)
-#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "norm", correction = TRUE)
-#' cv_versatile(x, na.rm = TRUE, digits = 3, method = "all", correction = TRUE)
 #' @references \code{[1]} Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib,
 #'   B, 2014, Confidence interval estimation for the population coefficient of
 #'   variation using ranked set sampling: A simulation study, Journal of Applied
@@ -67,8 +64,7 @@
 #'   \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
 #'
 #' @references \code{[2]} Kelley, K., 2018, MBESS: The MBESS R Package. R
-#'   package version 4.4. 3., Retrieved from
-#'   \href{http://cran.r-project.org/package=MBESS}{http://cran.r-project.org/package=MBESS}
+#'   package version 4.4. 3.
 #'
 #' @references \code{[3]} Kelley, K., 2007, Sample size planning for the
 #'   coefficient of variation from the accuracy in parameter estimation
