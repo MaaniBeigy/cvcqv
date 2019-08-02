@@ -1,7 +1,7 @@
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
-[![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![License](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![GitHub release](https://img.shields.io/github/release/MaaniBeigy/cvcqv)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.1.2-6666ff.svg)](https://cran.r-project.org/)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MaaniBeigy/cvcqv)](https://github.com/MaaniBeigy/cvcqv)
@@ -14,13 +14,26 @@
 
 `cvcqv` provides some easy-to-use functions and classes to calculate 
 Coefficient of  Variation (`cv`) and Coefficient of Quartile Variation (`cqv`)
-with confidence intervals provided with all available methds.   
+with confidence intervals provided with all available methods.
 
 # Overview   
 
 ### Background    
 
 There are abundant methods available for the calculation of **confidence intervals** of a dispersion measure like coefficient of variation (`cv`) or coefficient of quartile variation (`cqv`), which have not yet been implemented in R. Also, `cqv` is quite useful in conditions where the distribution of variables does not follow normal distribution.   
+
+#### Coefficient of Variation  
+
+`cv` is a measure of relative dispersion representing the degree of variability relative to the mean (Albatineh et al, 2014). Since cv is unitless, it is useful for comparison of variables with different units. It is also a measure of homogeneity (Albatineh et al, 2014).
+
+#### Coefficient of Quartile Variation
+
+`cqv` is a measure of relative dispersion  that is based on interquartile range (`IQR`). Since `cqv` is unitless, it is also useful for comparison of variables with different units. It is also a measure of homogeneity (Bonett, 2006; Altunkaynak, 2018).
+
+#### Confidence Interval
+
+Since the measurements of `cv` and `cqv` are obtained from samples, we 
+cannot easily generalize them and decide based upon them. Confidence Intervals (CI) help us to make a probabilistic interval around the estimation of calculated `cv` and `cqv`. For example, 95% CI indicates that it is 95% probable that the measurement for a population lies between the lower and upper bounds of that CI.
 
 ### Aims    
 
@@ -126,3 +139,11 @@ browseVignettes("cvcqv")
 ```
 
 Then, select `html` to show the vignette.
+
+## References
+
+Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib, B, 2014, Confidence interval estimation for the population coefficient of variation using ranked set sampling: A simulation study, Journal of Applied Statistics, 41(4), 733–751, DOI: [http://doi.org/10.1080/02664763.2013.847405](<http://doi.org/10.1080/02664763.2013.847405>)
+
+Bonett, DG., 2006, Confidence interval for a coefficient of quartile variation, Computational Statistics & Data Analysis, 50(11), 2953-7, DOI: [http://doi.org/10.1016/j.csda.2005.05.007](<http://doi.org/10.1016/j.csda.2005.05.007>)
+
+Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence intervals for the coefficient of quartile variation, Simulation and Computation, 1-9, DOI: [http://doi.org/10.1080/03610918.2018.1435800](<http://doi.org/10.1080/03610918.2018.1435800>)
