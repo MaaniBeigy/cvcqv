@@ -8,12 +8,10 @@
 #' @param digits integer indicating the number of decimal places to be used.
 #' @details \describe{
 #'         \item{\strong{Coefficient of Variation}}{
-#'         \deqn{ CV = \sigma/\mu} where \eqn{\sigma}
-#'         and \eqn{\mu} are standard deviation and mean, respectively.
 #'         The \emph{cv} is a measure of relative dispersion representing
-#'         the degree of variability relative to the mean [1]. Since \eqn{cv} is
-#'         unitless, it is useful for comparison of variables with different
-#'         units. It is also a measure of homogeneity [1].
+#'         the degree of variability relative to the mean \code{[1]}. 
+#'         Since \eqn{cv} is unitless, it is useful for comparison of variables 
+#'         with different units. It is also a measure of homogeneity \code{[1]}.
 #'         }
 #'         }
 #' @examples
@@ -26,7 +24,7 @@
 #' cv_x$est()
 #' cv_x$est_corr()
 #' R6::is.R6(cv_x)
-#' @references [1] Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib, B, 2014,
+#' @references \code{[1]} Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib, B, 2014,
 #'                 Confidence interval estimation for the population coefficient
 #'                 of variation using ranked set sampling: A simulation study,
 #'                 Journal of Applied Statistics, 41(4), 733–751, DOI:

@@ -15,7 +15,7 @@ stripped before the computation proceeds.}
 }
 \description{
 The R6 class \code{BootCoefQuartVar} produces the bootstrap
-             resamplimg for the coeficient of quartile variation (cqv) of the
+             resampling for the coefficient of quartile variation (cqv) of the
              given numeric vectors. It uses \link[boot]{boot} from the
              package \pkg{boot}. Also, it produces the bootstrap confidence
              intervals for the cqv based on the \link[boot]{boot.ci} from the

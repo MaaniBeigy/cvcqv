@@ -30,34 +30,32 @@ An object of type "list" which contains the estimate, the
        of 95\% confidence interval \code{(CI)}:
        \cr \cr
        \strong{est:}{
-       \deqn{((q3-q1)/(q3 + q1))*100}
+       \code{cqv*100}
        }
+       \cr \cr
        \strong{Bonett 95\% CI:}{
-       \deqn{  exp{ln(D/S)C +/- (z(1 - alpha/2) * sqrt(v))}, }
-       where \eqn{C = n/(n - 1)} is a centering adjustment which helps to
-       equalize the tail error probabilities. For this confidence interval,
-       \eqn{D = q3 - q1} and \eqn{S = q3 + q1}; \eqn{z(1 - alpha/2)} is the
-       \eqn{1 - alpha/2} quantile of the standard normal distribution [1, 2].
+       It uses a centering adjustment which helps to
+       equalize the tail error probabilities \code{[1, 2]}.
        }
        \cr \cr
        \strong{Normal approximation 95\% CI:}{
-       The intervals calculated by the normal approximation [3, 4],
+       The intervals calculated by the normal approximation \code{[3, 4]},
        using \link[boot]{boot.ci}.
        }
        \cr \cr
        \strong{Basic bootstrap 95\% CI:}{
-       The intervals calculated by the basic bootstrap method [3, 4],
+       The intervals calculated by the basic bootstrap method \code{[3, 4]},
        using \link[boot]{boot.ci}.
        }
        \cr \cr
        \strong{Bootstrap percentile 95\% CI:}{
-       The intervals calculated by the bootstrap percentile method [3, 4],
-       using \link[boot]{boot.ci}.
+       The intervals calculated by the bootstrap percentile 
+       method \code{[3, 4]}, using \link[boot]{boot.ci}.
        }
        \cr \cr
        \strong{Adjusted bootstrap percentile (BCa) 95\% CI:}{
        The intervals calculated by the adjusted bootstrap percentile
-       (BCa) method [3, 4], using \link[boot]{boot.ci}.
+       (BCa) method \code{[3, 4]}, using \link[boot]{boot.ci}.
        }
        }
        }
@@ -68,13 +66,10 @@ Versatile function for the coefficient of quartile variation (cqv)
 \details{
 \describe{
         \item{\strong{Coefficient of Quartile Variation}}{
-        \deqn{ cqv = ((q3-q1)/(q3 + q1))*100 , } where \eqn{q3}
-        and \eqn{q1} are third quartile (\emph{i.e.,} 75th percentile) and
-        first quartile (\emph{i.e.,} 25th percentile), respectively.
         The \emph{cqv} is a measure of relative dispersion that is based on
         interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it
         is useful for comparison of variables with different units. It is
-        also a measure of homogeneity [1, 2].
+        also a measure of homogeneity \code{[1, 2]}.
         }
         }
 }
@@ -93,18 +88,18 @@ cqv_versatile(x, na.rm = TRUE, digits = 2, method = "bca")
 cqv_versatile(x, na.rm = TRUE, digits = 2, method = "all")
 }
 \references{
-[1] Bonett, DG., 2006, Confidence interval for a coefficient of
+\code{[1]} Bonett, DG., 2006, Confidence interval for a coefficient of
                 quartile variation, Computational Statistics & Data Analysis,
                 50(11), 2953-7, DOI: \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
 
-[2] Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence
+\code{[2]} Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence
                 intervals for the coefficient of quartile variation,
                 Simulation and Computation, 1-9, DOI: \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
 
-[3] Canty, A., & Ripley, B, 2017, boot: Bootstrap R (S-Plus)
+\code{[3]} Canty, A., & Ripley, B, 2017, boot: Bootstrap R (S-Plus)
                 Functions. R package version 1.3-20.
 
-[4] Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and
+\code{[4]} Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and
                 Their Applications. Cambridge University Press, Cambridge.
                 ISBN 0-521-57391-2
 }

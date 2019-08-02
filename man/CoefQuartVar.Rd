@@ -18,13 +18,10 @@ The R6 class \code{CoefQuartVar} for the coefficient of
 \details{
 \describe{
         \item{\strong{Coefficient of Quartile Variation}}{
-        \deqn{ cqv = ((q3-q1)/(q3 + q1))*100 , }  where \eqn{q3}
-        and \eqn{q1} are third quartile (\emph{i.e.,} 75th percentile) and
-        first quartile (\emph{i.e.,} 25th percentile), respectively.
-        The \emph{cqv} is a measure of relative dispersion that is based on
+        \emph{cqv} is a measure of relative dispersion that is based on
         interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it
         is useful for comparison of variables with different units. It is
-        also a measure of homogeneity [1, 2].
+        also a measure of homogeneity \code{[1]}.
         }
         }
 }
@@ -39,7 +36,7 @@ cqv_x$est()
 R6::is.R6(cqv_x)
 }
 \references{
-[1] Bonett, DG., 2006, Confidence interval for a coefficient of
+\code{[1]} Bonett, DG., 2006, Confidence interval for a coefficient of
                 quartile variation, Computational Statistics & Data Analysis,
                 50(11), 2953-7, DOI: \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
 }

@@ -1,5 +1,5 @@
 ---
-title: "Coeficient of Quartile Variation: cqv_versatile"
+title: "Coefficient of Quartile Variation: cqv_versatile"
 author: "Maani Beigy"
 date: "February 25, 2019"
 output: rmarkdown::html_vignette

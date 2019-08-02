@@ -51,8 +51,8 @@ less than the lower confidence bound and $\alpha_U$ the proportion of times that
 upper confidence tile for $\lambda$ is is the noncentrality parameter that 
 results in $t_{(\alpha_U,v,\lambda_U)}=\hat{\lambda}$, where $t_{(1-\alpha_L,v,\lambda_L)}=\hat{\lambda}$ is the value of noncentral *t* distribution at the $1-\alpha_L$ **quantile** with noncentrality parameter $\lambda_L$ and $t_{(\alpha_U,v,\lambda_U)}=\hat{\lambda}$ is the value of noncentral *t* distribution at the $\alpha_U$ **quantile** with noncentrality parameter $\lambda_U$, respectively [@Kelley2007].   
 Afterwards, we transform the tiles of the confidence interval for $\lambda$, by
-dividing the tiles by $\sqrt{n}$ and therafter inversing them; the CI limits of 
-$cv$ will be obtaned:  
+dividing the tiles by $\sqrt{n}$ and thereafter inverting them; the CI limits of 
+$cv$ will be obtained:  
 $$
 p\left[\biggl(\frac{\lambda_U}{\sqrt{n}}\biggr)^{-1}
 \le CV \le \biggl(\frac{\lambda_L}{\sqrt{n}}\biggr)^{-1}\right] = 1-\alpha

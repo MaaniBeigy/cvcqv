@@ -1,7 +1,7 @@
 #' @title R6 Bootstrap Resampling for Coefficient of Variation
 #' @name BootCoefVar
 #' @description The R6 class \code{BootCoefVar} produces the bootstrap
-#'              resamplimg for the coeficient of variation (cv) of the
+#'              resampling for the coefficient of variation (cv) of the
 #'              given numeric vectors. It uses \link[boot]{boot} and
 #'              \link[boot]{boot.ci} from the package \pkg{boot}.
 #' @param x An \code{R} object. Currently there are methods for numeric vectors
