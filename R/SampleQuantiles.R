@@ -1,17 +1,17 @@
 #' @title R6 Sample Quantiles
 #' @name SampleQuantiles
 #' @description The R6 class \code{SampleQuantiles} produces the sample
-#'              quantiles corresponding to the given probabilities. It uses
-#'              \link[stats]{quantile} from the package \pkg{stats}.
+#'   quantiles corresponding to the given probabilities. It uses
+#'   \link[stats]{quantile} from the package \pkg{stats}.
 #' @param x An \code{R} object. Currently there are methods for numeric vectors
 #' @param na.rm a logical value indicating whether \code{NA} values should be
-#'              stripped before the computation proceeds.
+#'   stripped before the computation proceeds.
 #' @param digits integer indicating the number of decimal places to be used.
 #' @param probs numeric vector of probabilities with values in \code{[0,1]}.
 #' @param names logical; if TRUE, the result has a \link[base]{names} attribute
-#'              regarding the percentiles.
+#'   regarding the percentiles.
 #' @param type an integer between 1 and 9 selecting one of the nine quantile
-#'             algorithms explained in \link[stats]{quantile} to be used.
+#'   algorithms explained in \link[stats]{quantile} to be used.
 #' @examples
 #' x <- c(
 #'    0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,

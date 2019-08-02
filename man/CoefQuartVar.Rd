@@ -12,18 +12,15 @@ stripped before the computation proceeds.}
 \item{digits}{integer indicating the number of decimal places to be used.}
 }
 \description{
-The R6 class \code{CoefQuartVar} for the coefficient of
-             quartile variation (cqv)
+The R6 class \code{CoefQuartVar} for the coefficient of quartile
+  variation (cqv)
 }
 \details{
-\describe{
-        \item{\strong{Coefficient of Quartile Variation}}{
-        \emph{cqv} is a measure of relative dispersion that is based on
-        interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it
-        is useful for comparison of variables with different units. It is
-        also a measure of homogeneity \code{[1]}.
-        }
-        }
+\describe{ \item{\strong{Coefficient of Quartile Variation}}{
+  \emph{cqv} is a measure of relative dispersion that is based on
+  interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it is useful
+  for comparison of variables with different units. It is also a measure of
+  homogeneity \code{[1]}. } }
 }
 \examples{
 x <- c(
@@ -36,7 +33,8 @@ cqv_x$est()
 R6::is.R6(cqv_x)
 }
 \references{
-\code{[1]} Bonett, DG., 2006, Confidence interval for a coefficient of
-                quartile variation, Computational Statistics & Data Analysis,
-                50(11), 2953-7, DOI: \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
+\code{[1]} Bonett, DG., 2006, Confidence interval for a
+  coefficient of quartile variation, Computational Statistics & Data
+  Analysis, 50(11), 2953-7, DOI:
+  \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
 }

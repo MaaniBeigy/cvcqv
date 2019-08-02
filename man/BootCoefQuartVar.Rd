@@ -15,11 +15,10 @@ stripped before the computation proceeds.}
 }
 \description{
 The R6 class \code{BootCoefQuartVar} produces the bootstrap
-             resampling for the coefficient of quartile variation (cqv) of the
-             given numeric vectors. It uses \link[boot]{boot} from the
-             package \pkg{boot}. Also, it produces the bootstrap confidence
-             intervals for the cqv based on the \link[boot]{boot.ci} from the
-             package \pkg{boot}.
+  resampling for the coefficient of quartile variation (cqv) of the given
+  numeric vectors. It uses \link[boot]{boot} from the package \pkg{boot}.
+  Also, it produces the bootstrap confidence intervals for the cqv based on
+  the \link[boot]{boot.ci} from the package \pkg{boot}.
 }
 \examples{
 x <- c(
@@ -36,13 +35,13 @@ R6::is.R6(cqv_x)
 }
 \references{
 Canty, A., & Ripley, B, 2017, boot: Bootstrap R (S-Plus)
-            Functions. R package version 1.3-20.
+  Functions. R package version 1.3-20.
 
-Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and
-            Their Applications. Cambridge University Press, Cambridge.
-            ISBN 0-521-57391-2
+Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and Their
+  Applications. Cambridge University Press, Cambridge. ISBN 0-521-57391-2
 
-Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence
-            intervals for the coefficient of quartile variation,
-            Simulation and Computation, 1-9, DOI: \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
+Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence intervals
+  for the coefficient of quartile variation, Simulation and Computation, 1-9,
+  DOI:
+  \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
 }

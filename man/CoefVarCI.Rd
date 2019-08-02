@@ -12,10 +12,10 @@ stripped before the computation proceeds.}
 \item{digits}{integer indicating the number of decimal places to be used.}
 
 \item{method}{a scalar representing the type of confidence intervals
-required. The value should be any of the values "kelley_ci",
-"mckay_ci", "miller_ci", "vangel_ci", "mahmoudvand_hassani_ci",
-"equal_tailed_ci", "shortest_length_ci",
-"normal_approximation_ci", "norm_ci","basic_ci", or "all_ci".}
+required. The value should be any of the values "kelley_ci", "mckay_ci",
+"miller_ci", "vangel_ci", "mahmoudvand_hassani_ci", "equal_tailed_ci",
+"shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci", or
+"all_ci".}
 
 \item{alpha}{The allowed type I error probability}
 
@@ -25,84 +25,48 @@ required. The value should be any of the values "kelley_ci",
 variation if TRUE is determined.}
 }
 \value{
-An object of type "list" which contains the estimate, the
-        intervals, and the computation method. It has two main components:
+An object of type "list" which contains the estimate, the intervals,
+  and the computation method. It has two main components:
 
-\describe{
-       \item{$method}{
-       A description of statistical method used for the computations.
-       }
-       \item{$statistics}{
-       A data frame representing three vectors: est, lower and upper limits
-       of confidence interval \code{(CI)}; additional description vector is 
-       provided when "all" is selected:
-       \cr \cr
-       \strong{est:}{
-       \code{cv*100}
-       }
-       \cr \cr
-       \strong{Kelley Confidence Interval:}{
-       Thanks to package \link[MBESS]{MBESS} \code{[2]} for the
-       computation of confidence limits for the noncentrality parameter from
-       a \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}.
-       }
-       \cr \cr
-       \strong{McKay Confidence Interval:}{
-       The intervals calculated by the method introduced by McKay \code{[4]},
-       using chi-square distribution.
-       }
-       \cr \cr
-       \strong{Miller Confidence Interval:}{
-       The intervals calculated by the method introduced by Miller 
-       \code{[5]}, using the standard normal distribution.
-       }
-       \cr \cr
-       \strong{Vangel Confidence Interval:}{
-       Vangel \code{[6]} proposed a method for the calculation of CI for 
-       \emph{cv}; which is a modification on McKay’s CI.
-       }
-       \cr \cr
-       \strong{Mahmoudvand-Hassani Confidence Interval:}{
-       Mahmoudvand and Hassani \code{[7]} proposed a new CI for \emph{cv}; 
-       which is obtained using ranked set sampling \emph{(RSS)}
-       }
-       \cr \cr
-       \strong{Normal Approximation Confidence Interval:}{
-       Wararit Panichkitkosolkul \code{[8]} proposed another CI for 
-       \emph{cv}; which is a normal approximation.
-       }
-       \cr \cr
-       \strong{Shortest-Length Confidence Interval:}{
-       Wararit Panichkitkosolkul \code{[8]} proposed another CI for 
-       \emph{cv}; which is obtained through minimizing the length of CI.
-       }
-       \cr \cr
-       \strong{Equal-Tailed Confidence Interval:}{
-       Wararit Panichkitkosolkul \code{[8]} proposed another CI for 
-       \emph{cv}; which is obtained using chi-square distribution.
-       }
-       \cr \cr
-       \strong{Bootstrap Confidence Intervals:}{
-       Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we can 
-       obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.
-       }
-       \cr \cr
-       }
-       }
+\describe{ \item{$method}{ A description of statistical method used
+  for the computations. } \item{$statistics}{ A data frame representing three
+  vectors: est/, lower and upper limits of confidence interval \code{(CI)};
+  additional description vector is provided when "all" is selected: \cr \cr
+  \strong{est:}{ \code{cv*100} } \cr \cr \strong{Kelley Confidence
+  Interval:}{ Thanks to package \link[MBESS]{MBESS} \code{[2]} for the
+  computation of confidence limits for the noncentrality parameter from a
+  \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}. } \cr \cr
+  \strong{McKay Confidence Interval:}{ The intervals calculated by the method
+  introduced by McKay \code{[4]}, using chi-square distribution. } \cr \cr
+  \strong{Miller Confidence Interval:}{ The intervals calculated by the
+  method introduced by Miller \code{[5]}, using the standard normal
+  distribution. } \cr \cr \strong{Vangel Confidence Interval:}{ Vangel
+  \code{[6]} proposed a method for the calculation of CI for \emph{cv}; which
+  is a modification on McKay’s CI. } \cr \cr \strong{Mahmoudvand-Hassani
+  Confidence Interval:}{ Mahmoudvand and Hassani \code{[7]} proposed a new CI
+  for \emph{cv}; which is obtained using ranked set sampling \emph{(RSS)} }
+  \cr \cr \strong{Normal Approximation Confidence Interval:}{ Wararit
+  Panichkitkosolkul \code{[8]} proposed another CI for \emph{cv}; which is a
+  normal approximation. } \cr \cr \strong{Shortest-Length Confidence
+  Interval:}{ Wararit Panichkitkosolkul \code{[8]} proposed another CI for
+  \emph{cv}; which is obtained through minimizing the length of CI. } \cr \cr
+  \strong{Equal-Tailed Confidence Interval:}{ Wararit Panichkitkosolkul
+  \code{[8]} proposed another CI for \emph{cv}; which is obtained using
+  chi-square distribution. } \cr \cr \strong{Bootstrap Confidence
+  Intervals:}{ Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
+  can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}. } \cr
+  \cr } }
 }
 \description{
 The R6 class \code{CoefVarCI} for the confidence intervals of
-             coefficient of variation (cv)
+  coefficient of variation (cv)
 }
 \details{
-\describe{
-        \item{\strong{Coefficient of Variation}}{
-        The \emph{cv} is a measure of relative dispersion representing
-        the degree of variability relative to the mean \code{[1]}. 
-        Since \eqn{cv} is unitless, it is useful for comparison of variables 
-        with different units. It is also a measure of homogeneity \code{[1]}.
-        }
-        }
+\describe{ \item{\strong{Coefficient of Variation}}{ The \emph{cv}
+  is a measure of relative dispersion representing the degree of variability
+  relative to the mean \code{[1]}. Since \eqn{cv} is unitless, it is useful
+  for comparison of variables with different units. It is also a measure of
+  homogeneity \code{[1]}. } }
 }
 \examples{
 y <- c(
@@ -133,41 +97,41 @@ cv_y$all_ci()
 R6::is.R6(cv_y)
 }
 \references{
-\code{[1]} Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib, B, 2014,
-                Confidence interval estimation for the population coefficient
-                of variation using ranked set sampling: A simulation study,
-                Journal of Applied Statistics, 41(4), 733–751, DOI:
-                \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
+\code{[1]} Albatineh, AN., Kibria, BM., Wilcox, ML., & Zogheib,
+  B, 2014, Confidence interval estimation for the population coefficient of
+  variation using ranked set sampling: A simulation study, Journal of Applied
+  Statistics, 41(4), 733–751, DOI:
+  \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
 
-\code{[2]} Kelley, K., 2018, MBESS: The MBESS R Package. R package
-                version 4.4. 3., Retrieved from \href{http://cran.r-project.org/package=MBESS}{http://cran.r-project.org/package=MBESS}
+\code{[2]} Kelley, K., 2018, MBESS: The MBESS R Package. R
+  package version 4.4. 3., Retrieved from
+  \href{http://cran.r-project.org/package=MBESS}{http://cran.r-project.org/package=MBESS}
 
-\code{[3]} Kelley, K., 2007, Sample size planning for the coefficient of
-                variation from the accuracy in parameter estimation approach,
-                Behavior Research Methods, 39(4), 755–766, DOI:
-                \href{http://doi.org/10.3758/BF03192966}{http://doi.org/10.3758/BF03192966}
+\code{[3]} Kelley, K., 2007, Sample size planning for the
+  coefficient of variation from the accuracy in parameter estimation
+  approach, Behavior Research Methods, 39(4), 755–766, DOI:
+  \href{http://doi.org/10.3758/BF03192966}{http://doi.org/10.3758/BF03192966}
 
 \code{[4]} McKay, AT., 1932, Distribution of the Coefficient of
-                Variation and the Extended“ t” Distribution, Journal of the
-                Royal Statistical Society, 95(4), 695–698
+  Variation and the Extended“ t” Distribution, Journal of the Royal
+  Statistical Society, 95(4), 695–698
 
-\code{[5]} Miller, E., 1991, Asymptotic test statistics for coefficients
-                of variation, Communications in Statistics-Theory and
-                Methods, 20(10), 3351–3363
+\code{[5]} Miller, E., 1991, Asymptotic test statistics for
+  coefficients of variation, Communications in Statistics-Theory and Methods,
+  20(10), 3351–3363
 
 \code{[6]} Vangel, MG., 1996, Confidence intervals for a normal
-                coefficient of variation, The American Statistician, 50(1),
-                21–26
+  coefficient of variation, The American Statistician, 50(1), 21–26
 
-\code{[7]} Mahmoudvand, R., & Hassani, H., 2009, Two new confidence
-                intervals for the coefficient of variation in a normal
-                distribution, Journal of Applied Statistics, 36(4), 429–442
+\code{[7]} Mahmoudvand, R., & Hassani, H., 2009, Two new
+  confidence intervals for the coefficient of variation in a normal
+  distribution, Journal of Applied Statistics, 36(4), 429–442
 
-\code{[8]} Panichkitkosolkul, W., 2013, Confidence Intervals for the
-                Coefficient of Variation in a Normal Distribution with a
-                Known Population Mean, Journal of Probability and Statistics,
-                2013, 1–11, \href{http://doi.org/10.1155/2013/324940}{http://doi.org/10.1155/2013/324940}
+\code{[8]} Panichkitkosolkul, W., 2013, Confidence Intervals for
+  the Coefficient of Variation in a Normal Distribution with a Known
+  Population Mean, Journal of Probability and Statistics, 2013, 1–11,
+  \href{http://doi.org/10.1155/2013/324940}{http://doi.org/10.1155/2013/324940}
 
-\code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R (S-Plus)
-                Functions, R package version 1.3-20
+\code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
+  (S-Plus) Functions, R package version 1.3-20
 }

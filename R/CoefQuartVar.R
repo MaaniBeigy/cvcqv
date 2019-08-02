@@ -1,19 +1,16 @@
 #' @title R6 Coefficient of Quartile Variation (cqv)
 #' @name CoefQuartVar
-#' @description The R6 class \code{CoefQuartVar} for the coefficient of
-#'              quartile variation (cqv)
+#' @description The R6 class \code{CoefQuartVar} for the coefficient of quartile
+#'   variation (cqv)
 #' @param x An \code{R} object. Currently there are methods for numeric vectors
 #' @param na.rm a logical value indicating whether \code{NA} values should be
-#'              stripped before the computation proceeds.
+#'   stripped before the computation proceeds.
 #' @param digits integer indicating the number of decimal places to be used.
-#' @details \describe{
-#'         \item{\strong{Coefficient of Quartile Variation}}{
-#'         \emph{cqv} is a measure of relative dispersion that is based on
-#'         interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it
-#'         is useful for comparison of variables with different units. It is
-#'         also a measure of homogeneity \code{[1]}.
-#'         }
-#'         }
+#' @details \describe{ \item{\strong{Coefficient of Quartile Variation}}{
+#'   \emph{cqv} is a measure of relative dispersion that is based on
+#'   interquartile range \emph{(iqr)}. Since \eqn{cqv} is unitless, it is useful
+#'   for comparison of variables with different units. It is also a measure of
+#'   homogeneity \code{[1]}. } }
 #' @examples
 #' x <- c(
 #'    0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
@@ -23,9 +20,11 @@
 #' cqv_x <- CoefQuartVar$new(x, digits = 2)
 #' cqv_x$est()
 #' R6::is.R6(cqv_x)
-#' @references \code{[1]} Bonett, DG., 2006, Confidence interval for a coefficient of
-#'                 quartile variation, Computational Statistics & Data Analysis,
-#'                 50(11), 2953-7, DOI: \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
+#' @references \code{[1]} Bonett, DG., 2006, Confidence interval for a
+#'   coefficient of quartile variation, Computational Statistics & Data
+#'   Analysis, 50(11), 2953-7, DOI:
+#'   \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
+#'
 #' @export
 #' @import dplyr SciViews boot R6 utils
 NULL

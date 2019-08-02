@@ -21,8 +21,8 @@ algorithms explained in \link[stats]{quantile} to be used.}
 }
 \description{
 The R6 class \code{SampleQuantiles} produces the sample
-             quantiles corresponding to the given probabilities. It uses
-             \link[stats]{quantile} from the package \pkg{stats}.
+  quantiles corresponding to the given probabilities. It uses
+  \link[stats]{quantile} from the package \pkg{stats}.
 }
 \examples{
 x <- c(

@@ -15,9 +15,9 @@ stripped before the computation proceeds.}
 }
 \description{
 The R6 class \code{BootCoefVar} produces the bootstrap
-             resampling for the coefficient of variation (cv) of the
-             given numeric vectors. It uses \link[boot]{boot} and
-             \link[boot]{boot.ci} from the package \pkg{boot}.
+  resampling for the coefficient of variation (cv) of the given numeric
+  vectors. It uses \link[boot]{boot} and \link[boot]{boot.ci} from the
+  package \pkg{boot}.
 }
 \examples{
 x <- c(
@@ -39,9 +39,8 @@ R6::is.R6(cv_x)
 }
 \references{
 Canty, A., & Ripley, B, 2017, boot: Bootstrap R (S-Plus)
-            Functions. R package version 1.3-20.
+  Functions. R package version 1.3-20.
 
-Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and
-            Their Applications. Cambridge University Press, Cambridge.
-            ISBN 0-521-57391-2
+Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and Their
+  Applications. Cambridge University Press, Cambridge. ISBN 0-521-57391-2
 }
