@@ -1,14 +1,14 @@
 Package: cvcqv
 Type: Package
-Title: Coefficient of Variation (CV) and Coefficient of Quartile Variation (CQV) with Confidence Intervals (CI)
+Title: Coefficient of Variation (CV) with Confidence Intervals (CI)
 Version: 1.0.0
 Date: 2019-08-01
 Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Maani Beigy <manibeygi@gmail.com>
 Description: Provides some easy-to-use functions and classes to calculate 
-    Coefficient of  Variation (CV) and Coefficient of Quartile Variation (CQV)
-    with confidence intervals provided with all available methods. 
+    variability measures with confidence intervals provided with all available 
+    methods. 
 Depends: 
     R (>= 3.1.2),
     dplyr (>= 0.8.0.1)
