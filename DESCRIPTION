@@ -8,7 +8,7 @@ Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
 Maintainer: Maani Beigy <manibeygi@gmail.com>
 Description: Provides some easy-to-use functions and classes to calculate 
     Coefficient of  Variation (CV) and Coefficient of Quartile Variation (CQV)
-    with confidence intervals provided with all available methds. 
+    with confidence intervals provided with all available methods. 
 Depends: 
     R (>= 3.1.2),
     dplyr (>= 0.8.0.1)
