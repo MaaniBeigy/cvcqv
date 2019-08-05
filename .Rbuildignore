@@ -17,3 +17,5 @@
 ^sticker\.svg$
 ^cvcqv_1\.0\.0_R_x86_64-pc-linux-gnu\.tar\.gz$
 ^CRAN-RELEASE$
+^LICENSE$
+^LICENSE\.md$
