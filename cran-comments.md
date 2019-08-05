@@ -11,13 +11,8 @@ Although the previous builds with `AppVeyor` CI were successful, now they have e
 
 ## Resubmission
 
-In the previous submission to CRAN, there were notes about license, which is corrected, and examples with elapsed time > 10 s that are now removed. A cran maintainer requested references for the methods to be put in the description field of DESCRIPTION file. However, because of the spell_check() issues with the author names, it does not seem correct to put references in DESCRIPTION. The references are written in documentation files, vignettes, and README.md. I put some of the most important ones here:
-
-Panichkitkosolkul, W. (2013). Confidence Intervals for the Coefficient of Variation in a Normal Distribution with a Known Population Mean. Journal of Probability and Statistics, 2013, 1–11. [Link](https://doi.org/10.1155/2013/324940)
-
-Altunkaynak, B., & Gamgam, H. (2018). Bootstrap confidence intervals for the coefficient of quartile variation. Communications in Statistics: Simulation and Computation, 0(0), 1–9. [Link](https://doi.org/10.1080/03610918.2018.1435800)
-
-Albatineh, A. N., Kibria, B. M., Wilcox, M. L., & Zogheib, B. (2014). Confidence interval estimation for the population coefficient of variation using ranked set sampling: A simulation study. Journal of Applied Statistics, 41(4), 733–751. [Link](https://doi.org/10.1080/02664763.2013.847405)
+In the previous submission to CRAN, CRAN maintainers requested references for the methods to be put in the description field of DESCRIPTION file. Although the spell_check() has issues with the author names to put references in DESCRIPTION, I put some of the most important ones there. The full list of references is available in the documentation files, vignettes, and README.md. 
+Also, a CRAN maintainer requested small executable examples in my Rd files. All of the Rd files have examples.
 
 
 ## R CMD check results

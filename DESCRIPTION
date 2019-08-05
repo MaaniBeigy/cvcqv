@@ -8,7 +8,10 @@ Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
 Maintainer: Maani Beigy <manibeygi@gmail.com>
 Description: Provides some easy-to-use functions and classes to calculate 
     variability measures such as coefficient of variation with confidence 
-    intervals provided with all available methods.
+    intervals provided with all available methods. References are 
+    Panichkitkosolkul (2013) <doi:10.1155/2013/324940> ,
+    Altunkaynak & Gamgam (2018) <doi:10.1080/03610918.2018.1435800> ,
+    Albatineh, Kibria, Wilcox & Zogheib (2014) <doi:10.1080/02664763.2013.847405> .
 Depends: 
     R (>= 3.1.2),
     dplyr (>= 0.8.0.1)
