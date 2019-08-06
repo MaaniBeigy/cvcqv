@@ -1,3 +1,4 @@
+[![CRAN status](https://www.r-pkg.org/badges/version/cvcqv)](https://cran.r-project.org/package=cvcqv)
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
@@ -50,8 +51,13 @@ If you are an ubuntu user, you are going to need these non-R packages:
 ```linux
 sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libgsl-dev   
 ```   
+The `cvcqv` package is available on CRAN. To install:
 
-The `cvcqv` is available on github. To install it in `R`, use:    
+```r
+install.packages("cvcqv")
+```
+
+The `cvcqv` package is also available on github. To install it in `R`, use:    
 
 ```r
 devtools::install_github('MaaniBeigy/cvcqv')  

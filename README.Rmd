@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 # cvcqv <img src="./man/figures/sticker.svg" align="right" width="120" />
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/cvcqv)](https://cran.r-project.org/package=cvcqv)
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)](https://codecov.io/gh/MaaniBeigy/cvcqv)
@@ -58,12 +59,18 @@ If you are an ubuntu user, you are going to need these non-R packages:
 ```linux
 sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libgsl-dev   
 ```   
+The `cvcqv` package is available on CRAN. To install:
 
-You can install the released version of cvcqv from github with:
+```{r, eval = FALSE}
+install.packages("cvcqv")
+```
+
+The `cvcqv` package is also available on github. To install it in `R`, use:    
 
 ```{r, eval = FALSE}
 devtools::install_github('MaaniBeigy/cvcqv')  
 ```
+
 
 \* Currently, these tools are available:     
 
