@@ -1,4 +1,4 @@
-[![CRAN/METACRAN](https://img.shields.io/cran/v/cvcqv?color=brightgreen)](https://cran.r-project.org/package=cvcqv)
+[![CRAN status](https://www.r-pkg.org/badges/version/cvcqv)](https://cran.r-project.org/package=cvcqv)
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
@@ -9,7 +9,8 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GitHub last commit](https://img.shields.io/github/last-commit/MaaniBeigy/cvcqv)](https://github.com/MaaniBeigy/cvcqv/commits/master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MaaniBeigy/cvcqv/issues)
-[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)     
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/cvcqv)](https://cran.r-project.org/package=cvcqv)
 
 # cvcqv <img src="./man/figures/sticker.svg" align="right" width="120" />
 
