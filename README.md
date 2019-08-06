@@ -1,4 +1,4 @@
-[![CRAN status](https://www.r-pkg.org/badges/version/cvcqv)](https://cran.r-project.org/package=cvcqv)
+[![CRAN/METACRAN](https://img.shields.io/cran/v/cvcqv?color=brightgreen)](https://cran.r-project.org/package=cvcqv)
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![codecov](https://codecov.io/gh/MaaniBeigy/cvcqv/branch/master/graph/badge.svg)](https://codecov.io/gh/MaaniBeigy/cvcqv)
