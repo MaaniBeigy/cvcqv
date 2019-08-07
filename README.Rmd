@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/MaaniBeigy/cvcqv.svg?branch=master)](https://travis-ci.org/MaaniBeigy/cvcqv)
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/41rjx4g395bfdpq4?svg=true)](https://ci.appveyor.com/project/MaaniBeigy/cvcqv)
 [![Coverage](https://img.shields.io/badge/coverage-99%25-brightgreen)](https://codecov.io/gh/MaaniBeigy/cvcqv)
+[![Rdoc](http://www.rdocumentation.org/badges/version/cvcqv)](http://www.rdocumentation.org/packages/cvcqv)
 [![License](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![GitHub release](https://img.shields.io/github/release/MaaniBeigy/cvcqv)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.1.2-6666ff.svg)](https://cran.r-project.org/)
