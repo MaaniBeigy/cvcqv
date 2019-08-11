@@ -19,3 +19,5 @@
 ^CRAN-RELEASE$
 ^LICENSE$
 ^LICENSE\.md$
+^\.circleci$
+^config\.yml$
