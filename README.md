@@ -12,6 +12,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MaaniBeigy/cvcqv/issues)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/cvcqv)](https://cran.r-project.org/package=cvcqv)
+[![status](https://tinyverse.netlify.com/badge/cvcqv)](https://CRAN.R-project.org/package=cvcqv)
 
 # cvcqv <img src="./man/figures/sticker.svg" align="right" width="120" />
 
