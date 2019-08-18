@@ -21,3 +21,4 @@
 ^LICENSE\.md$
 ^\.circleci$
 ^config\.yml$
+^docs/articles$

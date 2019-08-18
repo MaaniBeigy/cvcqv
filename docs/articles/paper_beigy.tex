@@ -1,0 +1,121 @@
+% !TeX root = RJwrapper.tex
+\title{\pkg{cvcqv}: A Package for Estimation of Relative Variability}
+\author{by Maani Beigy}
+
+\maketitle
+
+\abstract{%
+Coefficient of variation (\emph{cv}) and coefficient of quartile variation (\emph{cqv}) are widely used measures of relative dispersion which play descriptive and inferential roles (\emph{e.g.,} reliability analysis, quality control, inequality measurement, and anomaly detection) in various fields such as biological and medical sciences, economics, actuarial sciences, etc. Since \emph{cv} and \emph{cqv} are unit-free, they are useful for comparing data from different distributions, data from different scales, or widely different means. However, to avoid their common misuses, confidence intervals (\emph{CI}) are required. The \textbf{cvcqv} package provides a home for such tools. To our knowledge, the new \code{R} package \textbf{cvcqv} is the first \code{R} implementation of \textbf{cqv} as a robust variability measure, with almost all available methods for \emph{CI} of \emph{cv} and \emph{cqv}. This paper elucidates this versatile functionality using reproducible examples on real datasets. Also, the new insights that \textbf{cvcqv}, alongside other \code{R} packages, brings into data science will be discussed. 
+}
+
+\section{Introduction}
+
+Researchers and practitioners in various fields use the coefficient of variation  (\emph{cv}) as a measure of relative variability \citep{Panichkitkosolkul_2013, Payton_1996}. \emph{cv} is calculated as the ratio of the sample standard deviation (\emph{sd}) to the sample mean ($\overline{x}$). However, \emph{cv} is often misleading for variables with non-ratio scales \citep{Payton_1996}, for homoscedastic data, and for variables without different magnitudes or units \citep{Shechtman_2013}.
+
+Robust statistical measurements such as coefficient of quartile variation (\emph{cqv}) are better alternatives in non-normal distributions \citep{Altunkaynak_2018}:
+$$
+cqv = \biggl(\frac{q_3-q_1}{q_3+q_1}\biggr)\times100
+$$
+where $q_3$ and $q_1$ are the sample third quartile (\emph{i.e.,} $75^{th}$ percentile) and first quartile (\emph{i.e.,} $25^{th}$ percentile), respectively.
+
+Almost always, we calculate \emph{cv} and \emph{cqv} from samples but the final objective is to generalize them as the populations' parameters \citep{Albatineh:2014}. For example, one may be interested in comparing the variabilities of the time-varying measurements of a variable to detect anomalies such as extreme behaviors of customers or institutes (as in actuarial sciences). Or someone might inquire into whether a laboratory test or technique has sufficient inter-assay and intra-assay reliablity \citep{Panichkitkosolkul_2013, Payton_1996}. In such scenarios, variabilities calculated from samples are often biased and misleading \citep{sorensen_2002, Payton_1996}. Therefore, various confidence intervals (\emph{CI}) have been introduced to correctly estimate the relative variability. 
+
+This paper sets out to demonstrate the versatility of \CRANpkg{cvcqv} package in a variety of data science tasks related to variability measurement. \code{R} \citep{R} provides a strong asset for progress in this direction because it already contains functionality used in a variety of packages like \CRANpkg{DescTools}, \CRANpkg{MBESS}, \CRANpkg{goeveg}, and \CRANpkg{sjstats}. However, robust variability measures such as \emph{cqv} has been missing in \code{R} for a long time. Moreover, the implementations of \emph{CI} for \emph{cv} have been limited to one or two methods. Lack of functions for the rigorous methods of calculation of \emph{CI} for \emph{cv} and \emph{cqv}, though available in the statistical literature, was a major motivation to develop this package and explain its versatile functionality in this paper.  
+
+\section{Package structure and functionality}
+
+The package can be installed and loaded as follows (see the package’s \href{https://github.com/MaaniBeigy/cvcqv/blob/master/README.md}{README} for dependencies and access to development versions):
+
+\begin{example}
+install.packages("cvcqv")
+\end{example}
+
+\begin{example}
+library(cvcqv)
+\end{example}
+
+\textbf{cvcqv} depends on \CRANpkg{dplyr} \citep{wickham_2019} for using \code{nth()} function and imports \CRANpkg{R6} \citep{chang_2019} for \code{"R6"} classes, \CRANpkg{SciViews} \citep{grosjean_2018} for \code{ln()} function, \CRANpkg{boot} \citep{canty_2019} for bootstrapping methods, and \CRANpkg{MBESS} \citep{kelley_2018} for noncentral distributions.
+
+\subsection{Core functions and classes}\label{core-functions-and-classes}
+
+The functionality of the package is developed as both simple functions and \code{"R6"} classes, for sake of versatility, portability and efficiency:
+
+\begin{itemize}
+\tightlist
+\item
+  The R6 class \code{"SampleQuantiles"} to produce the sample quantiles corresponding to the given probabilities. It uses \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/quantile.html}{quantile} function from the built-in \code{R} package \strong{stats}, but provides an \code{"R6"} interface to be inherited for other classes.
+\item
+  The R6 class \code{"BootCoefVar"} produces the bootstrap resampling for the \emph{cv}. It uses \href{https://stat.ethz.ch/R-manual/R-patched/library/boot/html/boot.ci.html}{boot.ci} function from \CRANpkg{boot}, but provides an \code{"R6"} interface to be inherited for child classes.
+\item
+  The R6 class \code{"BootCoefQuartVar"} produces the bootstrap resampling for the \emph{cqv}. It uses \href{https://stat.ethz.ch/R-manual/R-patched/library/boot/html/boot.html}{boot} and \href{https://stat.ethz.ch/R-manual/R-patched/library/boot/html/boot.ci.html}{boot.ci} functions from \CRANpkg{boot}, but provides an \code{"R6"} interface to be inherited for child classes.
+\item
+  The R6 class \code{"CoefVar"} calculates the sample \emph{cv}.
+\item
+  The R6 class \code{"CoefQuartVar"} calculates the sample \emph{cqv}.
+\item
+  The R6 class \code{"CoefVarCI"} calculates \emph{CI} for \emph{cv}.
+\item
+  The R6 class \code{"CoefQuartVarCI"} calculates \emph{CI} for \emph{cqv}.
+\item
+  The function \code{cv\_versatile} calculates \emph{cv} and its various \emph{CIs}.
+\item
+  The function \code{cqv\_versatile} calculates \emph{cqv} and its various \emph{CIs}.
+\end{itemize}
+
+\subsection{R6 Objects Tree}
+\begin{verbatim}
+SampleQuantiles
+      ├─── BootCoefVar
+      │    └────────── CoefVar
+      │                  └────────── CoefVarCI
+      │  
+      └─── BootCoefQuartVar
+           └────────── CoefQuartVar
+                         └────────── CoefQuartVarCI
+\end{verbatim}
+
+\subsection{Confidence Interval Methods}
+
+There are various methods for the calculation of \emph{CI} for \emph{cv} and \emph{cqv}, which have been implemented in \textbf{cvcqv} package:
+
+\setlength\tabcolsep{2pt}
+\begin{longtable}{|c|c|}
+\caption{
+Methods for calculation of \emph{CI} for \emph{cv} and \emph{cqv}
+}\\
+\hline
+\textbf{cv} & \textbf{cqv} \\
+\hline
+\endfirsthead
+\multicolumn{2}{c}%
+{\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+\hline
+\textbf{cv} & \textbf{cqv} \\
+\hline
+\endhead
+\hline \multicolumn{2}{r}{\textit{Continued on next page}} \\
+\endfoot
+\hline
+\endlastfoot
+"kelley" (\citeyear{kelley_2018, Kelley_2007}) & "bonett" (\citeyear{Bonett_2006}) \\ "mckay" (\citeyear{McKay_1932}) & "norm" (\citeyear{Altunkaynak_2018}) \\ "miller" (\citeyear{EdwardMiller_1991}) & "basic" (\citeyear{Altunkaynak_2018}) \\ "vangel" (\citeyear{Vangel_1996}) & "perc" (\citeyear{Altunkaynak_2018}) \\ "mahmoudvand\_hassani" (\citeyear{Mahmoudvand_2009}) & "bca" (\citeyear{Altunkaynak_2018}) \\ "equal\_tailed" (\citeyear{Panichkitkosolkul_2013}) &  \\ "shortest\_length" (\citeyear{Panichkitkosolkul_2013}) &  \\ "normal\_approximation" (\citeyear{Panichkitkosolkul_2013}) &  \\ "norm" (\citeyear{canty_2019, davison_1997}) &  \\ "basic" (\citeyear{canty_2019, davison_1997}) &  \\ "perc" (\citeyear{canty_2019, davison_1997}) &  \\ "bca" (\citeyear{canty_2019, davison_1997}) &  \\
+\end{longtable} 
+
+\section{Solutions for real-world problems}
+
+This section contains examples on real-world data science problems: 
+
+\subsection{Using cvcqv in Anomaly Detection}
+
+\bibliography{RJreferences}
+
+\address{%  
+  Maani Beigy\\
+  Department of Epidemiology and Biostatistics\\
+  School of Public Health\\
+  Tehran University of Medical Sciences\\
+  Tehran\\
+  Iran\\
+  ORCiD: 0000-0003-2963-3533\\
+  \email{manibeygi@gmail.com}\\
+  \email{m-beigy@alumnus.tums.ac.ir}
+}
