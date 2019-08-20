@@ -1,37 +1,45 @@
 # wine.R
-wine <- read.csv(
+# function of installing the uninstalled required packages
+if (length(
+  setdiff(c("tidyverse", "cvcqv", "tibbletime"), rownames(installed.packages()))
+  ) > 0) {
+  install.packages(setdiff(
+    c("tidyverse", "cvcqv", "tibbletime"), rownames(installed.packages()))
+    )
+} 
+# loading the required packages/libraries
+lapply(c("tidyverse", "cvcqv", "tibbletime"), require, character.only = TRUE)
+wine <- read.csv(  # read the data.frame wine from the csv file
   file = "./docs/articles/wine.csv",
   header = TRUE
 )
-str(wine)
-View(wine)
-wine$measurement <- as.Date(wine$measurement, format = "%Y-%m-%d")
-wine_tbl <- tibbletime::as_tbl_time(wine, measurement)
-str(wine_tbl)
-View(wine_tbl)
-library(tidyverse)
-library(anomalize)
-library(cvcqv)
-wine_gather <- wine_tbl %>% gather(
+str(wine)  # see the structure of the data.frame
+wine$measurement <- as.Date(  # transform the measurement data into Date format
+  wine$measurement, format = "%Y-%m-%d"
+  )
+wine_tbl <- tibbletime::as_tbl_time(  # convert the data.frame to a tbl_time
+  wine, measurement
+  )
+str(wine_tbl)    # see the structure of the tbl_time data.frame
+wine_gather <- wine_tbl %>% gather(  # convert the data to long format
   key = "wines",
   value = "score",
   Wine_1:Wine_5, -measurement
 )
-View(wine_gather)
-shapiro.test(wine_gather$score)
+shapiro.test(wine_gather$score)  # test the normality of the outcome variable
 wine_var <- wine_gather %>% group_by(expert, wines) %>% mutate(
+  # calculate the cqv and 95% bootstrap percentile confidence interval
   cqv_est = cvcqv::CoefQuartVarCI$new(
     x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$est,
+  )$perc_ci()$statistics$est,  # estimated cqv
   cqv_lower = cvcqv::CoefQuartVarCI$new(
     x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$lower,
+  )$perc_ci()$statistics$lower,  # lower bound of the 95% CI
   cqv_upper = cvcqv::CoefQuartVarCI$new(
     x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$upper
+  )$perc_ci()$statistics$upper  # upper bound of the 95% CI
 )
-View(wine_var)
-
+# draw a cluster bar plot to show the results
 ggplot(data = wine_var, aes(x = expert, y = cqv_est, fill = wines)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(
@@ -44,34 +52,8 @@ ggplot(data = wine_var, aes(x = expert, y = cqv_est, fill = wines)) +
     ) +
   xlab("Experts") + 
   ylab("cqv (%) with 95% CI")
-
-expert_var <- wine_gather %>% group_by(expert) %>% mutate(
-  cqv_est = cvcqv::CoefQuartVarCI$new(
-    x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$est,
-  cqv_lower = cvcqv::CoefQuartVarCI$new(
-    x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$lower,
-  cqv_upper = cvcqv::CoefQuartVarCI$new(
-    x = score, na.rm = TRUE, alpha = 0.05, R = 100, digits = 3,
-  )$perc_ci()$statistics$upper
-)
-View(expert_var)
-expert_var2 <- expert_var %>% group_by(expert, measurement) %>% summarise(
-  cqv_est = first(cqv_est), 
+wine_var %>% summarise(  # summarise the results for the experts
+  cqv_est = first(cqv_est),
   cqv_lower = first(cqv_lower),
   cqv_upper = first(cqv_upper)
-)
-View(expert_var2)
-ggplot(data = expert_var2, aes(x = expert, y = cqv_est, fill = expert)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(
-    aes(ymin = cqv_lower, ymax = cqv_upper),
-    width = 0.1, 
-    position = position_dodge(0.9)
-  ) + 
-  scale_fill_manual(
-    values = c("#a84551", "#963e48", "#843640")
-  ) +
-  xlab("Experts") + 
-  ylab("cqv (%) with 95% CI")
+) 

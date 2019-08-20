@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.8.7)  18 AUG 2019 06:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.8.7)  21 AUG 2019 03:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1598,31 +1598,60 @@ LaTeX Font Info:    Try loading font information for TS1+ppl on input line 46.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-) (./RJwrapper.bbl
-(./RJwrapper.brf)
+) [2] [3]
+<fig1.png, id=192, 399.74344pt x 275.52937pt>
+File: fig1.png Graphic file (type png)
+<use fig1.png>
+Package pdftex.def Info: fig1.png  used on input line 188.
+(pdftex.def)             Requested size: 199.16928pt x 137.28085pt.
+ [4 <./fig1.png (PNG copy)>] (./RJwrapper.bbl (./RJwrapper.brf)
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
- [2])) [3] [4]
+ [5]
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
+[]\T1/ppl/m/n/9 (+20) M. Beigy.  How to mea-sure the con-sis-tency of im-prove-
+ment on dif-fer-ent con-di-
+ []
+
+
+Underfull \hbox (badness 5175) in paragraph at lines 47--47
+\T1/ppl/m/n/9 (+20) tions?  Cross Val-i-dated, 2019c.  URL [][]$\T1/zi4/m/n/9 h
+ttps : / / stats . stackexchange . com / q / 399073$[][]\T1/ppl/m/n/9 (+20) .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--112
+[]\T1/ppl/m/n/9 (+20) Ida.  How to mea-sure the con-sis-tency of im-prove-ment 
+on dif-fer-ent con-di-
+ []
+
+
+Underfull \hbox (badness 6332) in paragraph at lines 112--112
+\T1/ppl/m/n/9 (+20) tions?  Cross Val-i-dated, 2019.  URL [][]$\T1/zi4/m/n/9 ht
+tps : / / stats . stackexchange . com / q / 398462$[][]\T1/ppl/m/n/9 (+20) .
+ []
+
+[6])) [7]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 34.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 34.
  (./RJwrapper.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 34.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 34.
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
-(rerunfilecheck)             Checksum: 99EB55271ABD7F8D064876FE477EF442;624.
+(rerunfilecheck)             Checksum: EA9F575D8A7EB18B5926F2776C9A6722;722.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: 9EFAB2AA66A7283F5B8006E3ECF2C6F6;1787.
+(rerunfilecheck)             Checksum: CE7DC7E97B03C12107C8DA7CF0174B37;2589.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 34.
  ) 
 Here is how much of TeX's memory you used:
- 22783 strings out of 494923
- 402063 string characters out of 6180743
- 506092 words of memory out of 5000000
- 25470 multiletter control sequences out of 15000+600000
- 38821 words of font info for 152 fonts, out of 8000000 for 9000
+ 22913 strings out of 494923
+ 403821 string characters out of 6180743
+ 507486 words of memory out of 5000000
+ 25538 multiletter control sequences out of 15000+600000
+ 41186 words of font info for 182 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,11n,94p,1171b,585s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,11n,94p,1171b,642s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/usr/
 share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-
 dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/te
@@ -1632,10 +1661,10 @@ s/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palati
 no/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.p
 fb>
-Output written on RJwrapper.pdf (4 pages, 126116 bytes).
+Output written on RJwrapper.pdf (7 pages, 157969 bytes).
 PDF statistics:
- 239 PDF objects out of 1000 (max. 8388607)
- 223 compressed objects within 3 object streams
- 35 named destinations out of 1000 (max. 500000)
- 30797 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 345 PDF objects out of 1000 (max. 8388607)
+ 324 compressed objects within 4 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 30810 words of extra memory for PDF output out of 35830 (max. 10000000)
 

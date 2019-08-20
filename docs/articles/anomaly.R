@@ -1,11 +1,20 @@
 # anomaly
-library(tidyverse)
-library(anomalize)
-library(cvcqv)
-# install.packages("tibbletime")
-# install.packages("cranlogs")
-library(cranlogs)
-library(tibbletime)
+# function of installing the uninstalled required packages
+if (length(
+  setdiff(c(
+    "tidyverse", "cvcqv", "tibbletime", "anomalize"
+    ), rownames(installed.packages()))
+) > 0) {
+  install.packages(setdiff(
+    c(
+      "tidyverse", "cvcqv", "tibbletime", "anomalize"
+      ), rownames(installed.packages()))
+  )
+} 
+# loading the required packages/libraries
+lapply(c(
+  "tidyverse", "cvcqv", "tibbletime", "anomalize"
+  ), require, character.only = TRUE)
 speed_df <- data.frame(
   date = as.Date(c(
     "2019-01-01", "2019-01-02", "2019-01-03", "2019-01-04", "2019-01-05",
@@ -21,7 +30,6 @@ speed_df <- data.frame(
 )
 speed_df
 speed_tbl_df <- tibbletime::as_tbl_time(speed_df, date)
-
 # cqv
 cqv_speed_A <- cvcqv::CoefQuartVarCI$new(
   x = subset(speed_tbl_df, case == "A")$speed, 
@@ -83,43 +91,5 @@ cvcqv_speed <- dplyr::bind_rows(list(
 attr(cvcqv_speed, "row.names") <- c(
   "cqv_A", "cqv_B", "cqv_C", "cv_A", "cv_B", "cv_C"
   )
-
+cvcqv_speed
 anomalize::anomalize(speed_tbl_df, speed, method = "iqr", alpha = 0.05)
-
-a <- cranlogs::cran_downloads(
-  packages = "cvcqv",
-  # when = c("last-month"),
-  from = "2019-01-01",
-  to = "2019-08-15"
-)
-class(a)
-sum(a$count)
-shapiro.test(a$count)
-cqv_versatile(a$count, na.rm = TRUE, digits = 3, method = "all", R = 100)
-c <- tidyverse_cran_downloads %>%
-  filter(package == "lubridate") %>% 
-  ungroup()
-cqv_versatile(c$count, na.rm = TRUE, digits = 3, method = "bonett", R = 100)
-class(a)
-b <- as_tbl_time(a, date)
-b_anom <- anomalize::anomalize(b, count, method = "iqr", alpha = 0.05)
-subset(b_anom, anomaly == "Yes")
-b %>%
-  ggplot(aes(date, count)) +
-  geom_point(color = "#2c3e50", alpha = 0.25) +
-  facet_wrap(~ package, scale = "free_y", ncol = 3) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
-  labs(title = "cvcqv Package Daily Download Counts",
-       subtitle = "Data from CRAN by way of cranlogs package")
-b %>%
-  # Data Manipulation / Anomaly Detection
-  time_decompose(count, method = "stl") %>%
-  anomalize(remainder, method = "iqr") %>%
-  time_recompose() %>%
-  # Anomaly Visualization
-  plot_anomalies(time_recomposed = TRUE, ncol = 3, alpha_dots = 0.25) +
-  labs(title = "cvcqv Anomalies", subtitle = "STL + IQR Methods") 
-  
-
-

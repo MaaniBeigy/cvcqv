@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -23,6 +23,28 @@ B.~Altunkaynak and H.~Gamgam.
 \newblock \doi{10.1080/03610918.2018.1435800}.
 \newblock URL \url{https://doi.org/10.1080/03610918.2018.1435800}.
 
+\bibitem[Beigy(2019{\natexlab{a}})]{Beigy_a_2019}
+M.~Beigy.
+\newblock \emph{cvcqv: Coefficient of Variation (CV) with Confidence Intervals
+  (CI)}, 2019{\natexlab{a}}.
+\newblock URL \url{https://CRAN.R-project.org/package=cvcqv}.
+\newblock R package version 1.0.0.
+
+\bibitem[Beigy(2019{\natexlab{b}})]{Beigy_b_2019}
+M.~Beigy.
+\newblock How to measure consistency of measurement over time.
+\newblock Cross Validated, 2019{\natexlab{b}}.
+\newblock URL \url{https://stats.stackexchange.com/q/422666}.
+\newblock URL:https://stats.stackexchange.com/q/422666 (version: 2019-08-18).
+
+\bibitem[Beigy(2019{\natexlab{c}})]{Beigy_c_2019}
+M.~Beigy.
+\newblock How to measure the consistency of improvement on different
+  conditions?
+\newblock Cross Validated, 2019{\natexlab{c}}.
+\newblock URL \url{https://stats.stackexchange.com/q/399073}.
+\newblock URL:https://stats.stackexchange.com/q/399073 (version: 2019-08-18).
+
 \bibitem[Bonett(2006)]{Bonett_2006}
 D.~G. Bonett.
 \newblock Confidence interval for a coefficient of quartile variation.
@@ -41,6 +63,12 @@ W.~Chang.
 \newblock URL \url{https://CRAN.R-project.org/package=R6}.
 \newblock R package version 2.4.0.
 
+\bibitem[Dancho and Vaughan(2018)]{Dancho_2018}
+M.~Dancho and D.~Vaughan.
+\newblock \emph{anomalize: Tidy Anomaly Detection}, 2018.
+\newblock URL \url{https://CRAN.R-project.org/package=anomalize}.
+\newblock R package version 0.1.1.
+
 \bibitem[Davison and Hinkley(1997)]{davison_1997}
 A.~C. Davison and D.~V. Hinkley.
 \newblock \emph{Bootstrap Methods and Their Applications}.
@@ -54,11 +82,33 @@ G.~Edward~Miller.
 \newblock 20\penalty0 (10):\penalty0 3351--3363, 1991.
 \newblock ISSN 0361-0926.
 
+\bibitem[Fathnia and Bayaz(2018)]{fathnia_2018}
+F.~Fathnia and M.~H. J.~D. Bayaz.
+\newblock Anomaly detection in smart grid with help of an improved optics using
+  coefficient of variation.
+\newblock In \emph{Electrical Engineering (ICEE), Iranian Conference on}, pages
+  1044--1050. IEEE, 2018.
+\newblock URL \url{https://doi.org/10.1109/ICEE.2018.8472534}.
+
 \bibitem[Grosjean(2018)]{grosjean_2018}
 P.~Grosjean.
 \newblock \emph{SciViews-R}.
 \newblock UMONS, MONS, Belgium, 2018.
 \newblock URL \url{http://www.sciviews.org/SciViews-R}.
+
+\bibitem[Hopkins(2000)]{hopkins_2000}
+W.~G. Hopkins.
+\newblock Measures of reliability in sports medicine and science.
+\newblock \emph{Sports medicine}, 30\penalty0 (1):\penalty0 1--15, 2000.
+\newblock URL \url{https://doi.org/10.2165/00007256-200030010-00001}.
+
+\bibitem[Ida(2019)]{Ida_2019}
+Ida.
+\newblock How to measure the consistency of improvement on different
+  conditions?
+\newblock Cross Validated, 2019.
+\newblock URL \url{https://stats.stackexchange.com/q/398462}.
+\newblock URL:https://stats.stackexchange.com/q/398462 (version: 2019-03-20).
 
 \bibitem[Kelley(2007)]{Kelley_2007}
 K.~Kelley.
@@ -126,11 +176,24 @@ J.~B. S{\o}rensen.
   475--491, 2002.
 \newblock URL \url{https://doi.org/10.1177/0049124102030004001}.
 
+\bibitem[tach(2017)]{tach_2017}
+tach.
+\newblock How to measure consistency of measurement over time.
+\newblock Cross Validated, 2017.
+\newblock URL \url{https://stats.stackexchange.com/q/318044}.
+\newblock URL:https://stats.stackexchange.com/q/318044 (version: 2017-12-10).
+
 \bibitem[Vangel(1996)]{Vangel_1996}
 M.~G. Vangel.
 \newblock Confidence intervals for a normal coefficient of variation.
 \newblock 50\penalty0 (1):\penalty0 21--26, 1996.
 \newblock ISSN 0003-1305.
+
+\bibitem[Wickham(2017)]{Wickham_2017}
+H.~Wickham.
+\newblock \emph{tidyverse: Easily Install and Load the 'Tidyverse'}, 2017.
+\newblock URL \url{https://CRAN.R-project.org/package=tidyverse}.
+\newblock R package version 1.2.1.
 
 \bibitem[Wickham et~al.(2019)Wickham, François, Henry, and
   Müller]{wickham_2019}
@@ -138,5 +201,14 @@ H.~Wickham, R.~François, L.~Henry, and K.~Müller.
 \newblock \emph{dplyr: A Grammar of Data Manipulation}, 2019.
 \newblock URL \url{https://CRAN.R-project.org/package=dplyr}.
 \newblock R package version 0.8.3.
+
+\bibitem[Zhou and Xu(2014)]{zhou_2014}
+S.~B. Zhou and W.~X. Xu.
+\newblock Local outlier detection algorithm based on coefficient of variation.
+\newblock In \emph{Advanced Design and Manufacturing Technology IV}, volume 635
+  of \emph{Applied Mechanics and Materials}, pages 1723--1728. Trans Tech
+  Publications Ltd, 11 2014.
+\newblock URL
+  \url{https://doi.org/10.4028/www.scientific.net/AMM.635-637.1723}.
 
 \end{thebibliography}
