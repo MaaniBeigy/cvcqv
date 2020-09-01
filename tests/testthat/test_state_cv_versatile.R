@@ -217,23 +217,26 @@ test_that(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = FALSE
+                correction = FALSE,
+                digits = 2,
             )$statistics$lower,
-            41.3, tolerance = 0.0001
+            40.95, tolerance = 0.0001
         )
         expect_equal(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = FALSE
+                correction = FALSE,
+                digits = 2,
             )$statistics$upper,
-            105.4, tolerance = 0.0001
+            103.93, tolerance = 0.0001
         )
         expect_equal(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = TRUE
+                correction = TRUE,
+                digits = 2
             )$method,
             "Corrected cv with Vangel 95% CI"
         )
@@ -241,31 +244,35 @@ test_that(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = TRUE
+                correction = TRUE,
+                digits = 2
             )$statistics$est,
-            58.1, tolerance = 0.0001
+            58.06, tolerance = 0.0001
         )
         expect_equal(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = TRUE
+                correction = TRUE,
+                digits = 2
             )$statistics$lower,
-            41.4, tolerance = 0.0001
+            41.13, tolerance = 0.0001
         )
         expect_equal(
             cv_versatile(
                 x,
                 method = "vangel",
-                correction = TRUE
+                correction = TRUE,
+                digits = 2
             )$statistics$upper,
-            106.2, tolerance = 0.0001
+            104.71, tolerance = 0.0001
         )
         expect_equal(
             cv_versatile(
                 x,
                 method = "mahmoudvand_hassani",
-                correction = FALSE
+                correction = FALSE,
+                digits = 2
             )$method,
             "cv with Mahmoudvand-Hassani 95% CI"
         )

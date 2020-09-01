@@ -199,22 +199,22 @@ test_that(
         )
         expect_equal(
             CoefVarCI$new(x)$lower_tile_vangel_cv(),
-            0.4128085,
+            0.4097103,
             tolerance = 0.0000001
         )
         expect_equal(
             CoefVarCI$new(x)$upper_tile_vangel_cv(),
-            1.054997,
+            1.040016,
             tolerance = 0.000001
         )
         expect_equal(
             CoefVarCI$new(x)$lower_tile_vangel_cv_corr(),
-            0.4146965,
+            0.4115559,
             tolerance = 0.0000001
         )
         expect_equal(
             CoefVarCI$new(x)$upper_tile_vangel_cv_corr(),
-            1.063586,
+            1.048242,
             tolerance = 0.000001
         )
         expect_equal(
@@ -471,13 +471,17 @@ test_that(
             tolerance = 0.0001
         )
         expect_equal(
-            CoefVarCI$new(x, correction = FALSE)$vangel_ci()$statistics$lower,
-            41.3,
+            CoefVarCI$new(
+                x, correction = FALSE, digits = 2
+                )$vangel_ci()$statistics$lower,
+            40.95,
             tolerance = 0.0001
         )
         expect_equal(
-            CoefVarCI$new(x, correction = FALSE)$vangel_ci()$statistics$upper,
-            105.5,
+            CoefVarCI$new(
+                x, correction = FALSE, digits = 2
+                )$vangel_ci()$statistics$upper,
+            103.92,
             tolerance = 0.0001
         )
         expect_equal(
@@ -491,12 +495,12 @@ test_that(
         )
         expect_equal(
             CoefVarCI$new(x, correction = TRUE)$vangel_ci()$statistics$lower,
-            41.5,
+            41.2,
             tolerance = 0.0001
         )
         expect_equal(
             CoefVarCI$new(x, correction = TRUE)$vangel_ci()$statistics$upper,
-            106.4,
+            104.8,
             tolerance = 0.0001
         )
         expect_equal(

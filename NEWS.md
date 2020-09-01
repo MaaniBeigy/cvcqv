@@ -1,4 +1,4 @@
-# cvcqv v1.0.0
+# cvcqv v1.0.1
 
 These functions and classes work:     
 

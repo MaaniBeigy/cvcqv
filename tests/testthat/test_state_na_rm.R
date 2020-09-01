@@ -86,12 +86,12 @@ test_that(
         )
     }
 )
-test_that(
-    desc = "correct missing handling when x is data.frame", {
-        df <- data.frame(
-            id = c(1:3, NA),
-            gender = c("m", "f", "m", NA),
-            fbs = c(104, 98, 129, NA)
-        )
-    }
-)
+# test_that(
+#     desc = "correct missing handling when x is data.frame", {
+#         df <- data.frame(
+#             id = c(1:3, NA),
+#             gender = c("m", "f", "m", NA),
+#             fbs = c(104, 98, 129, NA)
+#         )
+#     }
+# )

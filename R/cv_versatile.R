@@ -25,7 +25,7 @@
 #'   vectors: est, lower and upper limits of confidence interval \code{(CI)};
 #'   additional description vector is provided when "all" is selected: \cr \cr
 #'   \strong{est:}{ \code{cv*100} } \cr \cr \strong{Kelley Confidence
-#'   Interval:}{ Thanks to package \link[MBESS]{MBESS} \code{[2]} for the
+#'   Interval:}{ Thanks to package \pkg{MBESS} \code{[2]} for the
 #'   computation of confidence limits for the noncentrality parameter from a
 #'   \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}. } \cr \cr
 #'   \strong{McKay Confidence Interval:}{ The intervals calculated by the method
@@ -351,8 +351,8 @@ cv_versatile <- function(
         u1 <- v*t1
         u2 <- v*t2
         est.vangel <- cv  # cv is an estimate of CV
-        lower.tile.vangel <- cv/sqrt(((u1 + 1)/(v + 1) - 1 )*(cv^2) + u1/v)
-        upper.tile.vangel <- cv/sqrt(((u2 + 1)/(v + 1) - 1)*(cv^2) + u2/v)
+        lower.tile.vangel <- cv/sqrt((((u1 + 1)/(v)) - 1 )*(cv^2) + u1/v)
+        upper.tile.vangel <- cv/sqrt((((u2 + 1)/(v)) - 1)*(cv^2) + u2/v)
     } else if ("vangel" %in% method && correction == TRUE) {
         # if (cv_corr > 0.33) {
         #     warning("Confidence interval may be very approximate")
@@ -364,10 +364,10 @@ cv_versatile <- function(
         u2 <- v*t2
         est.vangel <- cv_corr  # corrected cv is an estimate of CV
         lower.tile.vangel <- cv_corr/sqrt(
-            ((u1 + 1)/(v + 1) - 1 )*(cv_corr^2) + u1/v
+            (((((u1 + 1)/(v)) - 1))*(cv_corr^2)) + u1/v
             )
         upper.tile.vangel <- cv_corr/sqrt(
-            ((u2 + 1)/(v + 1) - 1)*(cv_corr^2) + u2/v
+            (((((u2 + 1)/(v)) - 1))*(cv_corr^2)) + u2/v
             )
     } else if ("mahmoudvand_hassani" %in% method && correction == FALSE) {
         if (length(x) <= 340) {
@@ -554,8 +554,8 @@ cv_versatile <- function(
         uu1 <- v*tt1
         uu2 <- v*tt2
         est.vangel <- cv  # cv is an estimate of CV
-        lower.tile.vangel <- cv/sqrt(((uu1 + 1)/(v + 1) - 1 )*(cv^2) + uu1/v)
-        upper.tile.vangel <- cv/sqrt(((uu2 + 1)/(v + 1) - 1)*(cv^2) + uu2/v)
+        lower.tile.vangel <- cv/sqrt((((uu1 + 1)/(v)) - 1 )*(cv^2) + uu1/v)
+        upper.tile.vangel <- cv/sqrt((((uu2 + 1)/(v)) - 1 )*(cv^2) + uu2/v)
         if (length(x) <= 340) {
             cn <- sqrt(2/(length(x) - 1)) * (
                 (gamma(length(x)/2))/(gamma((length(x) - 1)/2))
@@ -656,8 +656,9 @@ cv_versatile <- function(
         uu1 <- v*tt1
         uu2 <- v*tt2
         est.vangel <- cv_corr  # cv_corr is an estimate of CV
-        lower.tile.vangel <- cv_corr/sqrt(((uu1 + 1)/(v + 1) - 1 )*(cv_corr^2) + uu1/v)
-        upper.tile.vangel <- cv_corr/sqrt(((uu2 + 1)/(v + 1) - 1)*(cv_corr^2) + uu2/v)
+        lower.tile.vangel <- cv_corr/sqrt((((uu1 + 1)/(v)) - 1 )*(cv_corr^2) + uu1/v)
+        
+        upper.tile.vangel <- cv_corr/sqrt((((uu2 + 1)/(v)) - 1 )*(cv_corr^2) + uu2/v)
         if (length(x) <= 340) {
             cn <- sqrt(2/(length(x) - 1)) * (
                 (gamma(length(x)/2))/(gamma((length(x) - 1)/2))

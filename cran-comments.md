@@ -7,16 +7,12 @@
 
 ## Problems
 
-Although the previous builds with `AppVeyor` CI were successful, now they have errors due to `gsl` dependency. I believe that it is a minor problem of `AppVeyor` virtual machines. 
-
-## Resubmission
-
-In the previous submission to CRAN, CRAN maintainers requested references for the methods to be put in the description field of DESCRIPTION file. Although the spell_check() has issues with the author names to put references in DESCRIPTION, I put some of the most important ones there. The full list of references is available in the documentation files, vignettes, and README.md. 
-Also, a CRAN maintainer requested small executable examples in my Rd files. All of the Rd files have examples.
-
+"checking for future file timestamps ... NOTE
+  unable to verify current time"
+It seems there are problems with "http://worldclockapi.com/api/json/utc/now".
 
 ## R CMD check results
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+0 errors ✓ | 0 warnings ✓ | 1 note x
 
 R6 is a build-time dependency.
 

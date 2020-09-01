@@ -33,7 +33,7 @@ An object of type "list" which contains the estimate, the intervals,
   vectors: est/, lower and upper limits of confidence interval \code{(CI)};
   additional description vector is provided when "all" is selected: \cr \cr
   \strong{est:}{ \code{cv*100} } \cr \cr \strong{Kelley Confidence
-  Interval:}{ Thanks to package \link[MBESS]{MBESS} \code{[2]} for the
+  Interval:}{ Thanks to package \pkg{MBESS} \code{[2]} for the
   computation of confidence limits for the noncentrality parameter from a
   \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}. } \cr \cr
   \strong{McKay Confidence Interval:}{ The intervals calculated by the method
