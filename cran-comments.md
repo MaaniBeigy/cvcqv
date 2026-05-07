@@ -1,19 +1,28 @@
-# cvcqv 1.0.2 — CRAN submission
+# cvcqv 1.0.3 — CRAN submission
 
-## Resubmission of archived package
+## Resubmission of archived package (follow-up to 1.0.2)
 
-This is a resubmission of `cvcqv` (version 1.0.2), archived on CRAN on
-2022-05-19. The archival was triggered by a single NOTE on all 13
-tested platforms:
+This is a follow-up resubmission of `cvcqv`, originally archived on
+CRAN on 2022-05-19, after CRAN's incoming-feasibility auto-check on
+1.0.2 (2026-05-07) flagged two non-blocking issues that have now been
+resolved in 1.0.3:
 
-  > 'LazyData' is specified without a 'data' directory
+* "Possibly misspelled words in DESCRIPTION" — author surnames
+  (`Albatineh`, `Altunkaynak`, `Gamgam`, `Kibria`, `Panichkitkosolkul`,
+  `Zogheib`) are now wrapped in single quotes in the `Description`
+  field, per the CRAN convention for proper names.
+* "Found the following (possibly) invalid URLs" — the link in
+  `README.md` to `cvcqv_1.0.0.tar.gz` (a file that no longer exists in
+  the repository) has been removed. The README now instructs users to
+  install from CRAN.
 
-This has been resolved by removing `LazyData: true` from `DESCRIPTION`;
-the package ships no exported datasets (the only `.rda` file in the
-package is internal data in `R/sysdata.rda`).
+The original archival reason was the NOTE
+`'LazyData' is specified without a 'data' directory`, resolved in 1.0.2
+by removing `LazyData: true` from `DESCRIPTION`; the package ships no
+exported datasets (the only `.rda` file in the package is internal data
+in `R/sysdata.rda`).
 
-In addition, the following pre-existing issues were addressed in the
-same release:
+The other resubmission fixes carried forward from 1.0.2:
 
 * 32 `checkRd: Lost braces` NOTEs in `CoefVarCI.Rd`, `CoefQuartVarCI.Rd`,
   `cv_versatile.Rd`, and `cqv_versatile.Rd`. Root cause: roxygen

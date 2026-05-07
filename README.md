@@ -151,23 +151,11 @@ The `results` will be:
 
 ## Documentation
 
-Download the
-[cvcqv_1.0.0.tar.gz](https://github.com/MaaniBeigy/cvcqv/raw/master/cvcqv_1.0.0.tar.gz).
-Install the source package `cvcqv` from the Packages \>\> Install \>\>
-Package Archive File (.tar.gz) \>\> Browse \>\> cvcqv_1.0.0.tar.gz. Or
-run an installation code like:
-
-``` r
-install.packages("~/cvcqv_1.0.0.tar.gz", repos = NULL, type = "source")
-```
-
-Then, browse for vignettes:
+Once installed, browse the package vignettes:
 
 ``` r
 browseVignettes("cvcqv")
 ```
-
-Then, select `html` to show the vignette.
 
 ## References
 

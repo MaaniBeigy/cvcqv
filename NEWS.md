@@ -1,3 +1,14 @@
+# cvcqv 1.0.3
+
+Patch release addressing CRAN auto-check feedback on the 1.0.2 resubmission:
+
+* Wrapped author surnames in `DESCRIPTION` (`Albatineh`, `Altunkaynak`,
+  `Gamgam`, `Kibria`, `Panichkitkosolkul`, `Zogheib`) in single quotes so
+  CRAN's spell-checker no longer flags them as misspellings.
+* Removed obsolete instructions in `README` to download
+  `cvcqv_1.0.0.tar.gz` from the GitHub repo (the file no longer exists;
+  install from CRAN instead).
+
 # cvcqv 1.0.2
 
 Resubmission after CRAN archival on 2022-05-19.
