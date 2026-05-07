@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="125.14429mm"
+   height="140.72279mm"
+   viewBox="0 0 125.14429 140.72279"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="sticker.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.42"
+     inkscape:cx="481.13724"
+     inkscape:cy="140.34719"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1299"
+     inkscape:window-height="713"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-46.042794,-70.233082)">
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#e4f1ef;fill-opacity:1;stroke:#002b36;stroke-width:5.575;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path855"
+       sodipodi:sides="6"
+       sodipodi:cx="108.61494"
+       sodipodi:cy="140.59448"
+       sodipodi:r1="65.205154"
+       sodipodi:r2="56.469318"
+       sodipodi:arg1="1.047518"
+       sodipodi:arg2="1.5711168"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 141.19942,197.07425 -65.205154,-0.0209 -32.58448,-56.47976 32.620671,-56.458872 65.205153,0.0209 32.58448,56.479767 z"
+       transform="rotate(89.689675,108.61494,140.59448)"
+       inkscape:transform-center-y="-5.5800979e-06" />
+    <g
+       id="g947"
+       transform="rotate(-30.392435,106.45555,143.17537)">
+      <text
+         id="text859"
+         y="151.21765"
+         x="54.731987"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'Vazir Code';-inkscape-font-specification:'Vazir Code';fill:#002b36;fill-opacity:1;stroke-width:0.26458332"
+           y="151.21765"
+           x="54.731987"
+           id="tspan857"
+           sodipodi:role="line"><tspan
+   id="tspan861"
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Vazir Code';-inkscape-font-specification:'Vazir Code Italic'">cv</tspan> = </tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path863"
+         d="m 110.1256,143.27138 h 45.61828"
+         style="fill:none;stroke:#002b36;stroke-width:4.26499987;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text867"
+         y="127.32236"
+         x="125.3317"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'Vazir Code';-inkscape-font-specification:'Vazir Code';fill:#002b36;fill-opacity:1;stroke-width:0.26458332"
+           y="127.32236"
+           x="125.3317"
+           id="tspan865"
+           sodipodi:role="line">σ</tspan></text>
+      <text
+         id="text867-3"
+         y="167.64801"
+         x="125.33133"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'Vazir Code';-inkscape-font-specification:'Vazir Code';fill:#002b36;fill-opacity:1;stroke-width:0.26458332"
+           y="167.64801"
+           x="125.33133"
+           id="tspan865-6"
+           sodipodi:role="line">μ</tspan></text>
+    </g>
+  </g>
+</svg>
