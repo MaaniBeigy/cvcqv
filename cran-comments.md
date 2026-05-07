@@ -27,8 +27,8 @@ same release:
 * local: Windows 11, R 4.6.0 (2026-04-24 ucrt)
 * GitHub Actions: ubuntu-latest (R-devel, R-release, R-oldrel-1),
   macos-latest (R-release), windows-latest (R-release)
-* win-builder: R-devel, R-release  <!-- run before submission -->
-* R-hub: macOS, Windows, Linux     <!-- run before submission -->
+* win-builder: R-devel, R-release
+* R-hub: macOS, Windows, Linux
 
 ## R CMD check results
 
