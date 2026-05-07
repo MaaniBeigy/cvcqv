@@ -1,4 +1,5 @@
 ^\.github$
+^\.lintr$
 ^PLAN\.md$
 ^tmp$
 ^CODE_OF_CONDUCT\.md$

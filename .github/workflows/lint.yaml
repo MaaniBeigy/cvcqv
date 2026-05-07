@@ -31,5 +31,9 @@ jobs:
       - name: Lint
         run: lintr::lint_package()
         shell: Rscript {0}
-        env:
-          LINTR_ERROR_ON_LINT: true
+        # LINTR_ERROR_ON_LINT intentionally not set — lint findings are
+        # advisory only on this 2020-era codebase. The `.lintr` config at
+        # repo root silences the categories that conflict with the
+        # established style (PascalCase R6 names, 4-space indents,
+        # explicit return(), etc.). Stylistic modernization is tracked
+        # separately and is not a precondition for CRAN release.

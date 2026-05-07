@@ -41,7 +41,10 @@ jobs:
 
       - uses: codecov/codecov-action@v6
         with:
-          fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
+          # Codecov upload is best-effort. Without CODECOV_TOKEN the protected
+          # default branch will reject the upload — that is not a CI failure.
+          # Set the CODECOV_TOKEN repo secret to make uploads authoritative.
+          fail_ci_if_error: false
           files: ./cobertura.xml
           plugins: noop
           disable_search: true
