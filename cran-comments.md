@@ -42,7 +42,7 @@ archived. The archival reason is documented above.
 During one local `--as-cran` run, the URL checker also reported
 `https://cran.r-project.org/package=MBESS` as 404. The URL is valid;
 this appears to be a transient CRAN-side response. Re-running the check
-clears it.
+cleared it.
 
 ## Downstream dependencies
 
