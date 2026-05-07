@@ -8,8 +8,6 @@
 [![R-CMD-check](https://github.com/MaaniBeigy/cvcqv/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MaaniBeigy/cvcqv/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/MaaniBeigy/cvcqv/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/MaaniBeigy/cvcqv/actions/workflows/test-coverage.yaml)
 [![lint](https://github.com/MaaniBeigy/cvcqv/actions/workflows/lint.yaml/badge.svg)](https://github.com/MaaniBeigy/cvcqv/actions/workflows/lint.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/MaaniBeigy/cvcqv/graph/badge.svg)](https://app.codecov.io/gh/MaaniBeigy/cvcqv)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/cvcqv)](https://CRAN.R-project.org/package=cvcqv)
 [![License: GPL
