@@ -1,7 +1,10 @@
+# cvcqv 1.0.2 — CRAN submission
+
 ## Resubmission of archived package
 
-This is a resubmission of `cvcqv`, archived on CRAN on 2022-05-19. The
-archival was triggered by a single NOTE on all 13 tested platforms:
+This is a resubmission of `cvcqv` (version 1.0.2), archived on CRAN on
+2022-05-19. The archival was triggered by a single NOTE on all 13
+tested platforms:
 
   > 'LazyData' is specified without a 'data' directory
 
