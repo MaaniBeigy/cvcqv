@@ -20,18 +20,18 @@
 #' @return \describe{ \item{$method}{ A description of statistical method used
 #'   for the computations. } \item{$statistics}{ A data frame representing three
 #'   vectors: est, lower and upper limits of 95\% confidence interval
-#'   \code{(CI)}: \cr \cr \strong{est:}{ \code{cqv*100} } \cr \cr \strong{Bonett
-#'   95\% CI:}{ It uses a centering adjustment which helps to equalize the tail
-#'   error probabilities \code{[1, 2]}. } \cr \cr \strong{Normal approximation
-#'   95\% CI:}{ The intervals calculated by the normal approximation \code{[3,
-#'   4]}, using \link[boot]{boot.ci}. } \cr \cr \strong{Basic bootstrap 95\%
-#'   CI:}{ The intervals calculated by the basic bootstrap method \code{[3, 4]},
-#'   using \link[boot]{boot.ci}. } \cr \cr \strong{Bootstrap percentile 95\%
-#'   CI:}{ The intervals calculated by the bootstrap percentile method \code{[3,
-#'   4]}, using \link[boot]{boot.ci}. } \cr \cr \strong{Adjusted bootstrap
-#'   percentile (BCa) 95\% CI:}{ The intervals calculated by the adjusted
+#'   \code{(CI)}: \cr \cr \strong{est:} \code{cqv*100}  \cr \cr \strong{Bonett
+#'   95\% CI:} It uses a centering adjustment which helps to equalize the tail
+#'   error probabilities \code{[1, 2]}.  \cr \cr \strong{Normal approximation
+#'   95\% CI:} The intervals calculated by the normal approximation \code{[3,
+#'   4]}, using \link[boot]{boot.ci}.  \cr \cr \strong{Basic bootstrap 95\%
+#'   CI:} The intervals calculated by the basic bootstrap method \code{[3, 4]},
+#'   using \link[boot]{boot.ci}.  \cr \cr \strong{Bootstrap percentile 95\%
+#'   CI:} The intervals calculated by the bootstrap percentile method \code{[3,
+#'   4]}, using \link[boot]{boot.ci}.  \cr \cr \strong{Adjusted bootstrap
+#'   percentile (BCa) 95\% CI:} The intervals calculated by the adjusted
 #'   bootstrap percentile (BCa) method \code{[3, 4]}, using
-#'   \link[boot]{boot.ci}. } } }
+#'   \link[boot]{boot.ci}.  } }
 #' @examples
 #' x <- c(
 #'     0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
@@ -43,12 +43,12 @@
 #' @references \code{[1]} Bonett, DG., 2006, Confidence interval for a
 #'   coefficient of quartile variation, Computational Statistics & Data
 #'   Analysis, 50(11), 2953-7, DOI:
-#'   \href{http://doi.org/10.1016/j.csda.2005.05.007}{http://doi.org/10.1016/j.csda.2005.05.007}
+#'   \doi{10.1016/j.csda.2005.05.007}
 #'
 #' @references \code{[2]} Altunkaynak, B., Gamgam, H., 2018, Bootstrap
 #'   confidence intervals for the coefficient of quartile variation, Simulation
 #'   and Computation, 1-9, DOI:
-#'   \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
+#'   \doi{10.1080/03610918.2018.1435800}
 #'
 #' @references \code{[3]} Canty, A., & Ripley, B, 2017, boot: Bootstrap R
 #'   (S-Plus) Functions. R package version 1.3-20.

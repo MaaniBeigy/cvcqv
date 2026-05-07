@@ -26,29 +26,29 @@
 #'   for the computations. } \item{$statistics}{ A data frame representing three
 #'   vectors: est/, lower and upper limits of confidence interval \code{(CI)};
 #'   additional description vector is provided when "all" is selected: \cr \cr
-#'   \strong{est:}{ \code{cv*100} } \cr \cr \strong{Kelley Confidence
-#'   Interval:}{ Thanks to package \pkg{MBESS} \code{[2]} for the
+#'   \strong{est:} \code{cv*100}  \cr \cr \strong{Kelley Confidence
+#'   Interval:} Thanks to package \pkg{MBESS} \code{[2]} for the
 #'   computation of confidence limits for the noncentrality parameter from a
-#'   \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}. } \cr \cr
-#'   \strong{McKay Confidence Interval:}{ The intervals calculated by the method
-#'   introduced by McKay \code{[4]}, using chi-square distribution. } \cr \cr
-#'   \strong{Miller Confidence Interval:}{ The intervals calculated by the
+#'   \emph{t} distribution \link[MBESS]{conf.limits.nct} \code{[3]}.  \cr \cr
+#'   \strong{McKay Confidence Interval:} The intervals calculated by the method
+#'   introduced by McKay \code{[4]}, using chi-square distribution.  \cr \cr
+#'   \strong{Miller Confidence Interval:} The intervals calculated by the
 #'   method introduced by Miller \code{[5]}, using the standard normal
-#'   distribution. } \cr \cr \strong{Vangel Confidence Interval:}{ Vangel
+#'   distribution.  \cr \cr \strong{Vangel Confidence Interval:} Vangel
 #'   \code{[6]} proposed a method for the calculation of CI for \emph{cv}; which
-#'   is a modification on McKay’s CI. } \cr \cr \strong{Mahmoudvand-Hassani
-#'   Confidence Interval:}{ Mahmoudvand and Hassani \code{[7]} proposed a new CI
-#'   for \emph{cv}; which is obtained using ranked set sampling \emph{(RSS)} }
-#'   \cr \cr \strong{Normal Approximation Confidence Interval:}{ Wararit
+#'   is a modification on McKay’s CI.  \cr \cr \strong{Mahmoudvand-Hassani
+#'   Confidence Interval:} Mahmoudvand and Hassani \code{[7]} proposed a new CI
+#'   for \emph{cv}; which is obtained using ranked set sampling \emph{(RSS)} 
+#'   \cr \cr \strong{Normal Approximation Confidence Interval:} Wararit
 #'   Panichkitkosolkul \code{[8]} proposed another CI for \emph{cv}; which is a
-#'   normal approximation. } \cr \cr \strong{Shortest-Length Confidence
-#'   Interval:}{ Wararit Panichkitkosolkul \code{[8]} proposed another CI for
-#'   \emph{cv}; which is obtained through minimizing the length of CI. } \cr \cr
-#'   \strong{Equal-Tailed Confidence Interval:}{ Wararit Panichkitkosolkul
+#'   normal approximation.  \cr \cr \strong{Shortest-Length Confidence
+#'   Interval:} Wararit Panichkitkosolkul \code{[8]} proposed another CI for
+#'   \emph{cv}; which is obtained through minimizing the length of CI.  \cr \cr
+#'   \strong{Equal-Tailed Confidence Interval:} Wararit Panichkitkosolkul
 #'   \code{[8]} proposed another CI for \emph{cv}; which is obtained using
-#'   chi-square distribution. } \cr \cr \strong{Bootstrap Confidence
-#'   Intervals:}{ Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
-#'   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}. } \cr
+#'   chi-square distribution.  \cr \cr \strong{Bootstrap Confidence
+#'   Intervals:} Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
+#'   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.  \cr
 #'   \cr } }
 #' @examples
 #' y <- c(
@@ -70,7 +70,7 @@
 #'   B, 2014, Confidence interval estimation for the population coefficient of
 #'   variation using ranked set sampling: A simulation study, Journal of Applied
 #'   Statistics, 41(4), 733–751, DOI:
-#'   \href{http://doi.org/10.1080/02664763.2013.847405}{http://doi.org/10.1080/02664763.2013.847405}
+#'   \doi{10.1080/02664763.2013.847405}
 #'
 #' @references \code{[2]} Kelley, K., 2018, MBESS: The MBESS R Package. R
 #'   package version 4.4. 3.
@@ -78,7 +78,7 @@
 #' @references \code{[3]} Kelley, K., 2007, Sample size planning for the
 #'   coefficient of variation from the accuracy in parameter estimation
 #'   approach, Behavior Research Methods, 39(4), 755–766, DOI:
-#'   \href{http://doi.org/10.3758/BF03192966}{http://doi.org/10.3758/BF03192966}
+#'   \doi{10.3758/BF03192966}
 #' @references \code{[4]} McKay, AT., 1932, Distribution of the Coefficient of
 #'   Variation and the Extended“ t” Distribution, Journal of the Royal
 #'   Statistical Society, 95(4), 695–698
@@ -93,7 +93,7 @@
 #' @references \code{[8]} Panichkitkosolkul, W., 2013, Confidence Intervals for
 #'   the Coefficient of Variation in a Normal Distribution with a Known
 #'   Population Mean, Journal of Probability and Statistics, 2013, 1–11,
-#'   \href{http://doi.org/10.1155/2013/324940}{http://doi.org/10.1155/2013/324940}
+#'   \doi{10.1155/2013/324940}
 #'
 #' @references \code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
 #'   (S-Plus) Functions, R package version 1.3-20
