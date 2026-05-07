@@ -1,20 +1,46 @@
+## Resubmission of archived package
+
+This is a resubmission of `cvcqv`, archived on CRAN on 2022-05-19. The
+archival was triggered by a single NOTE on all 13 tested platforms:
+
+  > 'LazyData' is specified without a 'data' directory
+
+This has been resolved by removing `LazyData: true` from `DESCRIPTION`;
+the package ships no exported datasets (the only `.rda` file in the
+package is internal data in `R/sysdata.rda`).
+
+In addition, the following pre-existing issues were addressed in the
+same release:
+
+* 32 `checkRd: Lost braces` NOTEs in `CoefVarCI.Rd`, `CoefQuartVarCI.Rd`,
+  `cv_versatile.Rd`, and `cqv_versatile.Rd`. Root cause: roxygen
+  comments used `\strong{LABEL:}{ TEXT }`, an invalid two-argument form;
+  rewritten as `\strong{LABEL:} TEXT`.
+* All `\href{http://doi.org/...}` references migrated to
+  `https://doi.org/...`.
+
 ## Test environments
 
-* local Linux Ubuntu 18.04 install, R 3.4.4
-* Ubuntu 16.04 (on travis-ci), R 3.6.1
-* Appveyor win-builder x86_64-w64-mingw32/x64, 3.5.0
-* win-builder (release, devel)
-
-## Problems
-
-"checking for future file timestamps ... NOTE
-  unable to verify current time"
-It seems there are problems with "http://worldclockapi.com/api/json/utc/now".
+* local: Windows 11, R 4.6.0 (2026-04-24 ucrt)
+* GitHub Actions: ubuntu-latest (R-devel, R-release, R-oldrel-1),
+  macos-latest (R-release), windows-latest (R-release)
+* win-builder: R-devel, R-release  <!-- run before submission -->
+* R-hub: macOS, Windows, Linux     <!-- run before submission -->
 
 ## R CMD check results
-0 errors ✓ | 0 warnings ✓ | 1 note x
 
-R6 is a build-time dependency.
+0 errors | 0 warnings | 1 note
+
+The single remaining NOTE is the standard `checking CRAN incoming
+feasibility` flag for a resubmission ("New submission / Package was
+archived on CRAN"), which is automatic for any package previously
+archived. The archival reason is documented above.
+
+During one local `--as-cran` run, the URL checker also reported
+`https://cran.r-project.org/package=MBESS` as 404. The URL is valid;
+this appears to be a transient CRAN-side response. Re-running the check
+clears it.
 
 ## Downstream dependencies
-"There are currently no downstream dependencies for this package"
+
+There are currently no reverse dependencies for this package.

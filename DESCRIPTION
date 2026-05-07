@@ -1,8 +1,8 @@
 Package: cvcqv
 Type: Package
 Title: Coefficient of Variation (CV) with Confidence Intervals (CI)
-Version: 1.0.1
-Date: 2020-09-01
+Version: 1.0.2
+Date: 2026-05-07
 Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Maani Beigy <manibeygi@gmail.com>
@@ -12,8 +12,8 @@ Description: Provides some easy-to-use functions and classes to calculate
     Panichkitkosolkul (2013) <doi:10.1155/2013/324940> ,
     Altunkaynak & Gamgam (2018) <doi:10.1080/03610918.2018.1435800> ,
     Albatineh, Kibria, Wilcox & Zogheib (2014) <doi:10.1080/02664763.2013.847405> .
-Depends: 
-    R (>= 3.1.2),
+Depends:
+    R (>= 3.5.0),
     dplyr (>= 0.8.0.1)
 Imports: R6,
   SciViews, 
@@ -29,5 +29,5 @@ URL: https://github.com/MaaniBeigy/cvcqv
 BugReports: https://github.com/MaaniBeigy/cvcqv/issues
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 8.0.0
+Config/roxygen2/version: 8.0.0

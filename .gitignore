@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 config.R
+tmp/
+docs/
+PLAN.md

@@ -43,5 +43,5 @@ Davison, AC., & Hinkley, DV., 1997, Bootstrap Methods and Their
 Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence intervals
   for the coefficient of quartile variation, Simulation and Computation, 1-9,
   DOI:
-  \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
+  \doi{10.1080/03610918.2018.1435800}
 }

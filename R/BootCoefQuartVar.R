@@ -30,7 +30,7 @@
 #' @references Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence intervals
 #'   for the coefficient of quartile variation, Simulation and Computation, 1-9,
 #'   DOI:
-#'   \href{http://doi.org/10.1080/03610918.2018.1435800}{http://doi.org/10.1080/03610918.2018.1435800}
+#'   \doi{10.1080/03610918.2018.1435800}
 #'
 #' @import dplyr SciViews boot R6 utils
 NULL
@@ -202,4 +202,3 @@ BootCoefQuartVar <- R6::R6Class(
         super_ = function() {super}
     )
 )
-
