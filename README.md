@@ -129,6 +129,9 @@ The `results` will be:
 | basic | 57.774 | 35.055 | 78.167 | cv with Basic Bootstrap 95% CI |
 | perc | 57.774 | 38.879 | 79.174 | cv with Bootstrap Percentile 95% CI |
 | bca | 57.774 | 40.807 | 82.297 | cv with Adjusted Bootstrap Percentile (BCa) 95% CI |
+| aak_adj | 57.774 | 48.029 | 72.516 | cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI |
+| aak_ls | 57.774 | 46.310 | 72.075 | cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI |
+| aak_als | 57.774 | 45.839 | 75.092 | cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI |
 
 Next, we want to find **all** of the available *confidence intervals*
 for the `cqv` of variable *x*:
@@ -171,3 +174,9 @@ DOI: <https://doi.org/10.1016/j.csda.2005.05.007>
 Altunkaynak, B., Gamgam, H., 2018, Bootstrap confidence intervals for
 the coefficient of quartile variation, Simulation and Computation, 1-9,
 DOI: <https://doi.org/10.1080/03610918.2018.1435800>
+
+Abu-Shawiesh, M. O. A., Akyuz, H. E., & Kibria, B. M. G., 2019,
+Performance of Some Confidence Intervals for Estimating the Population
+Coefficient of Variation under both Symmetric and Skewed Distributions,
+Statistics, Optimization & Information Computing, 7(2), 277-290, DOI:
+<https://doi.org/10.19139/soic.v7i2.630>
