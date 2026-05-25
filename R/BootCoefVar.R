@@ -37,164 +37,167 @@ NULL
 #' @importFrom MBESS conf.limits.nct
 NULL
 BootCoefVar <- R6::R6Class(
-    classname = "BootCoefVar",
-    public = list(
-        # ---------------- determining defaults for arguments -----------------
-        x = NA,
-        na.rm = FALSE,
-        R = 1000,
-        alpha = 0.05,
-        boot_cv = NA,
-        boot_cv_corr = NA,
-        # --------- determining constructor defaults for arguments ------------
-        initialize = function(
-            x = NA,
-            na.rm = FALSE,
-            R = 1000,
-            alpha = 0.05,
-            ...
-        ) {
-            # ---------------------- check NA or NAN -------------------------
-            if (missing(x) || is.null(x)) {
-                stop("object 'x' not found")
-            } else if (!missing(x)) {
-                self$x <- x
-            }
-            if (!missing(na.rm)) {
-                self$na.rm <- na.rm
-            }
-            if (na.rm == TRUE) {
-                self$x <- x[!is.na(x)]
-            } else if (anyNA(x) & self$na.rm == FALSE) {
-                stop(
-                    "missing values and NaN's not allowed if 'na.rm' is FALSE"
-                )
-            }
-            # ------------- stop if input x vector is not numeric -------------
-            if (!is.numeric(x)) {
-                stop("argument is not a numeric vector")
-            }
-            # ---- set the number of bootstrap replicates with user input -----
-            if (!missing(R)) {
-                self$R <- R
-            }
-            # ------ set the probability of type I error with user input ------
-            if (!missing(alpha)) {
-                self$alpha <- alpha
-            }
-            # ------ initialize boot_cv() i.e., bootstrap of cv function ------
-            self$boot_cv = function(...) {
-                return(
-                    boot::boot(self$x, function(x, i) {
-                            100 * (
-                                (sd(self$x[i], na.rm = self$na.rm)) /
-                                    (mean(self$x[i], na.rm = self$na.rm))
-                                )
-                        },
-                        R = self$R
-                        )
-                )
-            }
-            # - initialize boot_cv_corr() i.e., bootstrap of cv_corr function -
-            self$boot_cv_corr = function(...) {
-                return(
-                    boot::boot(self$x, function(x, i) {
-                        100 * (sd(
-                            self$x[i], na.rm = self$na.rm
-                            )/mean(
-                                self$x[i], na.rm = self$na.rm
-                                ) * ((1 - (1/(4 * (length(self$x[i]) - 1))) +
-                             (1/length(self$x)) * (
-                                 sd(
-                                     self$x[i], na.rm = self$na.rm
-                                     )/mean(
-                                         self$x[i], na.rm = self$na.rm
-                                         ))^2) + (1/(2 * (
-                                             length(self$x) - 1)^2))))
-                        },
-                        R = R
-                        )
-                )
-                }
-            },
-        # ------- public methods of cv bootstrap confidence intervals ---------
-        boot_norm_ci_cv = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv(),
-                    conf = (1 - self$alpha),
-                    type = "norm"
-                )
+  classname = "BootCoefVar",
+  public = list(
+    # ---------------- determining defaults for arguments -----------------
+    x = NA,
+    na.rm = FALSE,
+    R = 1000,
+    alpha = 0.05,
+    boot_cv = NA,
+    boot_cv_corr = NA,
+    # --------- determining constructor defaults for arguments ------------
+    initialize = function(x = NA,
+                          na.rm = FALSE,
+                          R = 1000,
+                          alpha = 0.05,
+                          ...) {
+      # ---------------------- check NA or NAN -------------------------
+      if (missing(x) || is.null(x)) {
+        stop("object 'x' not found")
+      } else if (!missing(x)) {
+        self$x <- x
+      }
+      if (!missing(na.rm)) {
+        self$na.rm <- na.rm
+      }
+      if (na.rm == TRUE) {
+        self$x <- x[!is.na(x)]
+      } else if (anyNA(x) & self$na.rm == FALSE) {
+        stop(
+          "missing values and NaN's not allowed if 'na.rm' is FALSE"
+        )
+      }
+      # ------------- stop if input x vector is not numeric -------------
+      if (!is.numeric(x)) {
+        stop("argument is not a numeric vector")
+      }
+      # ---- set the number of bootstrap replicates with user input -----
+      if (!missing(R)) {
+        self$R <- R
+      }
+      # ------ set the probability of type I error with user input ------
+      if (!missing(alpha)) {
+        self$alpha <- alpha
+      }
+      # ------ initialize boot_cv() i.e., bootstrap of cv function ------
+      self$boot_cv <- function(...) {
+        return(
+          boot::boot(self$x, function(x, i) {
+            100 * (
+              (sd(self$x[i], na.rm = self$na.rm)) /
+                (mean(self$x[i], na.rm = self$na.rm))
             )
-        },
-        boot_basic_ci_cv = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv(),
-                    conf = (1 - self$alpha),
-                    type = "basic"
-                )
-            )
-        },
-        boot_perc_ci_cv = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv(),
-                    conf = (1 - self$alpha),
-                    type = "perc"
-                )
-            )
-        },
-        boot_bca_ci_cv = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv(),
-                    conf = (1 - self$alpha),
-                    type = "bca"
-                )
-            )
-        },
-        # ---- public methods of cv_corr bootstrap confidence intervals -------
-        boot_norm_ci_cv_corr = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv_corr(),
-                    conf = (1 - self$alpha),
-                    type = "norm"
-                )
-            )
-        },
-        boot_basic_ci_cv_corr = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv_corr(),
-                    conf = (1 - self$alpha),
-                    type = "basic"
-                )
-            )
-        },
-        boot_perc_ci_cv_corr = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv_corr(),
-                    conf = (1 - self$alpha),
-                    type = "perc"
-                )
-            )
-        },
-        boot_bca_ci_cv_corr = function(...) {
-            return(
-                boot::boot.ci(
-                    self$boot_cv_corr(),
-                    conf = (1 - self$alpha),
-                    type = "bca"
-                )
-            )
-        }
-    ),
-    # ---- define super_ function to enable multiple levels of inheritance ----
-    active = list(
-        super_ = function() {super}
-    )
+          },
+          R = self$R
+          )
+        )
+      }
+      # - initialize boot_cv_corr() i.e., bootstrap of cv_corr function -
+      self$boot_cv_corr <- function(...) {
+        return(
+          boot::boot(self$x, function(x, i) {
+            100 * (sd(
+              self$x[i],
+              na.rm = self$na.rm
+            ) / mean(
+              self$x[i],
+              na.rm = self$na.rm
+            ) * ((1 - (1 / (4 * (length(self$x[i]) - 1))) +
+              (1 / length(self$x)) * (
+                sd(
+                  self$x[i],
+                  na.rm = self$na.rm
+                ) / mean(
+                  self$x[i],
+                  na.rm = self$na.rm
+                ))^2) + (1 / (2 * (
+              length(self$x) - 1)^2))))
+          },
+          R = R
+          )
+        )
+      }
+    },
+    # ------- public methods of cv bootstrap confidence intervals ---------
+    boot_norm_ci_cv = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv(),
+          conf = (1 - self$alpha),
+          type = "norm"
+        )
+      )
+    },
+    boot_basic_ci_cv = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv(),
+          conf = (1 - self$alpha),
+          type = "basic"
+        )
+      )
+    },
+    boot_perc_ci_cv = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv(),
+          conf = (1 - self$alpha),
+          type = "perc"
+        )
+      )
+    },
+    boot_bca_ci_cv = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv(),
+          conf = (1 - self$alpha),
+          type = "bca"
+        )
+      )
+    },
+    # ---- public methods of cv_corr bootstrap confidence intervals -------
+    boot_norm_ci_cv_corr = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv_corr(),
+          conf = (1 - self$alpha),
+          type = "norm"
+        )
+      )
+    },
+    boot_basic_ci_cv_corr = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv_corr(),
+          conf = (1 - self$alpha),
+          type = "basic"
+        )
+      )
+    },
+    boot_perc_ci_cv_corr = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv_corr(),
+          conf = (1 - self$alpha),
+          type = "perc"
+        )
+      )
+    },
+    boot_bca_ci_cv_corr = function(...) {
+      return(
+        boot::boot.ci(
+          self$boot_cv_corr(),
+          conf = (1 - self$alpha),
+          type = "bca"
+        )
+      )
+    }
+  ),
+  # ---- define super_ function to enable multiple levels of inheritance ----
+  active = list(
+    super_ = function() {
+      super
+    }
+  )
 )
-

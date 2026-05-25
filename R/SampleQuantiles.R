@@ -30,100 +30,105 @@ NULL
 #' @importFrom MBESS conf.limits.nct
 NULL
 SampleQuantiles <- R6::R6Class(
-    classname = "SampleQuantiles",
-    public = list(
-        # ---------------- determining defaults for arguments -----------------
-        x = NA,
-        na.rm = FALSE,
-        digits = 1,
-        probs = 0.5,
-        names = TRUE,
-        type = 7,
-        eps = NA,
-        epsp1 = NA,
-        epsm1 = NA,
-        # --------- determining constructor defaults for arguments ------------
-        initialize = function(
-            x = NA,
-            na.rm = FALSE,
-            digits = 1,
-            probs = 0.5,
-            names = TRUE,
-            type = 7,
-            ...) {
-            # ----------------------- check NA or NAN -------------------------
-            if (missing(x) || is.null(x)) {
-                stop("object 'x' not found")
-            } else if (!missing(x)) {
-                self$x <- x
-            }
-            if (!missing(na.rm)) {
-                self$na.rm <- na.rm
-            }
-            if (na.rm == TRUE) {
-                self$x <- x[!is.na(x)]
-            } else if (anyNA(x) & self$na.rm == FALSE) {
-                stop(
-                    "missing values and NaN's not allowed if 'na.rm' is FALSE"
-                )
-            }
-            # ------------- stop if input x vector is not numeric -------------
-            if (!is.numeric(x)) {
-                stop("argument is not a numeric vector")
-            }
-            # -------------- check for probs being in range [0,1] -------------
-            self$eps <- function(...) {100*.Machine$double.eps}
-            self$epsp1 <- function(...) {1 + 100*.Machine$double.eps}
-            self$epsm1 <- function(...) {-1 * (100*.Machine$double.eps)}
-            if (any(
-                !missing(probs) && (
-                    probs < self$epsm1() | probs > self$epsp1())
-                )
-                ) {
-                stop("probs outside [0,1]")
-            } else if ((
-                !missing(probs) && (probs <= self$epsp1() & probs >= 1)
-            )) {
-                self$probs <- 1
-            } else if ((
-                !missing(probs) && (probs >= self$epsm1() & probs <= 0)
-            )) {
-                self$probs <- 0
-            } else if (
-                (
-                    !missing(probs) && (probs >= 0 & probs <= 1)
-                )
-            ) {
-                self$probs <- probs
-            }
-            # ------------------- set digits with user input ------------------
-            if (!missing(digits)) {
-                self$digits <- digits
-            }
-            # ------------------- set type with user input --------------------
-            if (!missing(type)) {
-                self$type <- type
-            }
-            # ------------------ set names with user input --------------------
-            if (!missing(names)) {
-                self$names <- names
-            }
-            self$qx()  # initialize qx() i.e., sample quantile function
-        },
-        # --------- public function  qx() i.e., sample quantile function ------
-        qx = function(...) {
-            return(
-                round(
-                    stats::quantile(
-                        self$x,
-                        probs = self$probs,
-                        na.rm = self$na.rm,
-                        type = self$type,
-                        names = self$names
-                        ),
-                    digits = self$digits
-                    )
-            )
-        }
-    )
+  classname = "SampleQuantiles",
+  public = list(
+    # ---------------- determining defaults for arguments -----------------
+    x = NA,
+    na.rm = FALSE,
+    digits = 1,
+    probs = 0.5,
+    names = TRUE,
+    type = 7,
+    eps = NA,
+    epsp1 = NA,
+    epsm1 = NA,
+    # --------- determining constructor defaults for arguments ------------
+    initialize = function(x = NA,
+                          na.rm = FALSE,
+                          digits = 1,
+                          probs = 0.5,
+                          names = TRUE,
+                          type = 7,
+                          ...) {
+      # ----------------------- check NA or NAN -------------------------
+      if (missing(x) || is.null(x)) {
+        stop("object 'x' not found")
+      } else if (!missing(x)) {
+        self$x <- x
+      }
+      if (!missing(na.rm)) {
+        self$na.rm <- na.rm
+      }
+      if (na.rm == TRUE) {
+        self$x <- x[!is.na(x)]
+      } else if (anyNA(x) & self$na.rm == FALSE) {
+        stop(
+          "missing values and NaN's not allowed if 'na.rm' is FALSE"
+        )
+      }
+      # ------------- stop if input x vector is not numeric -------------
+      if (!is.numeric(x)) {
+        stop("argument is not a numeric vector")
+      }
+      # -------------- check for probs being in range [0,1] -------------
+      self$eps <- function(...) {
+        100 * .Machine$double.eps
+      }
+      self$epsp1 <- function(...) {
+        1 + 100 * .Machine$double.eps
+      }
+      self$epsm1 <- function(...) {
+        -1 * (100 * .Machine$double.eps)
+      }
+      if (any(
+        !missing(probs) && (
+          probs < self$epsm1() | probs > self$epsp1())
+      )
+      ) {
+        stop("probs outside [0,1]")
+      } else if ((
+        !missing(probs) && (probs <= self$epsp1() & probs >= 1)
+      )) {
+        self$probs <- 1
+      } else if ((
+        !missing(probs) && (probs >= self$epsm1() & probs <= 0)
+      )) {
+        self$probs <- 0
+      } else if (
+        (
+          !missing(probs) && (probs >= 0 & probs <= 1)
+        )
+      ) {
+        self$probs <- probs
+      }
+      # ------------------- set digits with user input ------------------
+      if (!missing(digits)) {
+        self$digits <- digits
+      }
+      # ------------------- set type with user input --------------------
+      if (!missing(type)) {
+        self$type <- type
+      }
+      # ------------------ set names with user input --------------------
+      if (!missing(names)) {
+        self$names <- names
+      }
+      self$qx() # initialize qx() i.e., sample quantile function
+    },
+    # --------- public function  qx() i.e., sample quantile function ------
+    qx = function(...) {
+      return(
+        round(
+          stats::quantile(
+            self$x,
+            probs = self$probs,
+            na.rm = self$na.rm,
+            type = self$type,
+            names = self$names
+          ),
+          digits = self$digits
+        )
+      )
+    }
+  )
 )

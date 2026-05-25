@@ -34,72 +34,72 @@ NULL
 #' @importFrom MBESS conf.limits.nct
 NULL
 CoefVar <- R6::R6Class(
-    classname = "CoefVar",
-    inherit = BootCoefVar,
-    public = list(
-        # ---------------- determining defaults for arguments -----------------
-        x = NA,
-        na.rm = FALSE,
-        digits = 1,
-        est = NA,
-        # --------- determining constructor defaults for arguments ------------
-        initialize = function(
-            x = NA,
-            na.rm = FALSE,
-            digits = 1,
-            ...
-        ) {
-            # ---------------------- check NA or NAN -------------------------
-            if (missing(x) || is.null(x)) {
-                stop("object 'x' not found")
-            } else if (!missing(x)) {
-                self$x <- x
-            }
-            if (!missing(na.rm)) {
-                self$na.rm <- na.rm
-            }
-            if (self$na.rm == TRUE) {
-                self$x <- x[!is.na(x)]
-            } else if (anyNA(x) & self$na.rm == FALSE) {
-                stop(
-                    "missing values and NaN's not allowed if 'na.rm' is FALSE"
-                )
-            }
-            # ------------- stop if input x vector is not numeric -------------
-            if (!is.numeric(x)) {
-                stop("argument is not a numeric vector")
-            }
-            # ------------------- set digits with user input ------------------
-            if (!missing(digits)) {
-                self$digits <- digits
-            }
-            # ----------- initialize cv estimate i.e., est() function ---------
-            self$est = function(...) {
-                return(
-                    round(
-                        100 * (
-                            (sd(self$x, na.rm = self$na.rm)) /
-                                (mean(self$x, na.rm = self$na.rm))
-                        ), digits = self$digits
-                    )
-                )
-            }
-        },
-        # -- public method of corrected cv estimate i.e., est_corr() function -
-        est_corr = function(...) {
-            return(
-                round(
-                    100 * ((self$est()/100) * (
-                        (1 - (1/(4 * (length(self$x) - 1))) +
-                             (1/length(self$x)) * (self$est()/100)^2) +
-                            (1/(2 * (length(self$x) - 1)^2))
-                        )), digits = self$digits
-                    )
-                )
-        }
-    ),
-    # ---- define super_ function to enable multiple levels of inheritance ----
-    active = list(
-        super_ = function() super
-    )
+  classname = "CoefVar",
+  inherit = BootCoefVar,
+  public = list(
+    # ---------------- determining defaults for arguments -----------------
+    x = NA,
+    na.rm = FALSE,
+    digits = 1,
+    est = NA,
+    # --------- determining constructor defaults for arguments ------------
+    initialize = function(x = NA,
+                          na.rm = FALSE,
+                          digits = 1,
+                          ...) {
+      # ---------------------- check NA or NAN -------------------------
+      if (missing(x) || is.null(x)) {
+        stop("object 'x' not found")
+      } else if (!missing(x)) {
+        self$x <- x
+      }
+      if (!missing(na.rm)) {
+        self$na.rm <- na.rm
+      }
+      if (self$na.rm == TRUE) {
+        self$x <- x[!is.na(x)]
+      } else if (anyNA(x) & self$na.rm == FALSE) {
+        stop(
+          "missing values and NaN's not allowed if 'na.rm' is FALSE"
+        )
+      }
+      # ------------- stop if input x vector is not numeric -------------
+      if (!is.numeric(x)) {
+        stop("argument is not a numeric vector")
+      }
+      # ------------------- set digits with user input ------------------
+      if (!missing(digits)) {
+        self$digits <- digits
+      }
+      # ----------- initialize cv estimate i.e., est() function ---------
+      self$est <- function(...) {
+        return(
+          round(
+            100 * (
+              (sd(self$x, na.rm = self$na.rm)) /
+                (mean(self$x, na.rm = self$na.rm))
+            ),
+            digits = self$digits
+          )
+        )
+      }
+    },
+    # -- public method of corrected cv estimate i.e., est_corr() function -
+    est_corr = function(...) {
+      return(
+        round(
+          100 * ((self$est() / 100) * (
+            (1 - (1 / (4 * (length(self$x) - 1))) +
+              (1 / length(self$x)) * (self$est() / 100)^2) +
+              (1 / (2 * (length(self$x) - 1)^2))
+          )),
+          digits = self$digits
+        )
+      )
+    }
+  ),
+  # ---- define super_ function to enable multiple levels of inheritance ----
+  active = list(
+    super_ = function() super
+  )
 )

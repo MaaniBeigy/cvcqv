@@ -13,7 +13,7 @@ Description: Provides some easy-to-use functions and classes to calculate
     'Altunkaynak' & 'Gamgam' (2018) <doi:10.1080/03610918.2018.1435800>,
     'Albatineh', 'Kibria', Wilcox & 'Zogheib' (2014) <doi:10.1080/02664763.2013.847405>.
 Depends:
-    R (>= 3.5.0),
+    R (>= 4.1.0),
     dplyr (>= 0.8.0.1)
 Imports: R6,
   SciViews, 

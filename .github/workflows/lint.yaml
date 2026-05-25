@@ -25,15 +25,18 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::lintr, local::.
+          extra-packages: any::lintr, any::pkgload, local::.
           needs: lint
 
       - name: Lint
-        run: lintr::lint_package()
+        # `pkgload::load_all()` first so that lintr's `object_usage_linter`
+        # can resolve cross-file internal helpers (e.g. R/aak_helpers.R)
+        # via the package's in-memory namespace. Without this, lintr only
+        # sees the installed (NAMESPACE-exported) symbols and flags every
+        # internal function call as `no visible global function`.
+        run: |
+          pkgload::load_all(".", quiet = TRUE)
+          lintr::lint_package()
         shell: Rscript {0}
-        # LINTR_ERROR_ON_LINT intentionally not set — lint findings are
-        # advisory only on this 2020-era codebase. The `.lintr` config at
-        # repo root silences the categories that conflict with the
-        # established style (PascalCase R6 names, 4-space indents,
-        # explicit return(), etc.). Stylistic modernization is tracked
-        # separately and is not a precondition for CRAN release.
+        env:
+          LINTR_ERROR_ON_LINT: true

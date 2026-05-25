@@ -1,15 +1,34 @@
+## Five principled exemptions; everything else fails CI.
+##
+##   object_name_linter:
+##     cvcqv's R6 class names (CoefVar, CoefQuartVar, CoefVarCI,
+##     CoefQuartVarCI, BootCoefVar, BootCoefQuartVar, SampleQuantiles)
+##     are public API. Renaming to snake_case would break every
+##     existing user's code.
+##
+##   line_length_linter(120):
+##     reference tables and long-form docstring lines naturally exceed
+##     80 chars. 120 is a reasonable cap.
+##
+##   return_linter:
+##     the codebase consistently uses explicit `return()` at function
+##     exits. This is a style choice, not a bug. Re-litigating it
+##     would touch hundreds of lines for no semantic benefit.
+##
+##   commented_code_linter:
+##     `R/cv_versatile.R` contains historical commented-out alternative
+##     implementations preserved as in-source documentation.
+##
+##   indentation_linter:
+##     styler's hanging-indent layout for long multi-line numeric
+##     expressions disagrees with lintr's strict indent expectations.
+##     We let styler win and disable this linter.
 linters: linters_with_defaults(
-    object_name_linter             = NULL,
-    indentation_linter             = NULL,
-    return_linter                  = NULL,
-    assignment_linter              = NULL,
-    commented_code_linter          = NULL,
-    brace_linter                   = NULL,
-    infix_spaces_linter            = NULL,
-    spaces_left_parentheses_linter = NULL,
-    spaces_inside_linter           = NULL,
-    trailing_blank_lines_linter    = NULL,
-    line_length_linter             = line_length_linter(120)
+    object_name_linter    = NULL,
+    return_linter         = NULL,
+    commented_code_linter = NULL,
+    indentation_linter    = NULL,
+    line_length_linter    = line_length_linter(120)
   )
 exclusions: list("tests/testthat", "vignettes", "inst/doc", "tmp")
 encoding: "UTF-8"

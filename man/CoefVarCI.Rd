@@ -44,7 +44,7 @@ An object of type "list" which contains the estimate, the intervals,
   \code{[6]} proposed a method for the calculation of CI for \emph{cv}; which
   is a modification on McKay’s CI.  \cr \cr \strong{Mahmoudvand-Hassani
   Confidence Interval:} Mahmoudvand and Hassani \code{[7]} proposed a new CI
-  for \emph{cv}; which is obtained using ranked set sampling \emph{(RSS)} 
+  for \emph{cv}; which is obtained using ranked set sampling \emph{(RSS)}
   \cr \cr \strong{Normal Approximation Confidence Interval:} Wararit
   Panichkitkosolkul \code{[8]} proposed another CI for \emph{cv}; which is a
   normal approximation.  \cr \cr \strong{Shortest-Length Confidence
