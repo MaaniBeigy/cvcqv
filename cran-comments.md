@@ -1,35 +1,34 @@
-# cvcqv 1.0.3 — CRAN submission
+# cvcqv 1.0.4 — CRAN submission
 
-## Resubmission of archived package (follow-up to 1.0.2)
+## Reason for the quick release after 1.0.3
 
-This is a follow-up resubmission of `cvcqv`, originally archived on
-CRAN on 2022-05-19, after CRAN's incoming-feasibility auto-check on
-1.0.2 (2026-05-07) flagged two non-blocking issues that have now been
-resolved in 1.0.3:
+This is a feature release submitted four days after 1.0.3 was accepted
+(2026-05-08). The motivation is to ship three published
+confidence-interval methods that were requested via GitHub issues #61,
+#62, and #63 and that already exist in the sibling Python package
+`pycvcqv`. The three methods are:
 
-* "Possibly misspelled words in DESCRIPTION" — author surnames
-  (`Albatineh`, `Altunkaynak`, `Gamgam`, `Kibria`, `Panichkitkosolkul`,
-  `Zogheib`) are now wrapped in single quotes in the `Description`
-  field, per the CRAN convention for proper names.
-* "Found the following (possibly) invalid URLs" — the link in
-  `README.md` to `cvcqv_1.0.0.tar.gz` (a file that no longer exists in
-  the repository) has been removed. The README now instructs users to
-  install from CRAN.
+* Abu-Shawiesh, Akyuz & Kibria (2019)
+  <doi:10.19139/soic.v7i2.630> adjusted-degrees-of-freedom CI for the
+  population coefficient of variation (`method = "aak_adj"`).
+* Abu-Shawiesh, Akyuz & Kibria (2019) large-sample CI
+  (`method = "aak_ls"`).
+* Abu-Shawiesh, Akyuz & Kibria (2019) augmented-large-sample CI
+  (`method = "aak_als"`).
 
-The original archival reason was the NOTE
-`'LazyData' is specified without a 'data' directory`, resolved in 1.0.2
-by removing `LazyData: true` from `DESCRIPTION`; the package ships no
-exported datasets (the only `.rda` file in the package is internal data
-in `R/sysdata.rda`).
+All three are exposed through both the `CoefVarCI` R6 class and the
+procedural `cv_versatile()` function. The existing public API is
+unchanged.
 
-The other resubmission fixes carried forward from 1.0.2:
+## R CMD check results
 
-* 32 `checkRd: Lost braces` NOTEs in `CoefVarCI.Rd`, `CoefQuartVarCI.Rd`,
-  `cv_versatile.Rd`, and `cqv_versatile.Rd`. Root cause: roxygen
-  comments used `\strong{LABEL:}{ TEXT }`, an invalid two-argument form;
-  rewritten as `\strong{LABEL:} TEXT`.
-* All `\href{http://doi.org/...}` references migrated to
-  `https://doi.org/...`.
+0 errors | 0 warnings | 1 note
+
+The single NOTE is the expected `Days since last update: 4` message
+from CRAN's incoming-feasibility check. We considered batching this
+feature with a later release, but felt the published methods (and the
+already-implemented Python counterpart) warranted shipping promptly so
+that R users have parity with `pycvcqv`.
 
 ## Test environments
 
@@ -37,22 +36,14 @@ The other resubmission fixes carried forward from 1.0.2:
 * GitHub Actions: ubuntu-latest (R-devel, R-release, R-oldrel-1),
   macos-latest (R-release), windows-latest (R-release)
 * win-builder: R-devel, R-release
-* R-hub: macOS, Windows, Linux
+* R-hub: linux, macos-arm64, windows
 
-## R CMD check results
-
-0 errors | 0 warnings | 1 note
-
-The single remaining NOTE is the standard `checking CRAN incoming
-feasibility` flag for a resubmission ("New submission / Package was
-archived on CRAN"), which is automatic for any package previously
-archived. The archival reason is documented above.
-
-During one local `--as-cran` run, the URL checker also reported
-`https://cran.r-project.org/package=MBESS` as 404. The URL is valid;
-this appears to be a transient CRAN-side response. Re-running the check
-cleared it.
+All 601 testthat assertions pass on R 4.6.0. The three new methods are
+each cross-validated against the worked examples in tables 5 and 6 of
+Abu-Shawiesh, Akyuz & Kibria (2019).
 
 ## Downstream dependencies
 
-There are currently no reverse dependencies for this package.
+There are currently no reverse dependencies for this package
+(`tools::package_dependencies('cvcqv', reverse = TRUE)` returns
+`NULL`).
