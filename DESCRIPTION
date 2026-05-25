@@ -1,8 +1,8 @@
 Package: cvcqv
 Type: Package
 Title: Coefficient of Variation (CV) with Confidence Intervals (CI)
-Version: 1.0.3
-Date: 2026-05-08
+Version: 1.0.4
+Date: 2026-05-12
 Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Maani Beigy <manibeygi@gmail.com>

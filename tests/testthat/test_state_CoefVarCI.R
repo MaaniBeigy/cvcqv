@@ -945,7 +945,7 @@ test_that(
         )
         expect_equal(
             nrow(CoefVarCI$new(x)$all_ci()$statistics),
-            12
+            15
         )
         expect_equal(
             ncol(CoefVarCI$new(x)$all_ci()$statistics),
@@ -957,7 +957,7 @@ test_that(
         )
         expect_equal(
             nrow(CoefVarCI$new(x, correction = TRUE)$all_ci()$statistics),
-            12
+            15
         )
         expect_equal(
             ncol(CoefVarCI$new(x, correction = TRUE)$all_ci()$statistics),

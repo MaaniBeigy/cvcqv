@@ -9,8 +9,8 @@
 #' @param method a scalar representing the type of confidence intervals
 #'   required. The value should be any of the values "kelley_ci", "mckay_ci",
 #'   "miller_ci", "vangel_ci", "mahmoudvand_hassani_ci", "equal_tailed_ci",
-#'   "shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci", or
-#'   "all_ci".
+#'   "shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci",
+#'   "aak_adj_ci", "aak_ls_ci", "aak_als_ci", or "all_ci".
 #' @param alpha The allowed type I error probability
 #' @param R integer indicating the number of bootstrap replicates.
 #' @param correction returns the unbiased estimate of the coefficient of
@@ -49,7 +49,14 @@
 #'   chi-square distribution.  \cr \cr \strong{Bootstrap Confidence
 #'   Intervals:} Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
 #'   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.  \cr
-#'   \cr } }
+#'   \cr \strong{Abu-Shawiesh-Akyuz-Kibria Confidence Intervals:}
+#'   Abu-Shawiesh, Akyuz, & Kibria \code{[10]} proposed three CIs for the
+#'   population \emph{cv} that adjust for non-normality through the sample
+#'   kurtosis: the adjusted-degrees-of-freedom CI (\code{aak_adj_ci}) derived
+#'   from Hummel et al.'s CI for the variance, the large-sample CI
+#'   (\code{aak_ls_ci}) derived from the log-transformed CI for the variance,
+#'   and the augmented-large-sample CI (\code{aak_als_ci}) derived from
+#'   Burch's CI for the variance.  \cr \cr } }
 #' @examples
 #' y <- c(
 #'     0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
@@ -97,6 +104,12 @@
 #'
 #' @references \code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
 #'   (S-Plus) Functions, R package version 1.3-20
+#'
+#' @references \code{[10]} Abu-Shawiesh, MOA., Akyuz, HE., & Kibria, BG.,
+#'   2019, Performance of Some Confidence Intervals for Estimating the
+#'   Population Coefficient of Variation under both Symmetric and Skewed
+#'   Distributions, Statistics, Optimization & Information Computing, 7(2),
+#'   277-290, DOI: \doi{10.19139/soic.v7i2.630}
 #' @export
 #' @import dplyr SciViews boot R6 utils
 NULL
@@ -176,6 +189,29 @@ CoefVarCI <- R6::R6Class(
         upper_tile_equal_cv = NA,
         lower_tile_equal_cv_corr = NA,
         upper_tile_equal_cv_corr = NA,
+        # ---- AA&K (Abu-Shawiesh, Akyuz & Kibria, 2019) population CIs -------
+        gamma_hat_aak = NA,
+        r_hat_aak = NA,
+        aak_adj_qchi_low = NA,
+        aak_adj_qchi_high = NA,
+        lower_tile_aak_adj_cv = NA,
+        upper_tile_aak_adj_cv = NA,
+        lower_tile_aak_adj_cv_corr = NA,
+        upper_tile_aak_adj_cv_corr = NA,
+        g2_aak = NA,
+        a_value_aak_ls = NA,
+        lower_tile_aak_ls_cv = NA,
+        upper_tile_aak_ls_cv = NA,
+        lower_tile_aak_ls_cv_corr = NA,
+        upper_tile_aak_ls_cv_corr = NA,
+        kappa_e5_aak = NA,
+        k_value_aak_als = NA,
+        b_value_aak_als = NA,
+        c_value_aak_als = NA,
+        lower_tile_aak_als_cv = NA,
+        upper_tile_aak_als_cv = NA,
+        lower_tile_aak_als_cv_corr = NA,
+        upper_tile_aak_als_cv_corr = NA,
         shortest_length = data.frame(
             # ----------- "a" and "b" values for shortest-length CI -----------
             v = c(  # degrees of freedom
@@ -820,6 +856,149 @@ CoefVarCI <- R6::R6Class(
                         )
                 )
             }
+            # ------------- AA&K-ADJ (Abu-Shawiesh et al., 2019) --------------
+            # adjusted-degrees-of-freedom CI derived from Hummel et al.'s
+            # CI for the population variance (Eq. 21).
+            self$gamma_hat_aak = function(...) {
+                # Hummel-style adjusted-kurtosis estimator (Eq. 5)
+                return(.gamma_hat_hummel(self$x, ddof = 1))
+            }
+            self$r_hat_aak = function(...) {
+                # adjusted degrees of freedom r_hat = 2n / (gamma_hat + 2n/(n-1))
+                n <- length(self$x)
+                gh <- self$gamma_hat_aak()
+                r_hat <- (2 * n) / (gh + 2 * n / (n - 1))
+                if (r_hat <= 0) {
+                    stop(
+                        "AA&K-ADJ: non-positive adjusted degrees of freedom"
+                    )
+                }
+                return(r_hat)
+            }
+            self$aak_adj_qchi_high = function(...) {
+                # (1 - alpha/2) quantile of chi-square with df = r_hat
+                return(stats::qchisq(1 - self$alpha/2, self$r_hat_aak()))
+            }
+            self$aak_adj_qchi_low = function(...) {
+                # (alpha/2) quantile of chi-square with df = r_hat
+                return(stats::qchisq(self$alpha/2, self$r_hat_aak()))
+            }
+            self$lower_tile_aak_adj_cv = function(...) {
+                # lower confidence limit for AA&K-ADJ method of cv
+                return(
+                    (self$est()/100) *
+                        sqrt(self$r_hat_aak() / self$aak_adj_qchi_high())
+                )
+            }
+            self$upper_tile_aak_adj_cv = function(...) {
+                # upper confidence limit for AA&K-ADJ method of cv
+                return(
+                    (self$est()/100) *
+                        sqrt(self$r_hat_aak() / self$aak_adj_qchi_low())
+                )
+            }
+            self$lower_tile_aak_adj_cv_corr = function(...) {
+                # lower confidence limit for AA&K-ADJ method of corrected cv
+                return(
+                    (self$est_corr()/100) *
+                        sqrt(self$r_hat_aak() / self$aak_adj_qchi_high())
+                )
+            }
+            self$upper_tile_aak_adj_cv_corr = function(...) {
+                # upper confidence limit for AA&K-ADJ method of corrected cv
+                return(
+                    (self$est_corr()/100) *
+                        sqrt(self$r_hat_aak() / self$aak_adj_qchi_low())
+                )
+            }
+            # -------------- AA&K-LS (Abu-Shawiesh et al., 2019) --------------
+            # large-sample CI for the population CV derived from the
+            # log-transformed CI for the variance (Eq. 26).
+            self$g2_aak = function(...) {
+                # bias-adjusted kurtosis estimator G_2 (Eq. 10)
+                return(.g2_bias_corrected(self$x))
+            }
+            self$a_value_aak_ls = function(...) {
+                # A = (G_2 + 2n/(n-1)) / n
+                n <- length(self$x)
+                return((self$g2_aak() + 2 * n / (n - 1)) / n)
+            }
+            self$lower_tile_aak_ls_cv = function(...) {
+                # lower confidence limit for AA&K-LS method of cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$a_value_aak_ls())
+                return((self$est()/100) * sqrt(exp(-radical)))
+            }
+            self$upper_tile_aak_ls_cv = function(...) {
+                # upper confidence limit for AA&K-LS method of cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$a_value_aak_ls())
+                return((self$est()/100) * sqrt(exp(+radical)))
+            }
+            self$lower_tile_aak_ls_cv_corr = function(...) {
+                # lower confidence limit for AA&K-LS method of corrected cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$a_value_aak_ls())
+                return((self$est_corr()/100) * sqrt(exp(-radical)))
+            }
+            self$upper_tile_aak_ls_cv_corr = function(...) {
+                # upper confidence limit for AA&K-LS method of corrected cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$a_value_aak_ls())
+                return((self$est_corr()/100) * sqrt(exp(+radical)))
+            }
+            # ------------- AA&K-ALS (Abu-Shawiesh et al., 2019) --------------
+            # augmented-large-sample CI for the population CV derived from
+            # Burch's CI for the variance using a three-term Taylor expansion
+            # of log(S^2) (Eq. 32).
+            self$kappa_e5_aak = function(...) {
+                # modified kurtosis estimator kappa_e5 (Eq. 13)
+                return(.kappa_e5(self$x))
+            }
+            self$k_value_aak_als = function(...) {
+                # K = kappa_e5 + 2n / (n - 1)
+                n <- length(self$x)
+                return(self$kappa_e5_aak() + 2 * n / (n - 1))
+            }
+            self$b_value_aak_als = function(...) {
+                # B = (K/n) * (1 + K/(2n))  -- variance of log(S^2)
+                n <- length(self$x)
+                k <- self$k_value_aak_als()
+                return((k / n) * (1 + k / (2 * n)))
+            }
+            self$c_value_aak_als = function(...) {
+                # C = K / (2n)  -- bias of log(S^2)
+                n <- length(self$x)
+                return(self$k_value_aak_als() / (2 * n))
+            }
+            self$lower_tile_aak_als_cv = function(...) {
+                # lower confidence limit for AA&K-ALS method of cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$b_value_aak_als())
+                c_v <- self$c_value_aak_als()
+                return((self$est()/100) * sqrt(exp(-radical + c_v)))
+            }
+            self$upper_tile_aak_als_cv = function(...) {
+                # upper confidence limit for AA&K-ALS method of cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$b_value_aak_als())
+                c_v <- self$c_value_aak_als()
+                return((self$est()/100) * sqrt(exp(+radical + c_v)))
+            }
+            self$lower_tile_aak_als_cv_corr = function(...) {
+                # lower confidence limit for AA&K-ALS method of corrected cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$b_value_aak_als())
+                c_v <- self$c_value_aak_als()
+                return((self$est_corr()/100) * sqrt(exp(-radical + c_v)))
+            }
+            self$upper_tile_aak_als_cv_corr = function(...) {
+                # upper confidence limit for AA&K-ALS method of corrected cv
+                z <- stats::qnorm(1 - self$alpha/2)
+                radical <- z * sqrt(self$b_value_aak_als())
+                c_v <- self$c_value_aak_als()
+                return((self$est_corr()/100) * sqrt(exp(+radical + c_v)))
+            }
             # ----------------------- Bootstrap methods -----------------------
             self$bootcv = function(...) {
                 # call grand-parent method of bootstrap for cv
@@ -1187,6 +1366,138 @@ CoefVarCI <- R6::R6Class(
                 )
             }
         },
+        # --------- public method aak_adj_ci() i.e., AA&K-ADJ CI --------------
+        aak_adj_ci = function(...) {
+            if (self$correction == FALSE) {
+                return(
+                    list(
+                        method = (
+                            "cv with Abu-Shawiesh-Akyuz-Kibria ADJ CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_adj_cv() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_adj_cv() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            } else {
+                return(
+                    list(
+                        method = (
+                       "corrected cv with Abu-Shawiesh-Akyuz-Kibria ADJ CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est_corr(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_adj_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_adj_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            }
+        },
+        # ---------- public method aak_ls_ci() i.e., AA&K-LS CI ---------------
+        aak_ls_ci = function(...) {
+            if (self$correction == FALSE) {
+                return(
+                    list(
+                        method = (
+                            "cv with Abu-Shawiesh-Akyuz-Kibria LS CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_ls_cv() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_ls_cv() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            } else {
+                return(
+                    list(
+                        method = (
+                       "corrected cv with Abu-Shawiesh-Akyuz-Kibria LS CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est_corr(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_ls_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_ls_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            }
+        },
+        # --------- public method aak_als_ci() i.e., AA&K-ALS CI --------------
+        aak_als_ci = function(...) {
+            if (self$correction == FALSE) {
+                return(
+                    list(
+                        method = (
+                            "cv with Abu-Shawiesh-Akyuz-Kibria ALS CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_als_cv() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_als_cv() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            } else {
+                return(
+                    list(
+                        method = (
+                       "corrected cv with Abu-Shawiesh-Akyuz-Kibria ALS CI"
+                        ),
+                        statistics = data.frame(
+                            est = round(self$est_corr(), digits = self$digits),
+                            lower = round(
+                                self$lower_tile_aak_als_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            upper = round(
+                                self$upper_tile_aak_als_cv_corr() * 100,
+                                digits = self$digits
+                            ),
+                            row.names = c(" ")
+                        )
+                    )
+                )
+            }
+        },
         # -- public method norm_ci() i.e., bootstrap normal approximation CI --
         norm_ci = function(...) {
             if (self$correction == FALSE) {
@@ -1382,9 +1693,15 @@ CoefVarCI <- R6::R6Class(
                                 "norm",  # 9
                                 "basic",  # 10
                                 "perc",  # 11
-                                "bca"  # 12
+                                "bca",  # 12
+                                "aak_adj",  # 13
+                                "aak_ls",  # 14
+                                "aak_als"  # 15
                             ),
                             est = c(
+                                round(self$est(), digits = self$digits),
+                                round(self$est(), digits = self$digits),
+                                round(self$est(), digits = self$digits),
                                 round(self$est(), digits = self$digits),
                                 round(self$est(), digits = self$digits),
                                 round(self$est(), digits = self$digits),
@@ -1445,6 +1762,18 @@ CoefVarCI <- R6::R6Class(
                                 round(
                                     self$boot_bca_ci_cv()$bca[4],
                                     digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_adj_cv() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_ls_cv() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_als_cv() * 100,
+                                    digits = self$digits
                                 )
                             ),
                             upper = c(
@@ -1494,6 +1823,18 @@ CoefVarCI <- R6::R6Class(
                                 round(
                                     self$boot_bca_ci_cv()$bca[5],
                                     digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_adj_cv() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_ls_cv() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_als_cv() * 100,
+                                    digits = self$digits
                                 )
                             ),
                             description = c(
@@ -1508,7 +1849,10 @@ CoefVarCI <- R6::R6Class(
                         "cv with Normal Approximation Bootstrap 95% CI",
                         "cv with Basic Bootstrap 95% CI",
                         "cv with Bootstrap Percentile 95% CI",
-                        "cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                        "cv with Adjusted Bootstrap Percentile (BCa) 95% CI",
+                        "cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI",
+                        "cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI",
+                        "cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
                             )
                         )
                     )
@@ -1530,9 +1874,15 @@ CoefVarCI <- R6::R6Class(
                                 "norm",  # 9
                                 "basic",  # 10
                                 "perc",  # 11
-                                "bca"  # 12
+                                "bca",  # 12
+                                "aak_adj",  # 13
+                                "aak_ls",  # 14
+                                "aak_als"  # 15
                             ),
                             est = c(
+                                round(self$est_corr(), digits = self$digits),
+                                round(self$est_corr(), digits = self$digits),
+                                round(self$est_corr(), digits = self$digits),
                                 round(self$est_corr(), digits = self$digits),
                                 round(self$est_corr(), digits = self$digits),
                                 round(self$est_corr(), digits = self$digits),
@@ -1593,6 +1943,18 @@ CoefVarCI <- R6::R6Class(
                                 round(
                                     self$boot_bca_ci_cv_corr()$bca[4],
                                     digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_adj_cv_corr() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_ls_cv_corr() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$lower_tile_aak_als_cv_corr() * 100,
+                                    digits = self$digits
                                 )
                             ),
                             upper = c(
@@ -1642,6 +2004,18 @@ CoefVarCI <- R6::R6Class(
                                 round(
                                     self$boot_bca_ci_cv_corr()$bca[5],
                                     digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_adj_cv_corr() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_ls_cv_corr() * 100,
+                                    digits = self$digits
+                                ),
+                                round(
+                                    self$upper_tile_aak_als_cv_corr() * 100,
+                                    digits = self$digits
                                 )
                             ),
                             description = c(
@@ -1656,7 +2030,10 @@ CoefVarCI <- R6::R6Class(
                 "Corrected cv with Normal Approximation Bootstrap 95% CI",
                 "Corrected cv with Basic Bootstrap 95% CI",
                 "Corrected cv with Bootstrap Percentile 95% CI",
-                "Corrected cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                "Corrected cv with Adjusted Bootstrap Percentile (BCa) 95% CI",
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI",
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI",
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
                             )
                         )
                     )

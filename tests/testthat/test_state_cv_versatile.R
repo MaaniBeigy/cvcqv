@@ -716,7 +716,7 @@ test_that(
                 method = "all",
                 correction = TRUE
             )$statistics),
-            10
+            13
         )
         expect_equal(
             ncol(cv_versatile(
@@ -768,7 +768,7 @@ test_that(
                 method = "all",
                 correction = FALSE
             )$statistics),
-            10
+            13
         )
         expect_equal(
             ncol(cv_versatile(
@@ -863,7 +863,7 @@ test_that(
                 method = "all",
                 correction = FALSE
             )$statistics),
-            10
+            13
         )
         expect_equal(
             ncol(cv_versatile(
@@ -887,7 +887,7 @@ test_that(
                 method = "all",
                 correction = TRUE
             )$statistics),
-            10
+            13
         )
         expect_equal(
             ncol(cv_versatile(
