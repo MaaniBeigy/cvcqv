@@ -1,4 +1,4 @@
-# cvcqv 1.0.4
+# cvcqv (development version)
 
 ## New features
 
