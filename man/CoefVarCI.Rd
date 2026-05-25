@@ -14,8 +14,8 @@ stripped before the computation proceeds.}
 \item{method}{a scalar representing the type of confidence intervals
 required. The value should be any of the values "kelley_ci", "mckay_ci",
 "miller_ci", "vangel_ci", "mahmoudvand_hassani_ci", "equal_tailed_ci",
-"shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci", or
-"all_ci".}
+"shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci",
+"aak_adj_ci", "aak_ls_ci", "aak_als_ci", or "all_ci".}
 
 \item{alpha}{The allowed type I error probability}
 
@@ -55,7 +55,14 @@ An object of type "list" which contains the estimate, the intervals,
   chi-square distribution.  \cr \cr \strong{Bootstrap Confidence
   Intervals:} Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.  \cr
-  \cr } }
+  \cr \strong{Abu-Shawiesh-Akyuz-Kibria Confidence Intervals:}
+  Abu-Shawiesh, Akyuz, & Kibria \code{[10]} proposed three CIs for the
+  population \emph{cv} that adjust for non-normality through the sample
+  kurtosis: the adjusted-degrees-of-freedom CI (\code{aak_adj_ci}) derived
+  from Hummel et al.'s CI for the variance, the large-sample CI
+  (\code{aak_ls_ci}) derived from the log-transformed CI for the variance,
+  and the augmented-large-sample CI (\code{aak_als_ci}) derived from
+  Burch's CI for the variance.  \cr \cr } }
 }
 \description{
 The R6 class \code{CoefVarCI} for the confidence intervals of
@@ -122,4 +129,10 @@ R6::is.R6(cv_y)
 
 \code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
   (S-Plus) Functions, R package version 1.3-20
+
+\code{[10]} Abu-Shawiesh, MOA., Akyuz, HE., & Kibria, BG.,
+  2019, Performance of Some Confidence Intervals for Estimating the
+  Population Coefficient of Variation under both Symmetric and Skewed
+  Distributions, Statistics, Optimization & Information Computing, 7(2),
+  277-290, DOI: \doi{10.19139/soic.v7i2.630}
 }

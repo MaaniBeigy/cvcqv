@@ -14,7 +14,8 @@ stripped before the computation proceeds.}
 \item{method}{a scalar representing the type of confidence intervals
 required. The value should be any of the values "kelley", "mckay",
 "miller", "vangel", "mahmoudvand_hassani", "equal_tailed",
-"shortest_length", "normal_approximation", "norm","basic", or "all".}
+"shortest_length", "normal_approximation", "norm","basic", "aak_adj",
+"aak_ls", "aak_als", or "all".}
 
 \item{correction}{returns the unbiased estimate of the coefficient of
 variation}
@@ -54,7 +55,12 @@ An object of type "list" which contains the estimate, the intervals,
   chi-square distribution.  \cr \cr \strong{Bootstrap Confidence
   Intervals:} Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.  \cr
-  \cr } }
+  \cr \strong{Abu-Shawiesh-Akyuz-Kibria Confidence Intervals:}
+  Abu-Shawiesh, Akyuz, & Kibria \code{[10]} proposed three CIs for the
+  population \emph{cv} that adjust for non-normality through the sample
+  kurtosis: the adjusted-degrees-of-freedom CI (\code{aak_adj}), the
+  large-sample CI (\code{aak_ls}), and the augmented-large-sample CI
+  (\code{aak_als}).  \cr \cr } }
 }
 \description{
 Versatile function for the coefficient of variation (cv)
@@ -113,4 +119,10 @@ cv_versatile(x, na.rm = TRUE, method = "mahmoudvand_hassani", correction = TRUE)
 
 \code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
   (S-Plus) Functions, R package version 1.3-20
+
+\code{[10]} Abu-Shawiesh, MOA., Akyuz, HE., & Kibria, BG.,
+  2019, Performance of Some Confidence Intervals for Estimating the
+  Population Coefficient of Variation under both Symmetric and Skewed
+  Distributions, Statistics, Optimization & Information Computing, 7(2),
+  277-290, DOI: \doi{10.19139/soic.v7i2.630}
 }

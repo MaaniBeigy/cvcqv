@@ -8,7 +8,8 @@
 #' @param method a scalar representing the type of confidence intervals
 #'   required. The value should be any of the values "kelley", "mckay",
 #'   "miller", "vangel", "mahmoudvand_hassani", "equal_tailed",
-#'   "shortest_length", "normal_approximation", "norm","basic", or "all".
+#'   "shortest_length", "normal_approximation", "norm","basic", "aak_adj",
+#'   "aak_ls", "aak_als", or "all".
 #' @param correction returns the unbiased estimate of the coefficient of
 #'   variation
 #' @param alpha The allowed type I error probability
@@ -47,7 +48,12 @@
 #'   chi-square distribution.  \cr \cr \strong{Bootstrap Confidence
 #'   Intervals:} Thanks to package \pkg{boot} by Canty & Ripley \code{[9]} we
 #'   can obtain bootstrap CI around \emph{cv} using \link[boot]{boot.ci}.  \cr
-#'   \cr } }
+#'   \cr \strong{Abu-Shawiesh-Akyuz-Kibria Confidence Intervals:}
+#'   Abu-Shawiesh, Akyuz, & Kibria \code{[10]} proposed three CIs for the
+#'   population \emph{cv} that adjust for non-normality through the sample
+#'   kurtosis: the adjusted-degrees-of-freedom CI (\code{aak_adj}), the
+#'   large-sample CI (\code{aak_ls}), and the augmented-large-sample CI
+#'   (\code{aak_als}).  \cr \cr } }
 #' @examples
 #' x <- c(
 #'     0.2, 0.5, 1.1, 1.4, 1.8, 2.3, 2.5, 2.7, 3.5, 4.4,
@@ -88,6 +94,12 @@
 #'
 #' @references \code{[9]} Canty, A., & Ripley, B., 2017, boot: Bootstrap R
 #'   (S-Plus) Functions, R package version 1.3-20
+#'
+#' @references \code{[10]} Abu-Shawiesh, MOA., Akyuz, HE., & Kibria, BG.,
+#'   2019, Performance of Some Confidence Intervals for Estimating the
+#'   Population Coefficient of Variation under both Symmetric and Skewed
+#'   Distributions, Statistics, Optimization & Information Computing, 7(2),
+#'   277-290, DOI: \doi{10.19139/soic.v7i2.630}
 #' @export
 #' @import dplyr SciViews boot R6 utils
 NULL
@@ -251,7 +263,8 @@ cv_versatile <- function(
             choices = c(
                 "kelley", "mckay", "miller", "vangel", "mahmoudvand_hassani",
                 "equal_tailed", "shortest_length", "normal_approximation",
-                "norm","basic", "perc", "bca", "all"
+                "norm","basic", "perc", "bca",
+                "aak_adj", "aak_ls", "aak_als", "all"
             ),
             several.ok = TRUE
         )
@@ -465,6 +478,88 @@ cv_versatile <- function(
         est.equal <- cv_corr  # corrected cv is an estimate of CV
         lower.tile.equal <- (cv_corr*sqrt(v))/(sqrt(tt1))
         upper.tile.equal <- (cv_corr*sqrt(v))/(sqrt(tt2))
+    } else if ("aak_adj" %in% method && correction == FALSE) {
+        if (length(x) < 4) {
+            stop("AA&K-ADJ CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        gh <- .gamma_hat_hummel(x, ddof = 1)
+        r_hat <- (2 * n) / (gh + 2 * n / (n - 1))
+        if (r_hat <= 0) {
+            stop("AA&K-ADJ: non-positive adjusted degrees of freedom")
+        }
+        u_high <- stats::qchisq(1 - alpha/2, r_hat)
+        u_low <- stats::qchisq(alpha/2, r_hat)
+        est.aak_adj <- cv  # cv is an estimate of CV
+        lower.tile.aak_adj <- cv * sqrt(r_hat / u_high)
+        upper.tile.aak_adj <- cv * sqrt(r_hat / u_low)
+    } else if ("aak_adj" %in% method && correction == TRUE) {
+        if (length(x) < 4) {
+            stop("AA&K-ADJ CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        gh <- .gamma_hat_hummel(x, ddof = 1)
+        r_hat <- (2 * n) / (gh + 2 * n / (n - 1))
+        if (r_hat <= 0) {
+            stop("AA&K-ADJ: non-positive adjusted degrees of freedom")
+        }
+        u_high <- stats::qchisq(1 - alpha/2, r_hat)
+        u_low <- stats::qchisq(alpha/2, r_hat)
+        est.aak_adj <- cv_corr  # corrected cv is an estimate of CV
+        lower.tile.aak_adj <- cv_corr * sqrt(r_hat / u_high)
+        upper.tile.aak_adj <- cv_corr * sqrt(r_hat / u_low)
+    } else if ("aak_ls" %in% method && correction == FALSE) {
+        if (length(x) < 4) {
+            stop("AA&K-LS CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        big_g2 <- .g2_bias_corrected(x)
+        a_value <- (big_g2 + 2 * n / (n - 1)) / n
+        z <- stats::qnorm(1 - alpha/2)
+        radical <- z * sqrt(a_value)
+        est.aak_ls <- cv
+        lower.tile.aak_ls <- cv * sqrt(exp(-radical))
+        upper.tile.aak_ls <- cv * sqrt(exp(+radical))
+    } else if ("aak_ls" %in% method && correction == TRUE) {
+        if (length(x) < 4) {
+            stop("AA&K-LS CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        big_g2 <- .g2_bias_corrected(x)
+        a_value <- (big_g2 + 2 * n / (n - 1)) / n
+        z <- stats::qnorm(1 - alpha/2)
+        radical <- z * sqrt(a_value)
+        est.aak_ls <- cv_corr
+        lower.tile.aak_ls <- cv_corr * sqrt(exp(-radical))
+        upper.tile.aak_ls <- cv_corr * sqrt(exp(+radical))
+    } else if ("aak_als" %in% method && correction == FALSE) {
+        if (length(x) < 4) {
+            stop("AA&K-ALS CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        kappa <- .kappa_e5(x)
+        k_value <- kappa + 2 * n / (n - 1)
+        b_value <- (k_value / n) * (1 + k_value / (2 * n))
+        c_value <- k_value / (2 * n)
+        z <- stats::qnorm(1 - alpha/2)
+        radical <- z * sqrt(b_value)
+        est.aak_als <- cv
+        lower.tile.aak_als <- cv * sqrt(exp(-radical + c_value))
+        upper.tile.aak_als <- cv * sqrt(exp(+radical + c_value))
+    } else if ("aak_als" %in% method && correction == TRUE) {
+        if (length(x) < 4) {
+            stop("AA&K-ALS CI requires at least 4 observations.")
+        }
+        n <- length(x)
+        kappa <- .kappa_e5(x)
+        k_value <- kappa + 2 * n / (n - 1)
+        b_value <- (k_value / n) * (1 + k_value / (2 * n))
+        c_value <- k_value / (2 * n)
+        z <- stats::qnorm(1 - alpha/2)
+        radical <- z * sqrt(b_value)
+        est.aak_als <- cv_corr
+        lower.tile.aak_als <- cv_corr * sqrt(exp(-radical + c_value))
+        upper.tile.aak_als <- cv_corr * sqrt(exp(+radical + c_value))
     } else if ("norm" %in% method && correction == FALSE) {
         boot.normcv.ci <- boot::boot.ci(
             boot.cv, conf = (1 - alpha), type = "norm"
@@ -599,6 +694,37 @@ cv_versatile <- function(
         est.equal <- cv  # cv is an estimate of CV
         lower.tile.equal <- (cv*sqrt(v))/(sqrt(ttt1))
         upper.tile.equal <- (cv*sqrt(v))/(sqrt(ttt2))
+        # ------------------- AA&K family (population CIs) --------------------
+        if (length(x) >= 4) {
+            n_all <- length(x)
+            gh_all <- .gamma_hat_hummel(x, ddof = 1)
+            r_hat_all <- (2 * n_all) / (gh_all + 2 * n_all / (n_all - 1))
+            if (r_hat_all <= 0) {
+                stop("AA&K-ADJ: non-positive adjusted degrees of freedom")
+            }
+            u_high_all <- stats::qchisq(1 - alpha/2, r_hat_all)
+            u_low_all <- stats::qchisq(alpha/2, r_hat_all)
+            est.aak_adj <- cv
+            lower.tile.aak_adj <- cv * sqrt(r_hat_all / u_high_all)
+            upper.tile.aak_adj <- cv * sqrt(r_hat_all / u_low_all)
+            big_g2_all <- .g2_bias_corrected(x)
+            a_val_all <- (big_g2_all + 2 * n_all / (n_all - 1)) / n_all
+            z_all <- stats::qnorm(1 - alpha/2)
+            rad_ls_all <- z_all * sqrt(a_val_all)
+            est.aak_ls <- cv
+            lower.tile.aak_ls <- cv * sqrt(exp(-rad_ls_all))
+            upper.tile.aak_ls <- cv * sqrt(exp(+rad_ls_all))
+            kappa_all <- .kappa_e5(x)
+            k_val_all <- kappa_all + 2 * n_all / (n_all - 1)
+            b_val_all <- (k_val_all / n_all) * (1 + k_val_all / (2 * n_all))
+            c_val_all <- k_val_all / (2 * n_all)
+            rad_als_all <- z_all * sqrt(b_val_all)
+            est.aak_als <- cv
+            lower.tile.aak_als <- cv * sqrt(exp(-rad_als_all + c_val_all))
+            upper.tile.aak_als <- cv * sqrt(exp(+rad_als_all + c_val_all))
+        } else {
+            stop("AA&K CIs require at least 4 observations.")
+        }
         boot.normcv.ci <- boot::boot.ci(
             boot.cv, conf = (1 - alpha), type = "norm"
         )
@@ -702,6 +828,39 @@ cv_versatile <- function(
         est.equal <- cv_corr  # cv_corr is an estimate of CV
         lower.tile.equal <- (cv_corr*sqrt(v))/(sqrt(ttt1))
         upper.tile.equal <- (cv_corr*sqrt(v))/(sqrt(ttt2))
+        # ------------------- AA&K family (population CIs) --------------------
+        if (length(x) >= 4) {
+            n_all <- length(x)
+            gh_all <- .gamma_hat_hummel(x, ddof = 1)
+            r_hat_all <- (2 * n_all) / (gh_all + 2 * n_all / (n_all - 1))
+            if (r_hat_all <= 0) {
+                stop("AA&K-ADJ: non-positive adjusted degrees of freedom")
+            }
+            u_high_all <- stats::qchisq(1 - alpha/2, r_hat_all)
+            u_low_all <- stats::qchisq(alpha/2, r_hat_all)
+            est.aak_adj <- cv_corr
+            lower.tile.aak_adj <- cv_corr * sqrt(r_hat_all / u_high_all)
+            upper.tile.aak_adj <- cv_corr * sqrt(r_hat_all / u_low_all)
+            big_g2_all <- .g2_bias_corrected(x)
+            a_val_all <- (big_g2_all + 2 * n_all / (n_all - 1)) / n_all
+            z_all <- stats::qnorm(1 - alpha/2)
+            rad_ls_all <- z_all * sqrt(a_val_all)
+            est.aak_ls <- cv_corr
+            lower.tile.aak_ls <- cv_corr * sqrt(exp(-rad_ls_all))
+            upper.tile.aak_ls <- cv_corr * sqrt(exp(+rad_ls_all))
+            kappa_all <- .kappa_e5(x)
+            k_val_all <- kappa_all + 2 * n_all / (n_all - 1)
+            b_val_all <- (k_val_all / n_all) * (1 + k_val_all / (2 * n_all))
+            c_val_all <- k_val_all / (2 * n_all)
+            rad_als_all <- z_all * sqrt(b_val_all)
+            est.aak_als <- cv_corr
+            lower.tile.aak_als <-
+                cv_corr * sqrt(exp(-rad_als_all + c_val_all))
+            upper.tile.aak_als <-
+                cv_corr * sqrt(exp(+rad_als_all + c_val_all))
+        } else {
+            stop("AA&K CIs require at least 4 observations.")
+        }
         boot.normcv_corr.ci <- boot::boot.ci(
             boot.cv_corr, conf = (1 - alpha), type = "norm"
         )
@@ -960,6 +1119,90 @@ cv_versatile <- function(
                 )
             )
         )
+    } else if ("aak_adj" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_adj * 100, digits = digits),
+                    lower = round(lower.tile.aak_adj * 100, digits = digits),
+                    upper = round(upper.tile.aak_adj * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("aak_adj" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_adj * 100, digits = digits),
+                    lower = round(lower.tile.aak_adj * 100, digits = digits),
+                    upper = round(upper.tile.aak_adj * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("aak_ls" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_ls * 100, digits = digits),
+                    lower = round(lower.tile.aak_ls * 100, digits = digits),
+                    upper = round(upper.tile.aak_ls * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("aak_ls" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_ls * 100, digits = digits),
+                    lower = round(lower.tile.aak_ls * 100, digits = digits),
+                    upper = round(upper.tile.aak_ls * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("aak_als" %in% method && correction == FALSE) {
+        return(
+            list(
+                method = (
+                    "cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_als * 100, digits = digits),
+                    lower = round(lower.tile.aak_als * 100, digits = digits),
+                    upper = round(upper.tile.aak_als * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
+    } else if ("aak_als" %in% method && correction == TRUE) {
+        return(
+            list(
+                method = (
+                    "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
+                ),
+                statistics = data.frame(
+                    est = round(est.aak_als * 100, digits = digits),
+                    lower = round(lower.tile.aak_als * 100, digits = digits),
+                    upper = round(upper.tile.aak_als * 100, digits = digits),
+                    row.names = c(" ")
+                )
+            )
+        )
     } else if ("norm" %in% method && correction == FALSE) {
         return(
             list(
@@ -1091,9 +1334,12 @@ cv_versatile <- function(
                         "shortest_length",  # 7
                         "normal_approximation",  # 8
                         "norm",  # 9
-                        "basic"  # 10
+                        "basic",  # 10
                         # "perc"  # 11
                         # "bca"  # 12
+                        "aak_adj",  # 13
+                        "aak_ls",  # 14
+                        "aak_als"  # 15
                     ),
                     est = c(
                         round(cv * 100, digits = digits),
@@ -1107,6 +1353,9 @@ cv_versatile <- function(
                         round(cv * 100, digits = digits),
                         # round(cv * 100, digits = digits),
                         # round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
+                        round(cv * 100, digits = digits),
                         round(cv * 100, digits = digits)
                         ),
                     lower = c(
@@ -1119,11 +1368,14 @@ cv_versatile <- function(
                         round(lower.tile.shortest * 100, digits = digits),
                         round(lower.tile.normaapprox * 100, digits = digits),
                         round(lower.tile.norm * 100, digits = digits),
-                        round(lower.tile.basic * 100, digits = digits)
+                        round(lower.tile.basic * 100, digits = digits),
                         # ,
                         # round(lower.tile.percent * 100, digits = digits)
                         # ,
                         # round(lower.tile.bca * 100, digits = digits)
+                        round(lower.tile.aak_adj * 100, digits = digits),
+                        round(lower.tile.aak_ls * 100, digits = digits),
+                        round(lower.tile.aak_als * 100, digits = digits)
                     ),
                     upper = c(
                         round(upper.tile.kelley * 100, digits = digits),
@@ -1135,11 +1387,14 @@ cv_versatile <- function(
                         round(upper.tile.shortest * 100, digits = digits),
                         round(upper.tile.normaapprox * 100, digits = digits),
                         round(upper.tile.norm * 100, digits = digits),
-                        round(upper.tile.basic * 100, digits = digits)
+                        round(upper.tile.basic * 100, digits = digits),
                         # ,
                         # round(upper.tile.percent * 100, digits = digits)
                         # ,
                         # round(upper.tile.bca * 100, digits = digits)
+                        round(upper.tile.aak_adj * 100, digits = digits),
+                        round(upper.tile.aak_ls * 100, digits = digits),
+                        round(upper.tile.aak_als * 100, digits = digits)
                     ),
                     description = c(
                         "cv with Kelley 95% CI",
@@ -1151,11 +1406,14 @@ cv_versatile <- function(
                         "cv with Shortest-Length 95% CI",
                         "cv with Normal Approximation 95% CI",
                         "cv with Normal Approximation Bootstrap 95% CI",
-                        "cv with Basic Bootstrap 95% CI"
+                        "cv with Basic Bootstrap 95% CI",
                         # ,
                         # "cv with Bootstrap Percentile 95% CI"
                         # ,
                         # "cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                        "cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI",
+                        "cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI",
+                        "cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
                     )
                 )
             )
@@ -1175,9 +1433,12 @@ cv_versatile <- function(
                         "shortest_length",  # 7
                         "normal_approximation",  # 8
                         "norm",  # 9
-                        "basic"  # 10
+                        "basic",  # 10
                         # "perc"  # 11
                         # "bca"  # 12
+                        "aak_adj",  # 13
+                        "aak_ls",  # 14
+                        "aak_als"  # 15
                     ),
                     est = c(
                         round(cv_corr * 100, digits = digits),
@@ -1191,6 +1452,9 @@ cv_versatile <- function(
                         round(cv_corr * 100, digits = digits),
                         # round(cv_corr * 100, digits = digits),
                         # round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
+                        round(cv_corr * 100, digits = digits),
                         round(cv_corr * 100, digits = digits)
                     ),
                     lower = c(
@@ -1203,11 +1467,14 @@ cv_versatile <- function(
                         round(lower.tile.shortest * 100, digits = digits),
                         round(lower.tile.normaapprox * 100, digits = digits),
                         round(lower.tile.norm * 100, digits = digits),
-                        round(lower.tile.basic * 100, digits = digits)
+                        round(lower.tile.basic * 100, digits = digits),
                         # ,
                         # round(lower.tile.percent * 100, digits = digits)
                         # ,
                         # round(lower.tile.bca * 100, digits = digits)
+                        round(lower.tile.aak_adj * 100, digits = digits),
+                        round(lower.tile.aak_ls * 100, digits = digits),
+                        round(lower.tile.aak_als * 100, digits = digits)
                     ),
                     upper = c(
                         round(upper.tile.kelley * 100, digits = digits),
@@ -1219,11 +1486,14 @@ cv_versatile <- function(
                         round(upper.tile.shortest * 100, digits = digits),
                         round(upper.tile.normaapprox * 100, digits = digits),
                         round(upper.tile.norm * 100, digits = digits),
-                        round(upper.tile.basic * 100, digits = digits)
+                        round(upper.tile.basic * 100, digits = digits),
                         # ,
                         # round(upper.tile.percent * 100, digits = digits)
                         # ,
                         # round(upper.tile.bca * 100, digits = digits)
+                        round(upper.tile.aak_adj * 100, digits = digits),
+                        round(upper.tile.aak_ls * 100, digits = digits),
+                        round(upper.tile.aak_als * 100, digits = digits)
                     ),
                     description = c(
                 "Corrected cv with Kelley 95% CI",
@@ -1235,11 +1505,14 @@ cv_versatile <- function(
                 "Corrected cv with Shortest-Length 95% CI",
                 "Corrected cv with Normal Approximation 95% CI",
                 "Corrected cv with Normal Approximation Bootstrap 95% CI",
-                "Corrected cv with Basic Bootstrap 95% CI"
+                "Corrected cv with Basic Bootstrap 95% CI",
                 # ,
                 # "Corrected cv with Bootstrap Percentile 95% CI"
                 # ,
                 # "Corrected cv with Adjusted Bootstrap Percentile (BCa) 95% CI"
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ADJ 95% CI",
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria LS 95% CI",
+                "Corrected cv with Abu-Shawiesh-Akyuz-Kibria ALS 95% CI"
                     )
                 )
             )

@@ -1,3 +1,27 @@
+# cvcqv 1.0.4
+
+## New features
+
+* Added three Abu-Shawiesh-Akyuz-Kibria (2019)
+  <doi:10.19139/soic.v7i2.630> population-coefficient-of-variation
+  confidence intervals, ported from the companion Python package
+  `pycvcqv`:
+    * `aak_adj_ci` / `method = "aak_adj"` — adjusted-degrees-of-freedom
+      CI (Eq. 21) derived from Hummel et al.'s CI for the variance;
+      `r_hat = 2n / (gamma_hat + 2n/(n-1))`.
+    * `aak_ls_ci` / `method = "aak_ls"` — large-sample CI (Eq. 26)
+      derived from the log-transformed CI for the variance;
+      `A = (G_2 + 2n/(n-1)) / n`.
+    * `aak_als_ci` / `method = "aak_als"` — augmented-large-sample CI
+      (Eq. 32) derived from Burch's CI for the variance using a
+      three-term Taylor expansion of `log(S^2)`.
+* The three new methods are exposed both through the `CoefVarCI` R6
+  class (as public `*_ci()` methods and via `all_ci()`) and through
+  the procedural `cv_versatile()` function (including `method = "all"`).
+* Internal kurtosis helpers (`.g2_excess_kurtosis`,
+  `.g2_bias_corrected`, `.kappa_e5`, `.gamma_hat_hummel`) live in
+  `R/aak_helpers.R`. All three CIs require at least 4 observations.
+
 # cvcqv 1.0.3
 
 Patch release addressing CRAN auto-check feedback on the 1.0.2 resubmission:

@@ -1,8 +1,8 @@
 Package: cvcqv
 Type: Package
 Title: Coefficient of Variation (CV) with Confidence Intervals (CI)
-Version: 1.0.3
-Date: 2026-05-08
+Version: 1.0.4
+Date: 2026-05-25
 Authors@R: person("Maani", "Beigy", email = "manibeygi@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Maani Beigy <manibeygi@gmail.com>
@@ -11,7 +11,8 @@ Description: Provides some easy-to-use functions and classes to calculate
     intervals provided with all available methods. References are
     'Panichkitkosolkul' (2013) <doi:10.1155/2013/324940>,
     'Altunkaynak' & 'Gamgam' (2018) <doi:10.1080/03610918.2018.1435800>,
-    'Albatineh', 'Kibria', Wilcox & 'Zogheib' (2014) <doi:10.1080/02664763.2013.847405>.
+    'Albatineh', 'Kibria', Wilcox & 'Zogheib' (2014) <doi:10.1080/02664763.2013.847405>,
+    'Abu-Shawiesh', 'Akyuz' & 'Kibria' (2019) <doi:10.19139/soic.v7i2.630>.
 Depends:
     R (>= 3.5.0),
     dplyr (>= 0.8.0.1)
