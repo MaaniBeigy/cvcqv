@@ -190,16 +190,16 @@ distribution (<code>conf.limits.nct</code>),
 will be obtained as:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">1.1</span>, <span class="fl">1.4</span>, <span class="fl">1.8</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>, <span class="fl">3.5</span>, <span class="fl">4.4</span>,</span>
-<span>    <span class="fl">4.6</span>, <span class="fl">5.4</span>, <span class="fl">5.4</span>, <span class="fl">5.7</span>, <span class="fl">5.8</span>, <span class="fl">5.9</span>, <span class="fl">6.0</span>, <span class="fl">6.6</span>, <span class="fl">7.1</span>, <span class="fl">7.9</span></span>
+<span>  <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">1.1</span>, <span class="fl">1.4</span>, <span class="fl">1.8</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>, <span class="fl">3.5</span>, <span class="fl">4.4</span>,</span>
+<span>  <span class="fl">4.6</span>, <span class="fl">5.4</span>, <span class="fl">5.4</span>, <span class="fl">5.7</span>, <span class="fl">5.8</span>, <span class="fl">5.9</span>, <span class="fl">6.0</span>, <span class="fl">6.6</span>, <span class="fl">7.1</span>, <span class="fl">7.9</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"kelley"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"kelley"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Kelley 95% CI"</span></span>
@@ -238,12 +238,12 @@ according to McKay’s method <span class="citation">(McKay,
 1932)</span>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"mckay"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"mckay"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with McKay 95% CI"</span></span>
@@ -278,12 +278,12 @@ according to Miller’s method <span class="citation">(Edward Miller,
 1991)</span>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"miller"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"miller"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Miller 95% CI"</span></span>
@@ -309,12 +309,12 @@ according to Vangel’s method <span class="citation">(Vangel,
 1996)</span>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"vangel"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"vangel"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Vangel 95% CI"</span></span>
@@ -343,12 +343,12 @@ C_n=\sqrt{\frac{2}{n-1}}\frac{\Gamma{(n/2)}}{\Gamma{((n-1)/2)}},
 according to Mahmoudvand-Hassani’s method <span class="citation">(Mahmoudvand &amp; Hassani, 2009)</span>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"mahmoudvand_hassani"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"mahmoudvand_hassani"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Mahmoudvand-Hassani 95% CI"</span></span>
@@ -376,12 +376,12 @@ Now we calculate the normal approximation 95% CI for
 according to Panichkitkosolkul <span class="citation">(Panichkitkosolkul, 2013)</span>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"normal_approximation"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"normal_approximation"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Normal Approximation 95% CI"</span></span>
@@ -407,12 +407,12 @@ degrees of freedom. Then, shortest-length 95% CI for
 is:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"shortest_length"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"shortest_length"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Shortest-Length 95% CI"</span></span>
@@ -452,12 +452,12 @@ Then, equal-tailed 95% CI for
 is:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"equal_tailed"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"equal_tailed"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Equal-Tailed 95% CI"</span></span>
@@ -474,12 +474,12 @@ is:</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">cv</annotation></semantics></math>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"basic"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"basic"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "Corrected cv with Basic Bootstrap 95% CI"</span></span>
@@ -495,12 +495,12 @@ is:</p>
 methods:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cv_versatile.html">cv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"all"</span>, </span>
-<span>    correction <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  correction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "All methods"</span></span>

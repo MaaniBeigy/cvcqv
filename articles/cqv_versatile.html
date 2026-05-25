@@ -154,14 +154,14 @@ is long and a bit complicated, but has been implemented for
 <code>cqv</code> function:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">1.1</span>, <span class="fl">1.4</span>, <span class="fl">1.8</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>, <span class="fl">3.5</span>, <span class="fl">4.4</span>,</span>
-<span>    <span class="fl">4.6</span>, <span class="fl">5.4</span>, <span class="fl">5.4</span>, <span class="fl">5.7</span>, <span class="fl">5.8</span>, <span class="fl">5.9</span>, <span class="fl">6.0</span>, <span class="fl">6.6</span>, <span class="fl">7.1</span>, <span class="fl">7.9</span></span>
+<span>  <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">1.1</span>, <span class="fl">1.4</span>, <span class="fl">1.8</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>, <span class="fl">3.5</span>, <span class="fl">4.4</span>,</span>
+<span>  <span class="fl">4.6</span>, <span class="fl">5.4</span>, <span class="fl">5.4</span>, <span class="fl">5.7</span>, <span class="fl">5.8</span>, <span class="fl">5.9</span>, <span class="fl">6.0</span>, <span class="fl">6.6</span>, <span class="fl">7.1</span>, <span class="fl">7.9</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cqv_versatile.html">cqv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"bonett"</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"bonett"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "cqv with Bonett 95% CI"</span></span>
@@ -178,10 +178,10 @@ is long and a bit complicated, but has been implemented for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>q</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">cqv</annotation></semantics></math>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cqv_versatile.html">cqv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"bca"</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"bca"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "cqv with adjusted bootstrap percentile (BCa) 95% CI"</span></span>
@@ -197,10 +197,10 @@ is long and a bit complicated, but has been implemented for
 methods:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cqv_versatile.html">cqv_versatile</a></span><span class="op">(</span></span>
-<span>    <span class="va">x</span>, </span>
-<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>    method <span class="op">=</span> <span class="st">"all"</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"all"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $method</span></span>
 <span><span class="co">## [1] "All methods"</span></span>
