@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cvcqv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -89,8 +89,8 @@ stripped before the computation proceeds.</p></dd>
 <dd><p>a scalar representing the type of confidence intervals
 required. The value should be any of the values "kelley_ci", "mckay_ci",
 "miller_ci", "vangel_ci", "mahmoudvand_hassani_ci", "equal_tailed_ci",
-"shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci", or
-"all_ci".</p></dd>
+"shortest_length_ci", "normal_approximation_ci", "norm_ci","basic_ci",
+"aak_adj_ci", "aak_ls_ci", "aak_als_ci", or "all_ci".</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
@@ -135,7 +135,14 @@ variation if TRUE is determined.</p></dd>
   <code>[8]</code> proposed another CI for <em>cv</em>; which is obtained using
   chi-square distribution.  <br><br><strong>Bootstrap Confidence
   Intervals:</strong> Thanks to package <span class="pkg">boot</span> by Canty &amp; Ripley <code>[9]</code> we
-  can obtain bootstrap CI around <em>cv</em> using <a href="https://rdrr.io/pkg/boot/man/boot.ci.html" class="external-link">boot.ci</a>.  <br><br></p></dd>
+  can obtain bootstrap CI around <em>cv</em> using <a href="https://rdrr.io/pkg/boot/man/boot.ci.html" class="external-link">boot.ci</a>.  <br><br><strong>Abu-Shawiesh-Akyuz-Kibria Confidence Intervals:</strong>
+  Abu-Shawiesh, Akyuz, &amp; Kibria <code>[10]</code> proposed three CIs for the
+  population <em>cv</em> that adjust for non-normality through the sample
+  kurtosis: the adjusted-degrees-of-freedom CI (<code>aak_adj_ci</code>) derived
+  from Hummel et al.'s CI for the variance, the large-sample CI
+  (<code>aak_ls_ci</code>) derived from the log-transformed CI for the variance,
+  and the augmented-large-sample CI (<code>aak_als_ci</code>) derived from
+  Burch's CI for the variance.  <br><br></p></dd>
 
 </dl></div>
     <div id="details">
@@ -179,6 +186,11 @@ variation if TRUE is determined.</p></dd>
   <a href="https://doi.org/10.1155/2013/324940" class="external-link">doi:10.1155/2013/324940</a></p>
 <p><code>[9]</code> Canty, A., &amp; Ripley, B., 2017, boot: Bootstrap R
   (S-Plus) Functions, R package version 1.3-20</p>
+<p><code>[10]</code> Abu-Shawiesh, MOA., Akyuz, HE., &amp; Kibria, BG.,
+  2019, Performance of Some Confidence Intervals for Estimating the
+  Population Coefficient of Variation under both Symmetric and Skewed
+  Distributions, Statistics, Optimization &amp; Information Computing, 7(2),
+  277-290, DOI: <a href="https://doi.org/10.19139/soic.v7i2.630" class="external-link">doi:10.19139/soic.v7i2.630</a></p>
     </div>
 
     <div id="ref-examples">

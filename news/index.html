@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cvcqv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -61,7 +61,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.3" id="cvcqv-103">cvcqv 1.0.3<a class="anchor" aria-label="anchor" href="#cvcqv-103"></a></h2>
+<h2 class="page-header" data-toc-text="1.0.4" id="cvcqv-104">cvcqv 1.0.4<a class="anchor" aria-label="anchor" href="#cvcqv-104"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-0-4">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-4"></a></h3>
+<ul><li>Added three Abu-Shawiesh-Akyuz-Kibria (2019) <a href="doi:10.19139/soic.v7i2.630" class="uri">doi:10.19139/soic.v7i2.630</a> population-coefficient-of-variation confidence intervals, ported from the companion Python package <code>pycvcqv</code>:
+<ul><li>
+<code>aak_adj_ci</code> / <code>method = "aak_adj"</code> — adjusted-degrees-of-freedom CI (Eq. 21) derived from Hummel et al.’s CI for the variance; <code>r_hat = 2n / (gamma_hat + 2n/(n-1))</code>.</li>
+<li>
+<code>aak_ls_ci</code> / <code>method = "aak_ls"</code> — large-sample CI (Eq. 26) derived from the log-transformed CI for the variance; <code>A = (G_2 + 2n/(n-1)) / n</code>.</li>
+<li>
+<code>aak_als_ci</code> / <code>method = "aak_als"</code> — augmented-large-sample CI (Eq. 32) derived from Burch’s CI for the variance using a three-term Taylor expansion of <code>log(S^2)</code>.</li>
+</ul></li>
+<li>The three new methods are exposed both through the <code>CoefVarCI</code> R6 class (as public <code>*_ci()</code> methods and via <code>all_ci()</code>) and through the procedural <code><a href="../reference/cv_versatile.html">cv_versatile()</a></code> function (including <code>method = "all"</code>).</li>
+<li>Internal kurtosis helpers (<code>.g2_excess_kurtosis</code>, <code>.g2_bias_corrected</code>, <code>.kappa_e5</code>, <code>.gamma_hat_hummel</code>) live in <code>R/aak_helpers.R</code>. All three CIs require at least 4 observations.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.3" id="cvcqv-103">cvcqv 1.0.3<small>2026-05-21</small><a class="anchor" aria-label="anchor" href="#cvcqv-103"></a></h2>
 <p>Patch release addressing CRAN auto-check feedback on the 1.0.2 resubmission:</p>
 <ul><li>Wrapped author surnames in <code>DESCRIPTION</code> (<code>Albatineh</code>, <code>Altunkaynak</code>, <code>Gamgam</code>, <code>Kibria</code>, <code>Panichkitkosolkul</code>, <code>Zogheib</code>) in single quotes so CRAN’s spell-checker no longer flags them as misspellings.</li>
 <li>Removed obsolete instructions in <code>README</code> to download <code>cvcqv_1.0.0.tar.gz</code> from the GitHub repo (the file no longer exists; install from CRAN instead).</li>
