@@ -1,34 +1,33 @@
-# cvcqv 1.0.4 — CRAN submission
+# cvcqv 1.0.4 CRAN submission
 
-## Reason for the quick release after 1.0.3
+## Summary
 
-This is a feature release submitted four days after 1.0.3 was accepted
-(2026-05-08). The motivation is to ship three published
-confidence-interval methods that were requested via GitHub issues #61,
-#62, and #63 and that already exist in the sibling Python package
-`pycvcqv`. The three methods are:
+This is a feature release. It adds three published confidence interval
+methods for the population coefficient of variation, bringing R users
+to parity with the sibling Python package `pycvcqv`. The three methods
+are:
 
 * Abu-Shawiesh, Akyuz & Kibria (2019)
-  <doi:10.19139/soic.v7i2.630> adjusted-degrees-of-freedom CI for the
-  population coefficient of variation (`method = "aak_adj"`).
+  <doi:10.19139/soic.v7i2.630> adjusted degrees of freedom CI
+  (`method = "aak_adj"`).
 * Abu-Shawiesh, Akyuz & Kibria (2019) large-sample CI
   (`method = "aak_ls"`).
-* Abu-Shawiesh, Akyuz & Kibria (2019) augmented-large-sample CI
+* Abu-Shawiesh, Akyuz & Kibria (2019) augmented large-sample CI
   (`method = "aak_als"`).
 
 All three are exposed through both the `CoefVarCI` R6 class and the
 procedural `cv_versatile()` function. The existing public API is
 unchanged.
 
+## Minimum R version
+
+The minimum required R is now 4.1.0 (was 3.5.0). The package internals
+use the native pipe `|>` in place of the magrittr `%>%`. R 4.1.0 was
+released in May 2021.
+
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-The single NOTE is the expected `Days since last update: 4` message
-from CRAN's incoming-feasibility check. We considered batching this
-feature with a later release, but felt the published methods (and the
-already-implemented Python counterpart) warranted shipping promptly so
-that R users have parity with `pycvcqv`.
+0 errors | 0 warnings | 0 notes
 
 ## Test environments
 
