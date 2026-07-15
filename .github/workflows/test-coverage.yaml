@@ -39,7 +39,7 @@ jobs:
           covr::to_cobertura(cov)
         shell: Rscript {0}
 
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@v7
         with:
           # Codecov upload is best-effort. Without CODECOV_TOKEN the protected
           # default branch will reject the upload — that is not a CI failure.
